@@ -145,3 +145,21 @@ store resolves to a directory that exists. Backup at `~/Claude/_archive/orphan-s
   still has to add is performing the move, plus symlinks and the ~23 config references.
 - **The four one-off scripts were generalized rather than archived.** *Why:* they lived in the job's
   temp directory, which is deleted with the job. Proven, working tools were about to evaporate.
+
+---
+
+## 2026-08-05 — history.md retirement executed
+
+- **The hook count was wrong: four writers, not three.** The grep that found "three writers, zero
+  readers" missed `memory_migrate.py` inside `close-session` itself — it scaffolded a fresh
+  `history.md` on every migration and seeded it from `progress-log.md`. *Lesson:* counting who writes
+  a file must include who **creates** it, not just who appends.
+- **All four writers retired in one pass, as decided:** Stop hook unwired from settings.json and
+  archived (with its test) to `~/.claude/hooks/_archive/` per the file-versioning convention;
+  `close-session` Phase 5 step removed; `new-session` Phase 4 tombstoned; `memory_migrate.py` now
+  scaffolds the 2-file shape (`context.md` + `decisions.md`) — verified by smoke test.
+- **Existing `history.md` files are left in place, inert.** Deleting them across all projects is a
+  separate sweep with no urgency — nothing reads them, and nothing writes them anymore. The two pure
+  autolog debris files here and in `claude-architect` were removed.
+- **Hooks load at session start**, so the removal takes effect for the *next* session; the current
+  one no longer has the script to run anyway.

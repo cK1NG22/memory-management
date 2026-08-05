@@ -42,8 +42,12 @@ work, not cleanup.
 - [ ] **`/mine-conversation`** — have agents read this conversation (and future long ones) and extract
       thoughts, patterns, and possibilities that got dropped. *Why:* this session produced far more
       than survived into the docs; the losses were silent, which is the recurring failure here.
-- [ ] Retire `history.md` + disable the `auto_log_history.py` Stop hook *(decided, not yet executed —
-      `close-session` still writes it)*.
+- [x] **Retire `history.md` + the `auto_log_history.py` Stop hook.** Done 2026-08-05. The Stop hook
+      is unwired from `~/.claude/settings.json` and archived (with its test) to
+      `~/.claude/hooks/_archive/`; `close-session` no longer appends it; `new-session` Phase 4 is
+      tombstoned; **`memory_migrate.py` — a fourth writer the original count missed — no longer
+      scaffolds or seeds it.** Existing `history.md` files are inert; leave them. Takes effect for
+      hooks at the next session start.
 
 ## Phase 2 — The promotion ladder
 
