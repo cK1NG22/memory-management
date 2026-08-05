@@ -187,3 +187,24 @@ store resolves to a directory that exists. Backup at `~/Claude/_archive/orphan-s
   destinations and token values) are in `plan/skill-relocation-plan.md`.
 - **No fresh headless session for the re-measure.** *Why:* `claude -p` bills the separate
   programmatic credit pool; the next normal session start measures the same thing for free.
+
+---
+
+## 2026-08-05 — The mode-skill shape (Carter's call)
+
+- **Mode skills reach a project through two symlink hops:** each skill lives once in its canonical
+  home, is linked into a central mode home (`~/.claude/modes/<mode>/skills/`), and each project's
+  `<mode>/.claude/skills` is **one folder-level symlink** to that mode home — not one link per
+  skill. *Why:* adding a skill to a mode then reaches every project instantly, with no
+  rescaffolding; per-skill links would need a re-scaffold on every addition. The path must be
+  exactly `<folder>/.claude/skills/` — the loader scans nothing else.
+- **Open verification attached to this decision:** per-skill symlinks are proven to load; a
+  symlinked *parent* `skills/` folder is not. Sentinel-test it before the mode templates are
+  written — this project's rule is never to build on an untested loading assumption.
+- **Double-loading is prevented by invariant + scan, not care.** Each skill loads from exactly one
+  place (global / a project / a mode home). The check belongs in `audit.py` and
+  `/move-project --check`: flag any skill name reachable from two locations. *Why:* "rescaffold
+  everything correctly" is vigilance, and vigilance drifts — the 7-vs-12 symlink count proved it
+  again this session.
+- **The full per-skill destination map is generated from disk, complete, and lives in
+  `plan/skill-relocation-plan.md`** — every one of the 113 skills appears exactly once.

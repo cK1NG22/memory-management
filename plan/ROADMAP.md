@@ -92,8 +92,13 @@ work, not cleanup.
       mode structure was approved for — without it modes carry instructions but no tooling, and the
       global catalog still loads everywhere regardless. Depends on the relocation step above: the
       skills must live outside `~/.claude/skills/` before there is anything to link.
-      **Symlinks are the known-fragile part** — 7 died silently in the June reorg — so this needs a
-      resolve-check, and `/move-project --check` is where that check belongs.
+      **Shape decided 2026-08-05:** one **folder-level** symlink per mode per project
+      (`<mode>/.claude/skills → ~/.claude/modes/<mode>/skills`), per-skill links only inside the
+      mode home — so adding a skill to a mode reaches every project without rescaffolding.
+      **Sentinel-test first:** a symlinked parent `skills/` folder loading is unverified.
+      **Symlinks are the known-fragile part** — 12 died silently in the June reorg — so this needs a
+      resolve-check plus a load-twice check (one loading location per skill), and
+      `/move-project --check` is where both belong. Per-mode assignments: `skill-relocation-plan.md`.
 
 ## Open questions — Carter's call
 

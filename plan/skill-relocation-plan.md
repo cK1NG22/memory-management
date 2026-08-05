@@ -84,6 +84,76 @@ The analytic delta is above (7.8K → ~6.4K catalog). The honest floor number co
 `.jsonl` (a fresh headless `claude -p` run would also measure it, but that bills the separate
 programmatic credit pool; not worth it when the next real session measures it for free).
 
+## The mode-skill shape (decided 2026-08-05)
+
+Skills reach a mode through **two symlink hops**, and the project-side hop is one link for the
+whole folder, not one per skill:
+
+```
+<project>/plan/.claude/skills  →  ~/.claude/modes/plan/skills/   (ONE folder-level link per project)
+                                   ├── writing-plans  →  <canonical home>
+                                   └── kpi-setter     →  <canonical home>   (per-skill links, kept once)
+```
+
+*Why folder-level on the project side:* adding a skill to `~/.claude/modes/plan/skills/` makes it
+appear in **every project instantly** — no rescaffolding. Per-skill links in each project would
+need a re-scaffold on every addition.
+
+*Why per-skill inside the mode home:* the skill itself still lives once, in its canonical repo or
+folder, so editing it stays centralized.
+
+**Open verification before building on this:** per-skill symlinks are proven to load; a symlinked
+*parent* `skills/` folder is not yet sentinel-tested. Test it before the mode templates are
+written. Double-loading is prevented by the invariant — **each skill loads from exactly one
+place** (global, a project, or a mode home) — enforced by a scan (extend `audit.py` /
+`/move-project --check` to flag any skill name reachable twice), never by scaffolding care.
+
+## Appendix — every skill's proposed load location (complete, generated from disk 2026-08-05)
+
+**Already relocated — done:**
+- `~/School/.claude/skills/` (5): `411-case` `411-deck` `411-refine` `411-reresearch` `411-research`
+- `~/Optimal/.claude/skills/` (6): `discovery-call-prep` `skill-compliance` `skill-factory`
+  `skill-spec-validator` `skill-to-spec` `acme-board-memo`
+
+**Stay global — locked (8):**
+- Cron: `email-tracker` `github-digest` `workout-bot`
+- Headless shifts: `day-shift` `night-shift` `morning-shift` `dream`
+- Path-locked: `gstack` (in CLAUDE.md + settings.json)
+
+**Stay global — gstack family (53, installer-owned, ~1.1K tokens total):**
+`_gstack-command` `autoplan` `benchmark` `benchmark-models` `browse` `canary` `careful` `codex`
+`connect-chrome` `context-restore` `context-save` `cso` `design-consultation` `design-html`
+`design-review` `design-shotgun` `devex-review` `document-generate` `document-release` `freeze`
+`gstack-upgrade` `guard` `health` `investigate` `ios-clean` `ios-design-review` `ios-fix` `ios-qa`
+`ios-sync` `land-and-deploy` `landing-report` `make-pdf` `office-hours` `open-gstack-browser`
+`pair-agent` `plan-ceo-review` `plan-design-review` `plan-devex-review` `plan-eng-review`
+`plan-tune` `qa` `qa-only` `retro` `review` `scrape` `setup-browser-cookies` `setup-gbrain` `ship`
+`skillify` `spec` `sync-gbrain` `unfreeze` — plus `setup-deploy` (gstack-adjacent)
+
+**Stay global — cross-cutting workflow (17):**
+`autoresearch` `brain-dump` `capture-feedback` `claude-audit` `clean-transcript` `close-session`
+`decide` `doc-coauthoring` `file-versioning` `learn` `locker` `memory-review` `new-project`
+`new-session` `scout-stack` `skill-creator` `transcribe-media`
+
+**Stay global — special cases (2):**
+- `ui-ux-pro-max` — a link into `~/.agents/skills/`, managed there; leave.
+- `restructure-project` — retire once the mode scaffold replaces it (it builds the Gen 3 shape).
+
+**Move to a project — Carter's call (6):**
+- `check-understanding` `find-your-level` → the AI Engineering curriculum project
+- `daily-standup` `source-leads` → `~/Optimal/.claude/skills/`
+- `connect-vault` → `~/Research/.claude/skills/`
+- `resolve-vulns` → `~/Claude/.claude/skills/` (next to the supply-chain scan)
+
+**Retire (1):** `notion-transcript` — Carter left Notion.
+
+**Move to a mode home — after the mode rollout (15):**
+- `plan/`: `kpi-setter` `opusplan`
+- `research/`: `sources-cited` `youtube-slide-transcript`
+- `make/`: `api-design` `architecture-review` `database-design` `dung` `mcp-builder` `tdd`
+  `vercel-deploy-claimable`
+- `make/?` — the file-type four, open question #2: `docx` `pdf` `pptx` `xlsx`
+
 ## Fragility guard
 
 Project-level skill symlinks are **the same fragile kind that died in the June reorg** — they die
