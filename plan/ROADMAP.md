@@ -18,6 +18,10 @@ work, not cleanup.
       that no longer exist. **139 routed** to live stores, **17 moved out of the memory system**
       entirely (Locker's build plans were never memories), **9 deleted**. **Cleanup is now finished:**
       22 live stores, 308 topic files, 0 dangling links, every store resolving to a real directory.
+- [x] **Write the repair down so it never has to be re-derived** — `docs/memory-repair-runbook.md`
+      (the 8-step procedure + the judgment rules + the shell gotchas) and `make/memory-repair/`
+      (`audit.py`, `dump.py`, `route.py`, `mkindex.py`). **`audit.py` is the durable half:** no args,
+      exit 1 when dirty, run it before and after moving any folder.
 
 ---
 

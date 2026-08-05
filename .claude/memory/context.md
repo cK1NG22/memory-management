@@ -1,6 +1,6 @@
 # Context — memory-management
 
-**Last updated:** 2026-08-04
+**Last updated:** 2026-08-05
 
 ## 🎯 Goal
 
@@ -16,8 +16,12 @@ everything remaining on the roadmap is net-new building.
 - The **16 orphaned stores are gone** — of 165 topic files, 139 were routed to live stores, 17 moved
   out of the memory system entirely, 9 deleted. Backup at
   `~/Claude/_archive/orphan-stores_2026-08-04/`.
-- **22 live stores, 308 topic files, 0 dangling links, 6 files unindexed by design.** Every store that
+- **23 live stores, 309 topic files, 0 dangling links, 6 files unindexed by design.** Every store that
   exists now corresponds to a directory that exists.
+- **The repair is written down and tooled** — `docs/memory-repair-runbook.md` plus
+  `make/memory-repair/`. Run `python3 make/memory-repair/audit.py` (no args, exit 1 when dirty)
+  **before and after moving any folder.** This is the durable output of the cleanup; the cleanup
+  itself was one-time.
 - The **two-system split is settled** — native memory for Carter-and-machine facts, project memory for
   the work. Forced by which one survives a folder move, not chosen by taste.
 - **This project is the Gen 4 trial** — first thing built in the mode structure, so it tests the design
@@ -69,9 +73,17 @@ See `decisions.md`. The ones that shape everything else:
   frontmatter, written into the memory system because it was the nearest writable place. They now live
   in `~/Archive/Locker-UI/plans/`.
 - **An argument measured against a baseline the proposal would itself change is not an argument.**
+- **A repair is worth less than the check that prevents the next one.** The 165 recovered files are a
+  one-time win; `audit.py` is the part that keeps paying. Written down the same day precisely because
+  the procedure was still in working memory — a week later it would have been reconstructed wrong.
 
 ## 📂 Files touched · 🌿 git
 
-Project at `~/Projects/memory-management/`, committed. Orphan work touched
+Project at `~/Projects/memory-management/`, committed (`dd18be7`). Orphan work touched
 `~/.claude/projects/*/memory/` (16 stores removed, 11 stores written), plus
 `~/Archive/Locker-UI/plans/` (new) and `~/Claude/_archive/orphan-stores_2026-08-04/` (backup).
+Tools now live in `make/memory-repair/`; the procedure in `docs/memory-repair-runbook.md`.
+
+⚠️ **The `auto_log_history.py` Stop hook is still live** and wrote a 2,312-line `history.md` into this
+project during the session that decided to delete it. It is untracked and gitignored-by-neglect, not
+by rule. Retiring it is Phase 1 on the roadmap.

@@ -124,3 +124,24 @@ store resolves to a directory that exists. Backup at `~/Claude/_archive/orphan-s
   the mode structure was actually approved for; without it modes carry instructions but no tooling.
   Depends on relocating skills out of global first, and needs a resolve-check — 7 symlinks died
   silently in the June reorg.
+
+---
+
+## 2026-08-05 — Writing the repair down
+
+- **The check matters more than the repair, so it got built as a tool rather than a doc section.**
+  `make/memory-repair/audit.py` takes no arguments and returns a non-zero exit code when anything is
+  wrong. *Why:* a repair fixes one incident; a check that runs before and after every folder move is
+  what stops the next three years of silent drift. The exit code is deliberate — it lets this drop
+  into a cron later without being rewritten.
+- **`audit.py` resolves store names by walking the filesystem, not by decoding the string.** *Why:*
+  the `/`→`-` encoding is lossy — `mana-ventures` (one folder) and `mana/ventures` (two) produce the
+  identical name. A naive decode reports a false orphan for every folder containing a hyphen, which is
+  most of them. Walking every possible split against real directories is the only correct method.
+- **`route.py` requires an explicit manifest naming every file, and reports `LEFT n`.** *Why:* a glob
+  would move files nobody read, which defeats the triage step entirely. The run is not finished until
+  every store reports `LEFT 0` — the tool refuses to let a file be silently skipped.
+- **Half of `/move-project --check` now exists.** The memory half is done and verified. What the skill
+  still has to add is performing the move, plus symlinks and the ~23 config references.
+- **The four one-off scripts were generalized rather than archived.** *Why:* they lived in the job's
+  temp directory, which is deleted with the job. Proven, working tools were about to evaporate.
