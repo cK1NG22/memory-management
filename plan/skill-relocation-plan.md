@@ -139,13 +139,20 @@ place** (global, a project, or a mode home) — enforced by a scan (extend `audi
 - `ui-ux-pro-max` — a link into `~/.agents/skills/`, managed there; leave.
 - `restructure-project` — retire once the mode scaffold replaces it (it builds the Gen 3 shape).
 
-**Move to a project — Carter's call (6):**
-- `check-understanding` `find-your-level` → the AI Engineering curriculum project
-- `daily-standup` `source-leads` → `~/Optimal/.claude/skills/`
-- `connect-vault` → `~/Research/.claude/skills/`
-- `resolve-vulns` → `~/Claude/.claude/skills/` (next to the supply-chain scan)
+**Moved to a project — approved and executed 2026-08-05 (tranche 2):**
+- `check-understanding` `find-your-level` → `~/Projects/ai-engineering/.claude/skills/` (real
+  dirs; their content paths were already absolute, so nothing broke)
+- `daily-standup` `source-leads` `notion-transcript` → `~/Optimal/optimal-claude-skills/`
+  (canonical home, a git repo — the three arrive as uncommitted new files for Carter), linked
+  from `~/Optimal/.claude/skills/`. Carter kept `notion-transcript` rather than retiring it.
+- `connect-vault` → `~/Research/.claude/skills/` (real dir — no separate canonical home exists
+  for Research)
 
-**Retire (1):** `notion-transcript` — Carter left Notion.
+**Parked — Carter undecided (1):** `resolve-vulns` stays global until he knows what he wants
+for it (candidate home was next to the supply-chain scan; may instead belong to a future
+automations project — see below).
+
+**Global after tranche 2: 96 skills** (day started at 113).
 
 **Move to a mode home — after the mode rollout (15):**
 - `plan/`: `kpi-setter` `opusplan`
@@ -153,6 +160,31 @@ place** (global, a project, or a mode home) — enforced by a scan (extend `audi
 - `make/`: `api-design` `architecture-review` `database-design` `dung` `mcp-builder` `tdd`
   `vercel-deploy-claimable`
 - `make/?` — the file-type four, open question #2: `docx` `pdf` `pptx` `xlsx`
+
+## Proposed: an automations project (Carter's idea, 2026-08-05)
+
+A dedicated project as the workspace for the cron jobs — and the mechanism that makes it more
+than tidiness: **launchd plists support a `WorkingDirectory` key** (the supply-chain-scan plist
+already uses it). Pin each cron's working directory to the project and the "cron-locked" global
+category dissolves — `email-tracker`, `github-digest`, `workout-bot`, and the shifts could all
+load from the project's `.claude/skills/` instead of taxing every session. It also gives the
+crons what they currently lack: one project memory, one roadmap, and one home for the
+observability convention, instead of state scattered across `~/Library/LaunchAgents/`,
+`~/.claude/state/`, and `~/Claude/`. Plists themselves stay in `~/Library/LaunchAgents/`
+(launchd requires it); the project documents them.
+
+**Dream is the exception:** its rules *are* memory policy (the Phase 2 promotion ladder), and
+the colocate principle says a tool and its rubric live together or the rubric goes stale — so
+dream belongs with memory-management, not the automations project. Carter's call.
+
+## Open: shifts under the mode structure (resolve later)
+
+Carter's direction: `day-shift`/`night-shift`/`morning-shift` execution should land in the
+`make/` of the relevant projects — possibly `make/shift-work/`. Unresolved tension to design
+around: the shift *foreman* is cross-project (it works a queue spanning projects), while the
+*work* belongs to each project's `make/`. Likely shape: the skill stays loadable wherever the
+foreman starts; per-project shift state lands in that project's `make/shift-work/`. Not blocking
+anything now.
 
 ## Fragility guard
 

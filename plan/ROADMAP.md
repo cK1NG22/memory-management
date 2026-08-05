@@ -100,6 +100,16 @@ work, not cleanup.
       resolve-check plus a load-twice check (one loading location per skill), and
       `/move-project --check` is where both belong. Per-mode assignments: `skill-relocation-plan.md`.
 
+## Phase 3.5 — Automations
+
+- [ ] **Create the automations project** (Carter's idea, endorsed 2026-08-05) — one workspace for
+      the cron jobs, with `WorkingDirectory` pinned in each plist so the cron-locked skills can
+      leave global too. Dream stays with memory-management (its rules are memory policy — the
+      colocate principle). Details: `skill-relocation-plan.md`.
+- [ ] **Shifts under the mode structure** — Carter's direction: execution lands in the relevant
+      project's `make/`, possibly `make/shift-work/`; the foreman stays cross-project. Resolve
+      when the mode rollout reaches the projects the shifts touch.
+
 ## Open questions — Carter's call
 
 1. **Why did Gen 2 → Gen 3 happen?** Undocumented anywhere on disk; only Carter knows. Still the best

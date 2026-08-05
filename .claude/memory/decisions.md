@@ -208,3 +208,24 @@ store resolves to a directory that exists. Backup at `~/Claude/_archive/orphan-s
   again this session.
 - **The full per-skill destination map is generated from disk, complete, and lives in
   `plan/skill-relocation-plan.md`** — every one of the 113 skills appears exactly once.
+
+---
+
+## 2026-08-05 — Tranche 2 rulings (Carter) + the automations direction
+
+- **Tranche 2 executed as approved:** curriculum quizzes into `~/Projects/ai-engineering/`,
+  `daily-standup`/`source-leads`/`notion-transcript` into `optimal-claude-skills` (linked from
+  `~/Optimal/.claude/skills/`), `connect-vault` into `~/Research/.claude/skills/`. Global is 96
+  skills, down from 113 at the day's start.
+- **`notion-transcript` kept, not retired** — Carter routed it to Optimal instead. *Lesson:* the
+  retire recommendation inferred too much from "Carter left Notion"; the skill's users aren't
+  only Carter's own workspace.
+- **`resolve-vulns` parked in global** — Carter doesn't know what he wants for it yet. Recorded
+  as undecided rather than forced into a category; a future automations project is a candidate.
+- **The automations-project idea is endorsed because of `WorkingDirectory`, not tidiness:**
+  pinning each plist's working directory to the project dissolves the whole cron-locked global
+  category. One plist (supply-chain-scan) already proves the key works. Dream is the exception —
+  its rules are memory policy, so it colocates with memory-management.
+- **Shifts direction noted, deliberately unresolved:** execution in the relevant project's
+  `make/` (possibly `make/shift-work/`), foreman stays cross-project. Design when the mode
+  rollout reaches those projects.
