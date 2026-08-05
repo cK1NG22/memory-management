@@ -65,13 +65,20 @@ work, not cleanup.
 
 ## Phase 3 — Restructure the projects
 
-- [ ] **Fix the 7 dead skill symlinks** from the June reorg. Silent failures; 3 of 4 targets
-      recoverable in `~/School/`, `~/Optimal/`, `~/Claude/`. **Prerequisite for any honest measurement.**
-- [ ] **Relocate skills out of global** — ~130 load into every session at ~11K tokens. The largest
-      controllable context cost found, and the one thing modes are genuinely good for.
-      Plan: `skill-relocation-plan.md`.
-- [ ] **Re-measure the floor** after pruning. *This is the step that settles the suspended argument —
-      do not relocate before measuring, or the baseline is destroyed.*
+- [x] **Fix the dead skill symlinks** from the June reorg. Done 2026-08-05. The live count was **12,
+      not 7** — the tally had drifted since it was taken. 11 re-pointed to their post-reorg homes
+      (`~/School/strat-411-skills/`, `~/Optimal/optimal-claude-skills/` + its `skill-factory/`,
+      `~/Claude/skill-factory/`); 1 removed (`qa-design-review` — its target no longer exists
+      anywhere on disk; the gstack repo dropped it upstream). Verified: zero dead links remain.
+- [ ] **Relocate skills out of global** — measured 2026-08-05: **113 skills at ~7.8K tokens** per
+      session (the ~130/~11K figure was an estimate; this is from the files). **Tranche 1 done:**
+      the 11 project-scoped symlinks moved to `~/School/.claude/skills/` and
+      `~/Optimal/.claude/skills/` — global is now 102 skills, ~1,440 tokens lighter everywhere.
+      Remaining tranches are Carter's call (physical moves + the gstack question).
+      Plan and full inventory: `skill-relocation-plan.md`.
+- [ ] **Re-measure the floor** after pruning. **Baseline captured 2026-08-05 (before relocating):
+      44K–55K tokens at session start across eight recent sessions**, from the `.jsonl` token data.
+      The post-relocation number comes free from the next normal session start.
 - [ ] **Restructure all project folders to the mode shape.** Sequence deliberately: fix → prune →
       measure → *then* migrate. Gen 3 tasks map to modes where they fit and stay put where they don't.
 - [ ] **Build the mode `CLAUDE.md` templates** — one canonical `research/`, `plan/`, and `make/`

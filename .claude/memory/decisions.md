@@ -163,3 +163,27 @@ store resolves to a directory that exists. Backup at `~/Claude/_archive/orphan-s
   autolog debris files here and in `claude-architect` were removed.
 - **Hooks load at session start**, so the removal takes effect for the *next* session; the current
   one no longer has the script to run anyway.
+
+---
+
+## 2026-08-05 — Dead symlinks fixed, skill relocation tranche 1
+
+- **Fix the symlinks before measuring, not after.** *Why:* a dead symlink is a skill that silently
+  doesn't load, so the pre-fix state under-reports the true catalog. Measuring after the fix and
+  before the relocation is the only order that gives an honest baseline. (The recorded count of 7
+  was also wrong — 12 were dead by execution time; counts drift, scans don't.)
+- **`qa-design-review` deleted rather than re-pointed.** *Why:* its target no longer exists
+  anywhere on disk — the gstack repo removed the skill upstream. A link with no possible target is
+  noise, and it's one `ln -s` to recreate if the skill ever returns.
+- **Relocated skills land in `<folder>/.claude/skills/` as symlinks to their canonical homes.**
+  *Why:* the loading rule (verified 2026-08-04) is that a folder's `.claude/skills/` loads only at
+  or below that folder — identical behavior inside the project, zero cost outside it. Nothing was
+  physically moved, so rollback is one `ln -s` per skill.
+- **The gstack family stays put: 53 of 113 skills, but only ~1,100 tokens.** *Why:* they're
+  installer-owned — `./setup` would regenerate anything hand-moved, making the "fix" a permanent
+  fight. The token weight is in the other 60 skills anyway.
+- **Physical moves are proposed, not executed.** *Why:* Carter owns folder structure; the remaining
+  candidates are real directories, and moving them decides where things live. The proposals (with
+  destinations and token values) are in `plan/skill-relocation-plan.md`.
+- **No fresh headless session for the re-measure.** *Why:* `claude -p` bills the separate
+  programmatic credit pool; the next normal session start measures the same thing for free.
