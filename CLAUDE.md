@@ -1,0 +1,47 @@
+# memory-management
+
+Carter's memory, context, and project-structure system. **Ongoing** — not a project that finishes.
+
+This is also the **first project built in the Gen 4 "mode" structure**, so it is the trial as well as
+the subject.
+
+## Read this first
+
+- **`.claude/memory/context.md`** — where things stand right now, and what's next.
+- **`.claude/memory/decisions.md`** — what was decided and why. Append-only.
+- **`docs/memory-systems-history.md`** — the single surviving record of the four memory-system
+  generations. **Read before deleting any memory store.** Everything it describes has been deleted.
+
+## The one thing to know
+
+There are **two independent memory systems**, and conflating them causes every failure in this
+project's history:
+
+| | **Native memory** | **Project memory** |
+| --- | --- | --- |
+| Where | `~/.claude/projects/<encoded-cwd>/memory/` | `<project>/.claude/memory/` |
+| Keyed by | the **exact absolute cwd** — does *not* walk up | path relative to the project |
+| Loaded | `MEMORY.md` auto every session; topic files on `description:` match | **nothing auto-loads it** — a pointer must fetch it |
+| Survives a folder move | **no** — the store is stranded silently | **yes** |
+| Holds | facts about **Carter and this machine** | facts about **the work** |
+
+**Routing test for any fact: would this still be true if the project were deleted?**
+Yes → native memory. No → project memory.
+
+## The modes
+
+`research/` → `plan/` → `make/`. Each carries its own `CLAUDE.md` and its own `.claude/skills/`.
+Modes are a **loading mechanism, not a locking one** — they control which skills and instructions
+load, and they are a convention, never enforcement. Nothing available in Claude Code is a hard write
+boundary; see `docs/mode-review-verdict.md`.
+
+Memory lives **once, at this root** — not per mode. Native memory already fragments per cwd, and
+three mode folders would mean three empty stores per project.
+
+## Conventions
+
+- `.claude/` is **committed**; only `.claude/worktrees/` is ignored. `settings.local.json` is the
+  per-user layer and is never committed.
+- No `history.md`. It had three writers and no readers; git already records what happened.
+- Plans, PRDs, and roadmaps are **present-tense and rewritten** — they live in `plan/`.
+  Memory is **past-tense and immutable** — it lives in `.claude/memory/`.
