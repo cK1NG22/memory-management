@@ -23,9 +23,18 @@ with the baseline safely captured.
   re-pointed, 1 removed (target gone upstream). Zero dead links remain.
 - **The context floor is measured, not estimated:** 44K–55K tokens at session start; the global
   skill catalog was 113 skills ≈ 7.8K tokens of it (~15–18% of the floor).
-- **Skill relocation tranche 1 is done:** the 11 project-scoped symlinks now load from
-  `~/School/.claude/skills/` and `~/Optimal/.claude/skills/` instead of global — 102 global
-  skills, ~1,440 tokens lighter in every session. Remaining tranches: `plan/skill-relocation-plan.md`.
+- **Skill relocation tranches 1 AND 2 are done — global is 96 skills, was 113 this morning**
+  (~2,600 catalog tokens lighter per session). Tranche 1: the 11 project symlinks →
+  `~/School/` and `~/Optimal/` `.claude/skills/`. Tranche 2 (Carter-approved): curriculum
+  quizzes → `~/Projects/ai-engineering/`, `daily-standup`/`source-leads`/`notion-transcript` →
+  `optimal-claude-skills` (kept, not retired — Carter), `connect-vault` → `~/Research/`.
+  `resolve-vulns` parked in global, undecided. Full map: `plan/skill-relocation-plan.md`.
+- **The mode-skill shape is decided:** one folder-level symlink per mode per project
+  (`<mode>/.claude/skills → ~/.claude/modes/<mode>/skills`), per-skill links only inside the
+  mode home. **Sentinel-test the folder-level link before building the templates** — unverified.
+- **The automations-project direction is endorsed:** plist `WorkingDirectory` pinning dissolves
+  the cron-locked category; dream colocates with memory-management instead. Shifts run in the
+  relevant project's `make/` (possibly `make/shift-work/`) — design later.
 - The **two-system split is settled** — native memory for Carter-and-machine facts, project memory
   for the work. **This project is the Gen 4 trial.**
 
@@ -33,13 +42,14 @@ with the baseline safely captured.
 
 Full list in `plan/ROADMAP.md`.
 
-1. **Carter's calls on relocation tranche 2** — the physical-move candidates and their proposed
-   destinations are in `plan/skill-relocation-plan.md` (notion-transcript retire?, curriculum
-   skills, `daily-standup`/`source-leads` → Optimal, file-type skills question).
-2. **Read the post-relocation floor** off the next normal session's `.jsonl` — the free re-measure.
-3. **Build `/context-dashboard`** — read `[[project-orchestrator-agent-deferred]]` first.
-4. Then **restructure projects to the mode shape** (templates + auto-symlinked mode skills — the
-   symlink halves of this now have a proven pattern *and* a proven failure mode).
+1. **Read the post-relocation floor** off the next normal session's `.jsonl` — the free re-measure
+   that settles the suspended argument.
+2. **Sentinel-test the folder-level skills symlink** — blocks the mode templates.
+3. **Carter to commit** the three new skills in `optimal-claude-skills` (arrived untracked), and
+   merge `worktree-skill-relocation` (3 commits).
+4. **Build `/context-dashboard`** — read `[[project-orchestrator-agent-deferred]]` first.
+5. Then **restructure projects to the mode shape**; create the automations project when Carter
+   is ready. Undecided: `resolve-vulns` home, file-type skills mode.
 
 ## 🧠 Recent decisions
 
@@ -69,7 +79,9 @@ See `decisions.md`. The ones that shape everything else:
 
 ## 📂 Files touched · 🌿 git
 
-Project at `~/Projects/memory-management/`. This session (branch `worktree-skill-relocation`):
-`plan/skill-relocation-plan.md` (new), `plan/ROADMAP.md`, this file, `decisions.md`.
-Outside the repo: `~/.claude/skills/` (12 links fixed → 11 then relocated),
-`~/School/.claude/skills/` (new, 5 links), `~/Optimal/.claude/skills/` (new, 6 links).
+Project at `~/Projects/memory-management/`. This session (branch `worktree-skill-relocation`,
+3 commits): `plan/skill-relocation-plan.md` (new), `plan/ROADMAP.md`, this file, `decisions.md`.
+Outside the repo: `~/.claude/skills/` (113 → 96), `~/School/.claude/skills/` (new, 5 links),
+`~/Optimal/.claude/skills/` (new, 9 links), `~/Optimal/optimal-claude-skills/` (3 skills moved
+in, untracked), `~/Research/.claude/skills/` + `~/Projects/ai-engineering/.claude/skills/` (new,
+real dirs).
