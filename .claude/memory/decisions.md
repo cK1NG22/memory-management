@@ -69,3 +69,58 @@ what was rejected and the reasoning that survived.
   `~/Claude/personal-backlog.md`. *Why:* memory is for recall; a checklist is for editing — filing one
   as the other is how a task hides for five months.
 - **Notion material deleted.** Carter is off Notion and removed the global `CLAUDE.md` pointer himself.
+
+---
+
+## 2026-08-04 — Orphan resolution (session 2)
+
+The last cleanup item. 16 native-memory stores were keyed to directories that no longer existed,
+holding 166 topic files that had been invisible since the 2026-06-30 reorg.
+
+### How orphans were routed
+
+- **Route by where Carter actually starts sessions, preserving folder depth.** *Why:* a store existed
+  at `~/Projects/Optimal/mana-drive-reorg` because he worked from that folder. Its successor
+  `~/Optimal/mana-drive-reorg` exists, so the memory goes there — not flattened up to `~/Optimal`,
+  where it would be invisible from the folder it describes. Fixing the path is the whole repair;
+  changing the depth would be a second, unrequested migration.
+- **Rejected: fold everything into `~/Projects`.** Simpler, and wrong — it would make every client
+  and Sandbox fact load on every session in the main working directory, which is the cost the whole
+  project exists to control.
+- **All velocity memory consolidated into one store** at `~/Sandbox/builds/velocity`. *Why:* it was
+  spread across three dead stores (`Sandbox`, `Sandbox/velocity`, `Sandbox/future-of-work-velocity`).
+  Preserving that split would preserve the fragmentation that caused the loss.
+- **The triage question was "does this file's subject still exist?"** — not the routing test. Only 9
+  of 166 failed it.
+
+### What was deleted (9 files)
+
+Four superseded memory-system records (the hub review, the migration notice, the dead 4-bucket folder
+map, the Locker go/no-go for an archived product), three executed-or-abandoned skill-factory stage
+plans plus a Gen 2 handoff whose "next action" was long since done, one duplicate feedback file whose
+newer copy already lived in `~/Projects`, and the `principle.ai` tutor project — the only orphan whose
+folder is gone from disk entirely.
+
+### What left the memory system
+
+- **Locker's 17 files were never memories.** No frontmatter, no descriptions — they are phased build
+  plans (`plan-2.1` … `plan-5-billing`) plus a vision doc, written into the memory store because it
+  was the nearest writable place. Moved to `~/Archive/Locker-UI/plans/` with a README explaining the
+  provenance. *Why not delete:* the product was killed, but a killed product's plans are a record,
+  and they cost nothing outside the memory system.
+
+### Verified
+
+22 live stores · 308 topic files · **0 dangling links** · 6 files unindexed by design. Every remaining
+store resolves to a directory that exists. Backup at `~/Claude/_archive/orphan-stores_2026-08-04/`
+(181 files, taken before anything moved).
+
+### Roadmap additions (Carter's ask)
+
+- **Mode `CLAUDE.md` templates**, used by the new-project skill at scaffold time. The open question is
+  the *update model* — a copied template drifts and can never be fixed centrally; a symlinked one
+  stays live but edits every project at once.
+- **Auto-symlink each mode's skills** into `<project>/<mode>/.claude/skills/`. This is the mechanism
+  the mode structure was actually approved for; without it modes carry instructions but no tooling.
+  Depends on relocating skills out of global first, and needs a resolve-check — 7 symlinks died
+  silently in the June reorg.

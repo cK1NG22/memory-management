@@ -274,3 +274,56 @@ This file exists so that deletion is safe. Finish the migration.
 **Full detail:** `mode-review-verdict.md` · `mode-structure-spec.md` · `mode-review-round1.md` ·
 `skill-relocation-plan.md` (all in this folder) · memory
 `reference-claude-code-loading-mechanics`
+
+---
+
+## ✅ The orphaned stores are gone — completed 2026-08-04
+
+The second and final cleanup. **16 stores keyed to directories that no longer existed, holding 165
+topic files.** Where they went:
+
+| Destination | Files |
+| --- | --- |
+| `~/Projects` (native, machine-wide facts) | 36 — working norms, the tool references, two user-profile facts |
+| `~/Clients/mana-ventures` (+ `attio-network-database`) | 43 — four dead stores merged into the two live ones |
+| `~/Optimal` (+ `mana-drive-reorg`, `optimal-claude-skills/skill-factory`) | 28 |
+| `~/Sandbox/builds/velocity` | 22 — **three** dead velocity stores consolidated into one |
+| `~/Clients/outreach` | 7 |
+| `~/Sandbox`, `~/Sandbox/builds`, `~/Clients/northstar-preschools` | 3 |
+| `~/Archive/Locker-UI/plans/` — **out of the memory system** | 17 |
+| deleted | 9 |
+
+**Backup of all 16 stores as they stood: `~/Claude/_archive/orphan-stores_2026-08-04/` (181 files).**
+
+### Verified after
+
+**22 live stores · 308 topic files · 0 dangling links · 6 files unindexed by design.** Every store
+now resolves to a directory that exists. Every `MEMORY.md` was rebuilt or extended so nothing landed
+unlisted.
+
+### How they were routed
+
+**By where Carter actually starts sessions, preserving folder depth.** A store existed at
+`~/Projects/Optimal/mana-drive-reorg` because he worked from that folder; its successor
+`~/Optimal/mana-drive-reorg` exists, so the memory went there rather than being flattened up to
+`~/Optimal` — where it would be invisible from the folder it describes.
+
+The one deliberate exception is **velocity**, whose memory was split across three dead stores. Keeping
+that split would have preserved the fragmentation that caused the loss, so it was consolidated.
+
+### What this cleanup revealed
+
+- **Some "memories" were never memories.** Locker's 18 files had no frontmatter and no descriptions —
+  they are phased build plans (`plan-2.1` … `plan-5-billing`) and a vision doc, written into a memory
+  store because it was the nearest writable place. They were moved to `~/Archive/Locker-UI/plans/`,
+  not deleted: a killed product's plans are still a record, and outside the memory system they cost
+  nothing. **A memory store with no frontmatter in it is a sign the tool was used as a folder.**
+- **Only 9 of 165 files failed the "does the subject still exist?" test.** The orphaned stores were
+  not full of rot — they were full of live work that had simply gone dark. This is the opposite of the
+  legacy hub, where the same rule deleted a great deal.
+- **Two stores pointed at empty shells, not missing folders.** `~/Projects/Sandbox` and
+  `~/Projects/Sandbox/velocity` still exist on disk but contain only stale worktrees, so a naive
+  existence check called them healthy. **Resolving a path is not the same as verifying the project is
+  there** — a lesson `/move-project --check` has to encode.
+- **One duplicate surfaced.** `feedback-subskill-vs-reference.md` existed in two stores with different
+  contents. Nothing detects this; a fork of the same rule can drift indefinitely.

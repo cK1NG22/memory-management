@@ -14,6 +14,10 @@ work, not cleanup.
 - [x] Neutralize the legacy hub — repoint 5 writers, relocate 2 operational logs, rehome 2 hubs
 - [x] Harvest all 167 legacy-hub files; store reduced to a tombstone
 - [x] Stand up this project in the Gen 4 mode structure *(it is the trial as well as the subject)*
+- [x] **Resolve every orphaned memory store** — 165 topic files across 16 stores keyed to directories
+      that no longer exist. **139 routed** to live stores, **17 moved out of the memory system**
+      entirely (Locker's build plans were never memories), **9 deleted**. **Cleanup is now finished:**
+      22 live stores, 308 topic files, 0 dangling links, every store resolving to a real directory.
 
 ---
 
@@ -59,8 +63,19 @@ work, not cleanup.
       do not relocate before measuring, or the baseline is destroyed.*
 - [ ] **Restructure all project folders to the mode shape.** Sequence deliberately: fix → prune →
       measure → *then* migrate. Gen 3 tasks map to modes where they fit and stay put where they don't.
-- [ ] **Templatize the modes** so every project gets the same `plan/CLAUDE.md`, `research/CLAUDE.md`,
-      `make/CLAUDE.md`. Ties into the Phase 2 promotion question.
+- [ ] **Build the mode `CLAUDE.md` templates** — one canonical `research/`, `plan/`, and `make/`
+      instruction file, stored once and used by the new-project skill at scaffold time. The three in
+      *this* project are the first drafts and the only copies that exist. **Decide the update model
+      before writing them:** a copied template drifts per project and can never be fixed centrally;
+      a symlinked or `@import`-ed one stays live but means editing it changes every project at once.
+      Ties directly into the Phase 2 promotion question — the template *is* the top rung of that ladder.
+- [ ] **Auto-symlink each mode's skills into `<project>/<mode>/.claude/skills/`** at scaffold time,
+      so entering a mode loads that mode's tools and nothing else. This is the mechanism the whole
+      mode structure was approved for — without it modes carry instructions but no tooling, and the
+      global catalog still loads everywhere regardless. Depends on the relocation step above: the
+      skills must live outside `~/.claude/skills/` before there is anything to link.
+      **Symlinks are the known-fragile part** — 7 died silently in the June reorg — so this needs a
+      resolve-check, and `/move-project --check` is where that check belongs.
 
 ## Open questions — Carter's call
 
