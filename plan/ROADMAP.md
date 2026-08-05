@@ -27,6 +27,9 @@ work, not cleanup.
       native store, symlinks in both directions, ~23 config references, worktrees holding absolute
       paths. **A `--check` audit mode is the more valuable half** — it would have caught the June
       damage before it compounded. Spec: `[[project-move-project-skill-idea]]`.
+      **Half of this already exists:** `docs/memory-repair-runbook.md` is the written procedure, and
+      `make/memory-repair/audit.py` is `--check` for the memory half (runs with no args, exit 1 when
+      dirty). What `/move-project` adds is *doing the move* and covering symlinks + config references.
 - [ ] **`/context-dashboard`** — show the makeup of the context window given current memory settings:
       what `MEMORY.md` costs, what the global skill catalog costs, what the CLAUDE.md chain costs,
       what each mode adds. *Why:* every decision in this project has been argued from estimates. Real

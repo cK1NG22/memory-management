@@ -11,6 +11,8 @@ the subject.
 - **`.claude/memory/decisions.md`** — what was decided and why. Append-only.
 - **`docs/memory-systems-history.md`** — the single surviving record of the four memory-system
   generations. **Read before deleting any memory store.** Everything it describes has been deleted.
+- **`docs/memory-repair-runbook.md`** — the procedure for recovering memory stranded by a folder move,
+  with the tools in `make/memory-repair/`. **Run `audit.py` before and after moving any folder.**
 
 ## The one thing to know
 
