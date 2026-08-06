@@ -229,3 +229,19 @@ store resolves to a directory that exists. Backup at `~/Claude/_archive/orphan-s
 - **Shifts direction noted, deliberately unresolved:** execution in the relevant project's
   `make/` (possibly `make/shift-work/`), foreman stays cross-project. Design when the mode
   rollout reaches those projects.
+
+---
+
+## 2026-08-05 — Wrap-up: pushes, nested repo, next session staged
+
+- **`skill-factory` is a repo nested inside `optimal-claude-skills` — resolved by gitignoring it,
+  never by committing it.** *Why:* it has its own remote (private `ck22coding/skill-factory`) and
+  its own history; committing a repo inside a repo produces neither. Its uncommitted changes are
+  its own open item.
+- **The `optimal-skills` GitHub remote pointed at a repo that didn't exist** — the push had been
+  failing silently forever (nothing ever pushed). Created it **private** and pushed. *Why private:*
+  nothing goes public without Carter's explicit say; flipping visibility later is one click.
+- **The symlinked-memory exploration got a designed prompt, not a cold start.** *Why:* the new
+  session inherits nothing; the prompt encodes the entry points, the test-first rule, and the
+  experiments ranked by value (store-level symlink first — it would collapse per-mode store
+  fragmentation). This is ROADMAP Phase 2's "mode memory" item beginning.

@@ -42,14 +42,17 @@ with the baseline safely captured.
 
 Full list in `plan/ROADMAP.md`.
 
-1. **Read the post-relocation floor** off the next normal session's `.jsonl` — the free re-measure
+1. **Symlinked-memory design session is IN FLIGHT** (started 2026-08-05, ~4 PM) — testing whether
+   native stores/topic files/MEMORY.md can be symlinks, then designing shared memory analogous to
+   the mode-skill shape. Findings land in `research/`, the design in `plan/`. Don't duplicate it.
+2. **Read the post-relocation floor** off the next normal session's `.jsonl` — the free re-measure
    that settles the suspended argument.
-2. **Sentinel-test the folder-level skills symlink** — blocks the mode templates.
-3. **Carter to commit** the three new skills in `optimal-claude-skills` (arrived untracked), and
-   merge `worktree-skill-relocation` (3 commits).
+3. **Sentinel-test the folder-level skills symlink** — blocks the mode templates (the in-flight
+   session's experiments may cover this — check before re-running).
 4. **Build `/context-dashboard`** — read `[[project-orchestrator-agent-deferred]]` first.
 5. Then **restructure projects to the mode shape**; create the automations project when Carter
-   is ready. Undecided: `resolve-vulns` home, file-type skills mode.
+   is ready. Undecided: `resolve-vulns` home, file-type skills mode. Also open: the nested
+   `skill-factory` repo (inside `optimal-claude-skills`, own remote) has uncommitted changes.
 
 ## 🧠 Recent decisions
 
