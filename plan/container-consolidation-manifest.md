@@ -119,12 +119,13 @@ Two exceptions, routed:
 Inside the GLOBAL block, three were **already promoted** into `~/.claude/CLAUDE.md`:
 `check-conformance-suites` ("Planning a build"), `file-versioning-convention` ("Files & versions"),
 `no-option-menus` (also in `plan/CLAUDE.md`'s mode rules).
-**Direction reversed (Carter, 2026-08-06): these come OUT of the global CLAUDE.md.** The topic
-files stay canonical and get indexed under mode sections in the sorted MEMORY.md (template below);
-mode-`CLAUDE.md` templates are the eventual delivery path into project sessions (Phase 3). No
-longer delete candidates. The trade, named honestly: the global CLAUDE.md is the only layer that
-loads in *every* session — after demotion these rules auto-load only where a MEMORY.md section or
-a mode CLAUDE.md carries them.
+**Direction reversed (Carter, 2026-08-06): these come OUT of the global CLAUDE.md.** Rev 2, same
+day: their canonical home is the shared **mode files** (section below) — `check-conformance-suites`
+and `no-option-menus` → `PLAN-MODE.md`, `file-versioning-convention` → `ALWAYS.md` (proposal).
+The CLAUDE.md text is removed once the mode file verifiably covers it; the memory topics then
+fold in and are deleted with the rest of the mode-principle files. Recall is preserved, not lost:
+mode files auto-load in every mode session via the mode `CLAUDE.md`'s `@import`, and `ALWAYS.md`
+via the global CLAUDE.md's.
 And one was **superseded**: `newsession-focus-ghostty` describes the Ghostty split-right
 launcher that `/new-session` no longer uses (it stages Agent View now — see
 `reference-new-session-agent-view`). **RULED: DELETE (Carter, 2026-08-06)** — moved to Tranche 2.
@@ -284,7 +285,7 @@ transcript-cleanup-skills, workspace-mcp-attachments-dir.
 | 1 — mechanical routes | 53 | Carter's go |
 | 2 — move-out / delete / fold | 5 (`plan-pmg-life-app`, `notion-multi-workspace-safety`, `model-configuration-guide`, `newsession-focus-ghostty` **ruled: delete**, `feedback-subskill-vs-reference` **fold into skill-factory reference, then delete**) | per-file confirmation (2 of 5 ruled) |
 | 3 — HOLD (automations 5, shifts 1) + ASK 8 + PARKED 12 | 26 | Phase 3.5 / per-file rulings |
-| 4 — GLOBAL (incl. the 3 CLAUDE.md-demotion files; mode-sorted in the template below) | 90 | the global-tier decision below |
+| 4 — GLOBAL: 36 fold into mode files · 12 → `ALWAYS.md` (proposal) · 42 stay as the library (3 user **approved** + 39 references) | 90 | mode-files go + `ALWAYS.md` confirm |
 | **Total** | **174** | |
 
 ## Tranche 4 — the global tier (the one real decision)
@@ -300,12 +301,13 @@ stores is the fork surface E5 warned about, at scale.
 container-level sessions, which is where cross-project work happens:
 
 1. The files stay where they are. No moves, no copies, no symlink fan-out.
-2. Universal *rules* are **not** promoted into `~/.claude/CLAUDE.md` — **reversed by Carter,
-   2026-08-06.** Topic files stay canonical; the sorted MEMORY.md's mode sections (template
-   below) are the index; the three rules currently living in the global CLAUDE.md get demoted
-   back out once their topic files verifiably cover the CLAUDE.md text. Mode-`CLAUDE.md`
-   templates (Phase 3, Gen 4 restructure) become the delivery path for mode rules into project
-   sessions — they load per-mode in every project, which MEMORY.md sections cannot do.
+2. Universal *rules* leave both `~/.claude/CLAUDE.md` **and** the memory store — **Carter,
+   2026-08-06 (rev 2).** Mode principles fold into the single-source mode files at
+   `~/.claude/modes/` (delivered by each mode `CLAUDE.md`'s `@import` — loads per-mode in every
+   project); Always rules fold into `ALWAYS.md` (proposal); the three rules currently living in
+   the global CLAUDE.md land in their mode file first, then the CLAUDE.md text is removed. The
+   36 + 12 memory topics are deleted once fold-in coverage is verified. Details in the mode-files
+   section below.
 3. High-value *references* needed by a specific project get the shared-topic-file mechanism (one
    symlink + index line into that project's store) — **after** the four audit.py checks are built.
    First candidate stays `reference-claude-code-loading-mechanics` → this repo's store.
@@ -313,10 +315,10 @@ container-level sessions, which is where cross-project work happens:
    Model-Configuration-Guide pointer), so any session can *fetch* the library even though nothing
    auto-loads it.
 
-The honest cost: these 90 files still have no auto-recall inside project sessions — same as today.
-The per-file fixes are a mode-`CLAUDE.md` template line (mode rules, Phase 3), a shared-file
-symlink (project-relevant references, post-audit-checks), or the pointer fetch. Relocation fixes
-none of it.
+The honest cost, updated for rev 2: the mode files **close the recall gap for the 48 rules** —
+mode principles auto-load in mode sessions everywhere, Always rules everywhere via the CLAUDE.md
+import. What still has no auto-recall inside project sessions is the library remainder (3 user +
+39 references) — fixed per-file by a shared-file symlink (post-audit-checks) or the pointer fetch.
 
 ## Execution procedure (runbook seed — capture as `docs/` runbook when run)
 
@@ -339,12 +341,43 @@ none of it.
    demoting the three promoted rules out of `~/.claude/CLAUDE.md` after verifying each topic file
    fully covers the removed text.
 
-## The sorted MEMORY.md (new dimension — Carter, 2026-08-06)
+## The sorted MEMORY.md + the mode files (Carter, 2026-08-06 — rev 2)
 
-Carter's addition to the manifest: every MEMORY.md index sorts its entries into
-**project-specific** and **mode-specific** sections, so a session sees at a glance which rules
-apply to what it is doing. MEMORY.md auto-loads in full every session — the sections don't change
-*what* loads, they tell the agent which lines to act on and which topics to fetch for its mode.
+Two mechanisms, split by **Carter's routing test**:
+
+- Is this specific to this project? **YES → the project's `MEMORY.md`** (*Project Awareness*).
+- Is this a principle that applies to a mode? **YES → the shared `<MODE>-MODE.md` file**
+  (*Situational / Mode Awareness*).
+
+**The mode files — one copy, referenced everywhere.** Mode principles live in exactly one place:
+`~/.claude/modes/RESEARCH-MODE.md`, `PLAN-MODE.md`, `MAKE-MODE.md`. Edit the file once and every
+project follows. `~/.claude/modes/` is already the decided home for per-mode *skills* (ROADMAP
+Phase 3), so a mode's instructions and tooling live side by side. Machine level is required — a
+copy inside any project would be per-project again. (It sits outside every git repo: include it
+in the store backups; versioning `~/.claude` is its own question, not this migration's.)
+
+**Delivery.** Each project's mode `CLAUDE.md` stays tiny — Carter's tiering below — and pulls the
+shared file in with one `@~/.claude/modes/<MODE>-MODE.md` import line: a *reference, not a copy*,
+so nothing forks (E5 was about symlinked stores that get written back; imports never write).
+Mode sessions in every project then auto-load their mode's principles — this closes the
+auto-recall gap for mode work that "the honest cost" paragraph names. **Sentinel-test the
+home-path `@import` once before Phase 3 stamps it everywhere** (cheap pre-flight; `@import`
+itself is verified in `reference-claude-code-loading-mechanics`).
+
+**Platform fact folded in:** inside a repo project there is no mode-level *store* — all modes
+share the project's one store (git-root keying, sentinel-proven). So "mode-level memory" = the
+**mode sections** of the project's MEMORY.md: project-specific memories from work in that mode,
+plus one pointer line to the mode file. At close-session, a mode-section entry that turns out to
+be a general mode principle is **promoted up** into the mode file; project-specific ones stay local.
+
+**The CLAUDE.md vs memory division (Carter's tiering; Phase 3 carries the full spec):**
+CLAUDE.mds explain and navigate; memory remembers.
+
+| Tier | CLAUDE.md says | Memory carries |
+| --- | --- | --- |
+| Container | what the container is + what's in the project folders below | what explains the container; potential future projects |
+| Project | what the project is + how to navigate the mode folders | this project only — progress, decisions |
+| Mode | which mode Claude is in + its directions (a faux system prompt) + the `@import` line | *(mode sections of project memory)* work done in that mode here + the mode-file pointer |
 
 **Template — project store:**
 
@@ -354,39 +387,48 @@ apply to what it is doing. MEMORY.md auto-loads in full every session — the se
 ## Project — always relevant here
 - [Title](file.md) — hook
 
-## Research — investigating
-## Plan — deciding & designing
-## Make — building
-(same one-line shape under each)
+## Research — this project's research memory
+- Mode principles: ~/.claude/modes/RESEARCH-MODE.md (single source — read when working in this mode)
+## Plan — this project's planning memory
+- Mode principles: ~/.claude/modes/PLAN-MODE.md
+## Make — this project's build memory
+- Mode principles: ~/.claude/modes/MAKE-MODE.md
 
 ## References — fetch on demand, any mode
 ```
 
 **Template — the global library (`~/Projects` store):** same shape, with `Project` replaced by
-two sections: `User` (who Carter is) and `Always` (rules that apply in every mode).
+`User` (who Carter is) and `Always` (rules for every mode — slated to fold into `ALWAYS.md`, below).
 
-**The 90 Tranche 4 files, sorted** (48 feedback + 3 user + 39 references):
+**The 90 Tranche 4 files, sorted — with rev-2 dispositions** (48 feedback + 3 user + 39
+references): the **36 mode-principle files** (Research + Plan + Make buckets) **fold into the
+three mode files, then delete** — the subskill-vs-reference pattern at scale; the **12 Always
+rules** fold into `ALWAYS.md`, a fourth file `@import`-ed from `~/.claude/CLAUDE.md` so it still
+loads in every session while the CLAUDE.md itself stays a thin navigator (**proposal, pending
+Carter**); the **3 user + 39 references stay** in the `~/Projects` store as the global library
+(making that store deliberately dual-role: container memory for `~/Projects` *and* the machine's
+library shelf — the one sanctioned exception to "container memory only explains the container"):
 
-- **User (3):** meta-user-profile, user-carter-schema-design, user-profile-consulting.
-- **Always (12):** bg-isolation-worktree-gitignore, browser-auth-no-arc, cost-vs-quality-defaults,
+- **User (3) — stay in the library store:** meta-user-profile, user-carter-schema-design, user-profile-consulting.
+- **Always (12) → `ALWAYS.md` (proposal):** bg-isolation-worktree-gitignore, browser-auth-no-arc, cost-vs-quality-defaults,
   file-versioning-convention, insight-blocks, main-session-stays-interactive, nmt-annotation,
   no-secrets-in-ai-edited-files, no-softening-asks, no-unverified-state, plain-naming-no-jargon,
   unattended-no-dynamic-workflows.
-- **Research (6):** independent-verifier, parallel-sonnet-research, research-spike-card-shape,
+- **Research (6) → `RESEARCH-MODE.md`:** independent-verifier, parallel-sonnet-research, research-spike-card-shape,
   research-to-reference-docs, root-page-is-not-spec, test-principles-not-projects.
-- **Plan (15):** check-conformance-suites, colocate-co-evolving-tools,
+- **Plan (15) → `PLAN-MODE.md`:** check-conformance-suites, colocate-co-evolving-tools,
   cos-as-memory-system-cross-harness, dogfood-in-real-contexts, dual-surface-parity,
   folder-proximity-two-audiences, kpi-stress-test, l0l1l2-data-model, mid-plan-clarifications,
   no-option-menus, orchestrator-pattern, personal-apps-free-tier, plan-mode-compact,
   research-tech-stack-on-scaffolding, simplify-first.
-- **Make (15):** automation-observability, carter-owns-folder-structure,
+- **Make (15) → `MAKE-MODE.md`:** automation-observability, carter-owns-folder-structure,
   claude-slack-connector-single-workspace, default-args-and-mock-patch, design-tokens,
   edit-dev-clone-not-plugin, experiment-md-framing, incremental-build-not-scaffold-first,
   no-model-names-in-claude-md, output-home-convention, parallel-jobs-worktree-isolation,
   private-first-iteration, skill-knowledge-mapping, structured-template-scaffolds,
   subagent-model-selection.
-- **References (39):** the machine/tool references already listed per-store above — one flat
-  section, not mode-sorted; they are fetched on demand, not bound to a mode.
+- **References (39) — stay in the library store:** the machine/tool references already listed
+  per-store above — one flat section, not mode-sorted; they are fetched on demand, not bound to a mode.
 
 Borderline calls, moves welcome: test-principles-not-projects (Research vs Plan),
 research-tech-stack-on-scaffolding (Plan vs Research), private-first-iteration (Make vs Plan),

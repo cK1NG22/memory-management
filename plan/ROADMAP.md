@@ -139,12 +139,23 @@ work, not cleanup.
       encoded absolute root path either way; `audit.py` before/after any move stays mandatory.
       Currently non-repo (from the manifest's destination check): dad, hoth, loops, ai-engineering,
       neon-learning, health-insurance, outreach, mana-ventures, custom-agents.
-- [ ] **Build the mode `CLAUDE.md` templates** — one canonical `research/`, `plan/`, and `make/`
-      instruction file, stored once and used by the new-project skill at scaffold time. The three in
-      *this* project are the first drafts and the only copies that exist. **Decide the update model
-      before writing them:** a copied template drifts per project and can never be fixed centrally;
-      a symlinked or `@import`-ed one stays live but means editing it changes every project at once.
-      Ties directly into the Phase 2 promotion question — the template *is* the top rung of that ladder.
+- [ ] **Build the mode files + mode `CLAUDE.md` templates** — update model **DECIDED (Carter,
+      2026-08-06): single-source, referenced.** Mode principles live once at
+      `~/.claude/modes/RESEARCH-MODE.md` / `PLAN-MODE.md` / `MAKE-MODE.md` (same home as the
+      per-mode skills below — a mode's instructions and tooling side by side). Each project's mode
+      `CLAUDE.md` stays a thin faux system prompt (which mode + directions) plus one
+      `@~/.claude/modes/<MODE>-MODE.md` import — editing the mode file changes every project at
+      once, which is the point. `ALWAYS.md` (every-mode rules, imported from `~/.claude/CLAUDE.md`)
+      proposed, pending Carter. Content seeds: the 36 mode-principle memories fold in per the
+      manifest's Tranche 4 (then delete); this project's three mode CLAUDE.mds are the first
+      drafts. **Sentinel-test the home-path `@import` first** (cheap pre-flight).
+      **CLAUDE.md-vs-memory tiering (Carter, 2026-08-06): CLAUDE.mds explain and navigate; memory
+      remembers.** Container CLAUDE.md: what the container is + the project folders below ·
+      Project: what the project is + how to navigate its modes · Mode: the directions.
+      Container memory: what explains the container + future project ideas · Project memory:
+      that project's progress and decisions · Mode sections of project memory: that mode's work
+      in that project + a pointer to the mode file, with general lessons **promoted up** into the
+      mode file (routing test: project-specific → MEMORY.md; mode principle → `<MODE>-MODE.md`).
 - [ ] **Auto-symlink each mode's skills into `<project>/<mode>/.claude/skills/`** at scaffold time,
       so entering a mode loads that mode's tools and nothing else. This is the mechanism the whole
       mode structure was approved for — without it modes carry instructions but no tooling, and the

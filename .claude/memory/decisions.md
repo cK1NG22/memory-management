@@ -306,3 +306,25 @@ Sentinel experiments (isolated throwaway trees, Claude Code 2.1.223 — full rec
   session inherits nothing; the prompt encodes the entry points, the test-first rule, and the
   experiments ranked by value (store-level symlink first — it would collapse per-mode store
   fragmentation). This is ROADMAP Phase 2's "mode memory" item beginning.
+
+---
+
+## 2026-08-06 — Mode-awareness files + the CLAUDE.md/memory tiering (Carter's call)
+
+- **Mode principles live once, in shared mode files** — `~/.claude/modes/RESEARCH-MODE.md`,
+  `PLAN-MODE.md`, `MAKE-MODE.md` — pulled in by an `@import` line in each project's mode
+  `CLAUDE.md`, never copied. *Why:* edit one file and every project follows; a copy drifts per
+  project; a reference cannot fork the way symlinked stores can (E5 — imports never write back).
+  Same home as the per-mode skills, so a mode's instructions and tooling live side by side.
+  Supersedes both earlier shapes for the global feedback rules: promotion into
+  `~/.claude/CLAUDE.md` (reversed the same day) and MEMORY.md mode sections as the rules' home
+  (the sections stay, but for project-specific memory + a pointer).
+- **The routing test (Carter, verbatim):** specific to this project? → `MEMORY.md` (*Project
+  Awareness*). A principle that applies to the mode? → `<MODE>-MODE.md` (*Situational / Mode
+  Awareness*).
+- **CLAUDE.mds explain and navigate; memory remembers.** Container `CLAUDE.md`: what the
+  container is + the project folders below · Project: what the project is + how to navigate its
+  modes · Mode: a faux system prompt (which mode + directions + the import). Container memory:
+  what explains the container + potential future projects · Project memory: that project's
+  progress and decisions · Mode sections of project memory: that mode's work in that project +
+  the mode-file pointer, with general lessons promoted up into the mode file.
