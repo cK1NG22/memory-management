@@ -1,9 +1,8 @@
 # Container-store consolidation — the manifest (Phase 2.5)
 
 **Status: PROPOSAL — nothing has moved.** Drafted 2026-08-06 from `dump.py` descriptions of every
-file in the six container stores; premise corrected same day (Carter: container-level launches are
-part of the convention). Per the orphan-repair precedent: full manifest first, no move without
-Carter's approval. Once ruled on, this file is the source for the `route.py` manifests.
+file in the six container stores. Per the orphan-repair precedent: full manifest first, no move
+without Carter's approval. Once ruled on, this file is the source for the `route.py` manifests.
 
 **Falsifier:** if Carter's rulings reroute more than ~15% of Tranche 1, the routing rule used here
 ("narrowest directory from which every session that needs it starts") is not operational and Phase 2.5
@@ -11,10 +10,9 @@ needs a different rule before execution.
 
 ## Scope: placement, not rescue
 
-**The premise, corrected by Carter 2026-08-06:** sessions launch at `<container>/` (`~/Projects`,
-`~/Clients`, `~/Sandbox`, …), `<project>/`, or `<project>/<mode>/`. Container stores therefore
-**stay live** — `~/Projects`' 135 topics load whenever a session opens at `~/Projects`. An earlier
-draft called these stores dormant; that was wrong.
+**The premise:** sessions launch at `<container>/` (`~/Projects`, `~/Clients`, `~/Sandbox`, …),
+`<project>/`, or `<project>/<mode>/` — Carter's launch convention. Container stores therefore
+**stay live**: `~/Projects`' 135 topics load whenever a session opens at `~/Projects`.
 
 What makes this migration worth doing anyway (sentinel-proven 2026-08-06): **exactly one store
 loads per session — ancestors never stack.** So a project-specific fact filed at container level

@@ -3,6 +3,11 @@
 Append-only. Each entry: what was decided, and **why**. Git records what changed; only this records
 what was rejected and the reasoning that survived.
 
+One exception (Carter, 2026-08-06): a **misrecorded entry** — something Carter never actually
+decided — is corrected **in place**, never by appending a correction. Two conflicting statements
+confuse the agents that read this file; a misunderstanding was never a decision, so there is
+nothing to preserve. Git keeps the history of the misrecording.
+
 ---
 
 ## 2026-08-04 — Founding session (the whole redesign happened in one sitting)
@@ -269,10 +274,11 @@ Sentinel experiments (isolated throwaway trees, Claude Code 2.1.223 — full rec
 
 ## 2026-08-06 — Session-launch convention + transcript housekeeping (Carter, same day)
 
-- **Sessions get opened only at `<project>/` or `<project>/<mode>/` from now on** (Carter's call).
-  *Why:* transcripts key to the exact launch cwd (tested), so launch discipline is the only thing
-  that keeps the `~/.claude/projects/` map readable; memory already converges to the git root on
-  its own.
+- **Sessions get opened only at `<container>/` (`~/Projects`, `~/Clients`, `~/Sandbox`,
+  `~/Research`, …), `<project>/`, or `<project>/<mode>/` from now on — never deeper** (Carter's
+  call). *Why:* transcripts key to the exact launch cwd (tested), so launch discipline is the only
+  thing that keeps the `~/.claude/projects/` map readable; memory already converges to the git
+  root on its own.
 - **Existing transcripts consolidated to match, safely** — moving a session's `.jsonl` (+ its
   UUID workspace folder) between store dirs was sentinel-tested first: resume works after the
   move, and **resume-by-id turned out to be global**, so placement only affects the per-folder
@@ -300,19 +306,3 @@ Sentinel experiments (isolated throwaway trees, Claude Code 2.1.223 — full rec
   session inherits nothing; the prompt encodes the entry points, the test-first rule, and the
   experiments ranked by value (store-level symlink first — it would collapse per-mode store
   fragmentation). This is ROADMAP Phase 2's "mode memory" item beginning.
-
----
-
-## 2026-08-06 — Launch convention corrected (Carter, during Phase 2.5 manifest review)
-
-- **Sessions launch at three levels, not two: `<container>/` (`~/Projects`, `~/Research`,
-  `~/Clients`, `~/Sandbox`, …), `<project>/`, and `<project>/<mode>/`.** The earlier 2026-08-06
-  entry recorded project + mode only; Carter corrected it when the first Phase 2.5 manifest
-  claimed the container stores were dormant. *Why it matters:* container stores stay **live**, so
-  Phase 2.5 is a **placement** migration — a project-specific fact filed in a container store
-  loads only in container sessions, never in the project sessions that need it (one store per
-  session, ancestors never stack) — not a dormancy rescue. Transcript folding is unaffected: the
-  consolidate tool already leaves container- and project-level dirs alone.
-- *Lesson (recurring):* the last correction of this class was git-root keying, overgeneralized
-  from non-git test dirs. A convention attributed to Carter gets re-confirmed with Carter before
-  any migration is built on it.

@@ -73,17 +73,15 @@ work, not cleanup.
 
 - [x] **Transcript housekeeping** — done 2026-08-06. 46 dead-path dirs (294 MB) archived, 83 deep
       transcript items folded to project level per the session-launch convention (sessions open at
-      `<container>/`, `<project>/`, or `<project>/<mode>/` — corrected 2026-08-06, container level
-      was missing from the first record). Standing tools: `make/memory-repair/`
+      `<container>/`, `<project>/`, or `<project>/<mode>/` — never deeper). Standing tools: `make/memory-repair/`
       `transcript_sweep.py` + `transcript_consolidate.py`; procedure:
       `docs/transcript-housekeeping-runbook.md`.
 - [ ] **Consolidate the container stores** (`~/Projects` 135 topics, `~/Optimal`, `~/Sandbox`,
-      `~/Sandbox/builds`, `~/Vault`, `~/Research`) — a **placement** migration, not a dormancy
-      rescue (Carter's 2026-08-06 correction: container-level launches are part of the convention,
-      so these stores stay live). The issue: project-specific facts filed at container level load
-      only in container sessions, never in the project sessions that need them — one store per
-      session. Full per-file proposal: `container-consolidation-manifest.md` (54 mechanical routes,
-      91 global files stay as `~/Projects`' reference library). Use the memory-repair runbook flow
+      `~/Sandbox/builds`, `~/Vault`, `~/Research`) — a **placement** migration: container stores
+      stay live under the launch convention, but one store loads per session, so project-specific
+      facts filed at container level never load in the project sessions that need them. Full
+      per-file proposal: `container-consolidation-manifest.md` (54 mechanical routes, 91 global
+      files stay as `~/Projects`' reference library). Use the memory-repair runbook flow
       (dump/route/mkindex, explicit manifests, `LEFT 0`); **capture the process** for the dream
       ladder. Awaiting Carter's rulings.
 - [ ] **Build the four `audit.py` checks** from `mode-memory-design.md` (stranded repo-subdir
@@ -119,6 +117,18 @@ work, not cleanup.
       The post-relocation number comes free from the next normal session start.
 - [ ] **Restructure all project folders to the mode shape.** Sequence deliberately: fix → prune →
       measure → *then* migrate. Gen 3 tasks map to modes where they fit and stay put where they don't.
+- [ ] **`git init` every project folder as part of the mode migration** (Carter, 2026-08-06). A
+      non-repo project fragments native memory: every mode-folder launch keys its own store
+      (exact-cwd keying), so `plan/` and `make/` sessions each get a separate empty store — the
+      June accident, re-run per project. A repo converges every inside-the-project session onto one
+      root store. **Containers must stay non-repos** — a repo at `~/Projects` would swallow every
+      non-repo project under it into one store. Pre-flight per project: check for existing stores
+      keyed to its *subfolders* — creating a repo above such a store strands it retroactively
+      (audit check #1's inverse). `attio-network-database` verified safe 2026-08-06 (it is its own
+      repo). Note `git init` does **not** protect against folder moves — the store keys to the
+      encoded absolute root path either way; `audit.py` before/after any move stays mandatory.
+      Currently non-repo (from the manifest's destination check): dad, hoth, loops, ai-engineering,
+      neon-learning, health-insurance, outreach, mana-ventures, custom-agents.
 - [ ] **Build the mode `CLAUDE.md` templates** — one canonical `research/`, `plan/`, and `make/`
       instruction file, stored once and used by the new-project skill at scaffold time. The three in
       *this* project are the first drafts and the only copies that exist. **Decide the update model

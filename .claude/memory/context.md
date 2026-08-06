@@ -23,12 +23,12 @@ No mode-memory layer gets built.
   file symlink + per-store index line), MEMORY.md never shared, store-dir symlinks demoted to
   repair tool. Four audit.py checks specified and **required before any symlink exists**.
 - **Transcript housekeeping executed:** 46 dead dirs (294 MB) archived, 83 deep transcript items
-  folded to project level. **Session-launch convention (Carter, corrected 2026-08-06):** sessions
-  open at `<container>/` (`~/Projects`, `~/Clients`, …), `<project>/`, or `<project>/<mode>/` —
+  folded to project level. **Session-launch convention (Carter):** sessions open at
+  `<container>/` (`~/Projects`, `~/Clients`, …), `<project>/`, or `<project>/<mode>/` —
   never deeper. Tools: `make/memory-repair/transcript_sweep.py` +
   `transcript_consolidate.py`; procedure: `docs/transcript-housekeeping-runbook.md` (the seed for
   a future dream skill).
-- **Consequence now queued (re-scoped after Carter's correction):** container stores stay live for
+- **Consequence now queued:** container stores stay live for
   container sessions, but a project-specific fact filed there never loads in the project sessions
   that need it — one store per session, ancestors never stack. Phase 2.5 is therefore a
   **placement** migration, not a dormancy rescue; full proposal in
@@ -62,9 +62,8 @@ See `decisions.md` (two entries 2026-08-06). The load-bearing ones:
   fork surface (E5).
 - **Shared topic files are the one adopted sharing mechanism**; copying is forking; index line
   mandatory in each consuming store.
-- **Sessions open at container, project, or mode level** (corrected 2026-08-06 — container level
-  was missing from the first record) — transcripts key to the exact launch cwd, so launch
-  discipline is what keeps the transcript map readable.
+- **Sessions open at container, project, or mode level** — transcripts key to the exact launch
+  cwd, so launch discipline is what keeps the transcript map readable.
 - **Housekeeping tools are standing maintenance, not one-offs** — worktrees and background jobs
   recreate deep transcript dirs constantly.
 

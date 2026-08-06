@@ -32,7 +32,7 @@ see `research/sources/native-memory-keying-and-symlink-experiments.md`.
 
 ## Procedure B — consolidate deep transcript dirs
 
-*Rule (Carter, 2026-08-06; corrected same day to include container level):* sessions are launched
+*Rule (Carter, 2026-08-06):* sessions are launched
 at `<container>/`, `<project>/`, or `<project>/<mode>/`; anything keyed deeper than project folds
 up into the project-level dir. Container- and project-level dirs are left alone; mode-level dirs
 (`<project>/research|plan|make`) stay.

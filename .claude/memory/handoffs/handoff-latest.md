@@ -33,7 +33,7 @@ closed session's transcript out of the worktree-keyed dir — **fold BEFORE dele
 ## Decisions This Session
 - Native memory keys to the **git root** (sentinel-proven) → no mode-memory layer gets built
 - Shared topic files = the one cross-store mechanism (canonical copy + symlink + index line); copying is forking
-- Sessions open only at `<project>/` or `<project>/<mode>/` (Carter's launch convention)
+- Sessions open at `<container>/`, `<project>/`, or `<project>/<mode>/` (Carter's launch convention)
 - Transcript housekeeping is standing maintenance: sweep + consolidate tools, archive never delete
 - Four audit.py checks are required before any memory symlink exists (spec in design doc)
 
