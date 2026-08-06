@@ -1,6 +1,6 @@
 # Context — memory-management
 
-**Last updated:** 2026-08-05
+**Last updated:** 2026-08-06
 
 ## 🎯 Goal
 
@@ -9,82 +9,80 @@ folder.** Optimizing for context curation, explicitly not for traditional coding
 
 ## 🧭 Where we are now
 
-**Cleanup is finished and the pruning has started.** The fix → prune → measure sequence is underway
-with the baseline safely captured.
+**The mode-memory question is resolved — by the platform, not by us.** Sentinel experiments
+(2026-08-06, Claude Code 2.1.223) proved native memory is keyed to the **git root**: every session
+inside a repo project reads and writes ONE store, so research/plan/make already share memory.
+No mode-memory layer gets built.
 
-- The **legacy hub is gone** (167 files harvested) and the **16 orphaned stores are resolved**
-  (139 routed, 17 moved out of the memory system, 9 deleted). 23 live stores, 309 topic files,
-  0 dangling links. Backup at `~/Claude/_archive/orphan-stores_2026-08-04/`.
-- **The repair is written down and tooled** — `docs/memory-repair-runbook.md` plus
-  `make/memory-repair/`. Run `python3 make/memory-repair/audit.py` before and after moving any folder.
-- **`history.md` is retired** (executed 2026-08-05) — all four writers stopped, the Stop hook
-  unwired and archived. Existing copies are inert.
-- **The dead skill symlinks are fixed** (2026-08-05) — 12 were dead, not the recorded 7; 11
-  re-pointed, 1 removed (target gone upstream). Zero dead links remain.
-- **The context floor is measured, not estimated:** 44K–55K tokens at session start; the global
-  skill catalog was 113 skills ≈ 7.8K tokens of it (~15–18% of the floor).
-- **Skill relocation tranches 1 AND 2 are done — global is 96 skills, was 113 this morning**
-  (~2,600 catalog tokens lighter per session). Tranche 1: the 11 project symlinks →
-  `~/School/` and `~/Optimal/` `.claude/skills/`. Tranche 2 (Carter-approved): curriculum
-  quizzes → `~/Projects/ai-engineering/`, `daily-standup`/`source-leads`/`notion-transcript` →
-  `optimal-claude-skills` (kept, not retired — Carter), `connect-vault` → `~/Research/`.
-  `resolve-vulns` parked in global, undecided. Full map: `plan/skill-relocation-plan.md`.
-- **The mode-skill shape is decided:** one folder-level symlink per mode per project
-  (`<mode>/.claude/skills → ~/.claude/modes/<mode>/skills`), per-skill links only inside the
-  mode home. **Sentinel-test the folder-level link before building the templates** — unverified.
-- **The automations-project direction is endorsed:** plist `WorkingDirectory` pinning dissolves
-  the cron-locked category; dream colocates with memory-management instead. Shifts run in the
-  relevant project's `make/` (possibly `make/shift-work/`) — design later.
-- The **two-system split is settled** — native memory for Carter-and-machine facts, project memory
-  for the work. **This project is the Gen 4 trial.**
+- **Full experiment record:** `research/sources/native-memory-keying-and-symlink-experiments.md`
+  (git-root keying · exactly one store per session, ancestors never stack — the opposite of
+  CLAUDE.md · physical-path keying · all three symlink forms load · E5: a dangling memory symlink
+  is silently empty and the next write forks it self-camouflagingly · transcripts are portable and
+  resume-by-id is global).
+- **The design:** `plan/mode-memory-design.md` — shared topic files only (one canonical copy +
+  file symlink + per-store index line), MEMORY.md never shared, store-dir symlinks demoted to
+  repair tool. Four audit.py checks specified and **required before any symlink exists**.
+- **Transcript housekeeping executed:** 46 dead dirs (294 MB) archived, 83 deep transcript items
+  folded to project level. **Session-launch convention (Carter):** sessions open only at
+  `<project>/` or `<project>/<mode>/`. Tools: `make/memory-repair/transcript_sweep.py` +
+  `transcript_consolidate.py`; procedure: `docs/transcript-housekeeping-runbook.md` (the seed for
+  a future dream skill).
+- **Consequence now queued:** under the launch convention, container-level stores (`~/Projects`
+  135 topics, `~/Sandbox`, `~/Clients/…`, home, `/`) rarely load — their memories go dormant
+  until consolidated into project stores (Phase 2.5).
+- `worktree-skill-relocation` is **merged** (main moved to a31e76c; branch gone). This session's
+  branch `worktree-mode-memory-research` (7 commits) awaits merge.
+- Machine state verified clean twice today: 24 stores, 315 topic files, audit exit 0.
 
 ## ⏭️ Next steps / open
 
-Full list in `plan/ROADMAP.md`.
+Full list in `plan/ROADMAP.md` (new Phase 2.5).
 
-1. **Symlinked-memory design session is IN FLIGHT** (started 2026-08-05, ~4 PM) — testing whether
-   native stores/topic files/MEMORY.md can be symlinks, then designing shared memory analogous to
-   the mode-skill shape. Findings land in `research/`, the design in `plan/`. Don't duplicate it.
-2. **Read the post-relocation floor** off the next normal session's `.jsonl` — the free re-measure
-   that settles the suspended argument.
-3. **Sentinel-test the folder-level skills symlink** — blocks the mode templates (the in-flight
-   session's experiments may cover this — check before re-running).
-4. **Build `/context-dashboard`** — read `[[project-orchestrator-agent-deferred]]` first.
-5. Then **restructure projects to the mode shape**; create the automations project when Carter
-   is ready. Undecided: `resolve-vulns` home, file-type skills mode. Also open: the nested
-   `skill-factory` repo (inside `optimal-claude-skills`, own remote) has uncommitted changes.
+1. **Next session (planned with Carter):** merge `worktree-mode-memory-research`; run
+   `transcript_consolidate.py --execute` to fold this session's transcript out of the worktree dir
+   **before** removing the worktree (fold-then-delete order — see runbook); then start the
+   **container-store consolidation** (Phase 2.5), capturing the process as a runbook.
+2. **Build the four `audit.py` checks** (spec in `plan/mode-memory-design.md`).
+3. **Correction sweep** — root `CLAUDE.md` table, `docs/memory-repair-runbook.md`, `audit.py`
+   orphan message, and close-session's Phase-5 text all still claim exact-cwd keying.
+4. Still open from before: **sentinel-test the folder-level skills symlink** (today's memory tests
+   do NOT cover the skills loader — different mechanism); post-relocation floor re-measure;
+   `/context-dashboard`.
 
 ## 🧠 Recent decisions
 
-See `decisions.md`. The ones that shape everything else:
+See `decisions.md` (two entries 2026-08-06). The load-bearing ones:
 
-- Folders are a **loading** mechanism, not a locking one — nothing here is a hard write boundary.
-- Memory lives **once at the project root**, never per mode.
-- `history.md` is **deleted**, not capped — four writers (not three), zero readers.
-- Fix symlinks **before** measuring; measure **before** relocating — each step protects the next
-  one's honesty.
-- Relocated skills are **symlinked into `<folder>/.claude/skills/`**, never physically moved
-  without Carter; the gstack 53 stay put (installer-owned, only ~1.1K tokens).
+- **No mode-memory layer** — git-root keying makes it redundant; symlinks would add a proven
+  fork surface (E5).
+- **Shared topic files are the one adopted sharing mechanism**; copying is forking; index line
+  mandatory in each consuming store.
+- **Sessions open only at project or mode level** — transcripts key to the exact launch cwd, so
+  launch discipline is what keeps the transcript map readable.
+- **Housekeeping tools are standing maintenance, not one-offs** — worktrees and background jobs
+  recreate deep transcript dirs constantly.
 
 ## 💡 What we learned
 
-- **Loading is not obeying.** A nearer, more specific instruction silently beats a distant general
-  one even while the distant one sits fully loaded in context.
-- **Native memory does not walk up the tree** — the mechanism behind every stranding.
-- **A project that moves doesn't lose its memory — it silently starts a second one from zero.**
-- **A dead symlink is a silent subtraction.** Fixing the 12 didn't just restore skills — it
-  restored the truth of the baseline. Silent failures corrupt measurements, not just behavior.
-- **Recorded counts drift; scans don't.** "7 dead symlinks" was true when written and wrong by
-  execution. Anything cheap to re-derive should be re-derived, not trusted from notes.
-- **A repair is worth less than the check that prevents the next one** — `audit.py` keeps paying;
-  the project-level skill symlinks created today are exactly the kind of thing it should learn to
-  check next.
+- **Platform findings carry a version stamp.** "Native memory does not walk up" was true of
+  non-git dirs and false inside repos — overgeneralized provenance, caught only by re-testing.
+- **Exactly one memory store loads per session; ancestor stores never stack** — the opposite
+  shape of the CLAUDE.md chain. Layered instructions vs one flat notebook per project.
+- **The worst symlink failure self-camouflages:** a dangling store link reads as empty memory,
+  and the next write recreates the stale target so resolve-checks pass again (E5).
+- **Transcripts are logs, not knowledge** — keyed to launch cwd, portable, resume-by-id global;
+  only `memory/` folders matter for recall.
+- **Capture the process the first time it runs** (Carter) — the runbook written at first
+  execution is the seed dream promotes into a skill.
 
 ## 📂 Files touched · 🌿 git
 
-Project at `~/Projects/memory-management/`. This session (branch `worktree-skill-relocation`,
-3 commits): `plan/skill-relocation-plan.md` (new), `plan/ROADMAP.md`, this file, `decisions.md`.
-Outside the repo: `~/.claude/skills/` (113 → 96), `~/School/.claude/skills/` (new, 5 links),
-`~/Optimal/.claude/skills/` (new, 9 links), `~/Optimal/optimal-claude-skills/` (3 skills moved
-in, untracked), `~/Research/.claude/skills/` + `~/Projects/ai-engineering/.claude/skills/` (new,
-real dirs).
+Project at `~/Projects/memory-management/`. This session (branch `worktree-mode-memory-research`,
+7 commits): `research/sources/native-memory-keying-and-symlink-experiments.md` (new),
+`plan/mode-memory-design.md` (new), `docs/transcript-housekeeping-runbook.md` (new),
+`make/memory-repair/transcript_sweep.py` + `transcript_consolidate.py` (new), `plan/ROADMAP.md`,
+`decisions.md`, this file. Outside the repo: `~/.claude/projects/` (83 dirs → 30: 46 archived to
+`~/Claude/_archive/projects-transcripts_2026-08-06/`, 6 dirs folded up),
+`reference-claude-code-loading-mechanics.md` in the `~/Projects` store (corrected + extended),
+`~/Claude/personal-backlog.md` (terminal side-panel renderer TODO),
+`~/Claude/session-logs/thinking-patterns.md`.

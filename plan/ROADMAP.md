@@ -69,6 +69,25 @@ work, not cleanup.
       the judgment is not. Then change `close-session`, `new-session`, `dream`, and the history hook
       **together** — all four write the same files.
 
+## Phase 2.5 — Memory consolidation & correction sweep (added 2026-08-06)
+
+- [x] **Transcript housekeeping** — done 2026-08-06. 46 dead-path dirs (294 MB) archived, 83 deep
+      transcript items folded to project level per the new session-launch convention (sessions open
+      only at `<project>/` or `<project>/<mode>/`). Standing tools: `make/memory-repair/`
+      `transcript_sweep.py` + `transcript_consolidate.py`; procedure:
+      `docs/transcript-housekeeping-runbook.md`.
+- [ ] **Consolidate the container stores** (`~/Projects` 135 topics, `~/Sandbox`, `~/Clients/…`,
+      home, `/`) into project-level stores — under the session-launch convention these stores
+      rarely load, so their ~200 memories are going dormant. Use the memory-repair runbook flow
+      (dump/route/mkindex, explicit manifests, `LEFT 0`); **capture the process** for the dream
+      ladder. Planned with Carter for the next session.
+- [ ] **Build the four `audit.py` checks** from `mode-memory-design.md` (stranded repo-subdir
+      stores, lstat-level symlink resolution, containment invariant, fork tripwire) — required
+      before any memory symlink is created.
+- [ ] **Correction sweep for git-root keying wording** — still stating exact-cwd keying: the root
+      `CLAUDE.md` two-system table, `docs/memory-repair-runbook.md`, `audit.py`'s orphan message,
+      and the close-session skill's Phase-5 native-memory text.
+
 ## Phase 3 — Restructure the projects
 
 - [x] **Fix the dead skill symlinks** from the June reorg. Done 2026-08-05. The live count was **12,
