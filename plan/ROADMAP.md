@@ -91,8 +91,9 @@ work, not cleanup.
       2026-08-06). close-session Phase 5: replace "keyed to the exact working directory / does not
       walk up" with git-root keying + the one-store-per-session rule; route native facts to the
       repo-root store. new-session: codify the worktree case (handoff written and committed on the
-      branch, launch dir = project root per the session-launch convention) and drop any exact-cwd
-      assumptions. Both live in `~/.claude/skills/` — outside this repo, so it's a hand edit, not
+      branch) and set the launch dir per the session-launch convention — **project root or the
+      mode folder that fits the next action** (`<project>/` or `<project>/<mode>/`), never a
+      deeper path — and drop any exact-cwd assumptions. Both live in `~/.claude/skills/` — outside this repo, so it's a hand edit, not
       part of a branch merge.
 
 ## Phase 3 — Restructure the projects
