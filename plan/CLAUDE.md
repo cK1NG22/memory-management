@@ -15,8 +15,6 @@ something `make/` can execute without re-litigating it.
 - **A migration that doesn't delete is an addition.** Every plan that moves something must say what
   gets deleted and how that deletion is verified.
 - **Name the falsifier.** What result would mean this was wrong? If nothing would, it is not a plan.
-- **No option menus.** Give the tests that generate an answer, not a catalog of answers — a menu
-  turns design into selection.
 
 ## Where things go
 
@@ -27,3 +25,7 @@ These are **present-tense and rewritten**. Anything past-tense and immutable bel
 `../.claude/memory/decisions.md` instead.
 
 **Write only inside `plan/`.** If something belongs in `research/` or `make/`, say so and stop.
+
+## Mode principles (single source: ~/.claude/modes/PLAN-MODE.md, via the symlink beside this file)
+
+@PLAN-MODE.md

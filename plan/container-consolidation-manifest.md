@@ -356,16 +356,18 @@ Phase 3), so a mode's instructions and tooling live side by side. Machine level 
 copy inside any project would be per-project again. (It sits outside every git repo: include it
 in the store backups; versioning `~/.claude` is its own question, not this migration's.)
 
-**Delivery.** Each project's mode `CLAUDE.md` stays tiny — Carter's tiering below — and pulls the
-shared file in with one `@~/.claude/modes/<MODE>-MODE.md` import line: a *reference, not a copy*,
-so nothing forks (E5 was about symlinked stores that get written back; imports never write).
-Mode sessions in every project then auto-load their mode's principles — this closes the
-auto-recall gap for mode work that "the honest cost" paragraph names. **Sentinel-test the
-home-path `@import` once before Phase 3 stamps it everywhere** (cheap pre-flight; `@import`
-itself is verified in `reference-claude-code-loading-mechanics`). Test both directions: that a
-home-path import loads, and what a **broken** import does — silent or loud. A silent failure
-would be E5's camouflage problem in new clothing and needs an audit check; Carter's trust in
-`ALWAYS.md` explicitly rides on this test.
+**Delivery — revised by the sentinel test, executed 2026-08-06.** The test overturned the
+home-path form: a project CLAUDE.md's `@~/.claude/modes/X.md` **silently never loads** (import
+containment is checked on the literal path, before symlink resolution). The working delivery,
+approved by Carter and shipped: each mode dir carries an in-project **symlink**
+`<MODE>-MODE.md → ~/.claude/modes/<MODE>-MODE.md` (absolute target — survives a project move) and
+the mode `CLAUDE.md` ends with `@<MODE>-MODE.md` — still a reference, not a copy; nothing forks.
+`ALWAYS.md` needs no symlink: the user-level `~/.claude/CLAUDE.md` is containment-exempt (tested)
+and imports it directly. The broken-import direction tested **silent** — E5's camouflage in new
+clothing — so `audit.py` now carries a broken-imports check (missing target, dead symlink,
+containment escape; negative-tested). Wiring is probe-verified in this project; Phase 3 stamps
+the symlink + import pair into every other project's mode dirs. Full record:
+`reference-claude-code-loading-mechanics` · procedure: `docs/mode-files-runbook.md`.
 
 **Platform fact folded in:** inside a repo project there is no mode-level *store* — all modes
 share the project's one store (git-root keying, sentinel-proven). So "mode-level memory" = the

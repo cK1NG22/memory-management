@@ -1,6 +1,6 @@
 # Context — memory-management
 
-**Last updated:** 2026-08-06 (session 2 — manifest review, mode-files design)
+**Last updated:** 2026-08-06 (session 3 — Phase 2.5 execution: merge, sentinel test, mode files delivered)
 
 ## 🎯 Goal
 
@@ -8,6 +8,16 @@ A memory and context system where **nothing fails silently** and **nothing is st
 folder.** Optimizing for context curation, explicitly not for traditional coding conventions.
 
 ## 🧭 Where we are now
+
+**Tranche 4's mode-files delivery is EXECUTED.** The `@import` sentinel test overturned the
+approved mechanism — home-path imports silently never load (containment is lexical, pre-symlink)
+— and Carter re-approved delivery via in-project symlinks, matching the mode-skills shape. The
+four files live at `~/.claude/modes/` (ALWAYS, RESEARCH-MODE, PLAN-MODE, MAKE-MODE); ALWAYS.md is
+imported directly by `~/.claude/CLAUDE.md` (user level is containment-exempt); this project's
+three mode CLAUDE.mds import via symlink, probe-verified; the 48 folded topics are deleted
+(backup: `~/Claude/_archive/container-stores_2026-08-06/`); `audit.py` gained a broken-imports
+check with a negative test. Procedure: `docs/mode-files-runbook.md`. Tranches 1–3 still await
+Carter's gates. Mempalace is dead (Carter: never uses it) — strike it from workflows.
 
 **The Phase 2.5 manifest is reviewed and the architecture is settled.** Carter reviewed
 `plan/container-consolidation-manifest.md` line by line and the design went through two revisions
@@ -40,18 +50,18 @@ in one sitting, both his:
 Full list in `plan/ROADMAP.md`. **Carter's call: execution happens in a NEW session** — see
 `handoffs/handoff-latest.md` for the ordered next actions. In short:
 
-1. **Merge `worktree-phase25-manifest` into main** (8 commits, local only — no remote), then fold
-   this session's transcript out of the worktree-keyed dir **before** deleting the worktree.
-2. **Run the `@import` sentinel test** (home-path import loads; broken import loud or silent) —
-   gates ALWAYS.md and the whole mode-files delivery.
-3. **Get Carter's remaining gates:** Tranche 1 go (53 routes) · 3 unruled Tranche 2 files ·
-   8 ASKs.
-4. **Execute per the manifest's procedure** (backup → toplevel re-check → route.py → sectioned
-   indexes per the template → fold 36+12 into mode files → CLAUDE.md demotion → audit exit 0),
-   **capturing the runbook as it runs.**
-5. Carried forward: the four audit.py checks · correction sweep + close-session/new-session skill
-   updates (⚠️ two sessions old, unmoved) · worktree memory promotion review · skills-symlink
-   sentinel · floor re-measure · mempalace re-mine of this memory dir post-merge.
+1. ~~Merge · transcript fold · sentinel test · mode-files delivery~~ **done 2026-08-06 (session
+   3).** The fold was vacuous — EnterWorktree mid-session doesn't re-key transcripts.
+2. **Get Carter's remaining gates:** Tranche 1 go (53 routes) · 3 unruled Tranche 2 files
+   (`plan-pmg-life-app`, `notion-multi-workspace-safety`, `model-configuration-guide`) · 8 ASKs.
+3. **Execute Tranches 1–3 per the manifest** (route.py to LEFT 0 → sectioned indexes per the
+   template → fix-in-passing → audit exit 0), extending the runbook as it runs.
+4. **Phase 3 carries:** stamping mode CLAUDE.mds + symlinks in every project (the runbook's step
+   5), then removing `# Planning a build` from the global CLAUDE.md (marked with a comment).
+5. Carried forward: the four audit.py checks (shared-file symlinks gate — the imports check is
+   built, the four store-level ones are not) · correction sweep + close-session/new-session skill
+   updates (⚠️ three sessions old now) · worktree memory promotion review · skills-symlink
+   sentinel · floor re-measure.
 
 ## 🧠 Recent decisions
 
@@ -78,6 +88,11 @@ See `decisions.md` (three entry groups dated 2026-08-06). Load-bearing:
   architecture layer needed him.
 - **Editor buffers aren't disk.** Carter's Cursor notes were invisible until Cmd+S — checksum
   against git before concluding "no changes."
+- **Import containment is lexical and pre-symlink** — the one untested assumption in an approved
+  design was the one that failed. The contingency test earned its place; keep making approvals
+  contingent on the load-bearing mechanic.
+- **A tripwire isn't built until it has failed on purpose.** The audit imports check shipped with
+  a negative test that fabricates both failure modes.
 
 ## 📂 Files touched · 🌿 git
 

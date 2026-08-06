@@ -334,3 +334,40 @@ Sentinel experiments (isolated throwaway trees, Claude Code 2.1.223 — full rec
   untested behavior is a broken import — if a missing target fails silently, that is E5's
   camouflage in a new mechanism, and the pre-flight must prove it loud (or add an audit check)
   before every-session rules ride on it.
+
+---
+
+## 2026-08-06 — @import sentinel results + mode files delivered (execution session)
+
+- **The approved delivery mechanism didn't survive its own contingency test.** Sentinel results
+  (CLI 2.1.223, four probe runs, two models): `@~/.claude/modes/X.md` in a project CLAUDE.md
+  **silently never loads** — import containment is checked on the *literal* path, before symlink
+  resolution, so any path outside the project (tilde, absolute, or `../` climb) is dead. An
+  **in-project symlink to an outside target loads fine** — the containment check never resolves
+  the link. A missing/broken target is **completely silent** (exit 0, no stderr, line stays as
+  literal text): E5's camouflage, confirmed in the new mechanism.
+- **Delivery re-approved as the symlink pattern (Carter):** he asked whether it matched the
+  mode-skills shape ("are they saved in the same place? if so, lets do it") — it does, same
+  `~/.claude/modes/` home. Each mode dir carries `<MODE>-MODE.md → ~/.claude/modes/<MODE>-MODE.md`
+  (absolute target — survives a project move, the hazard this project actually has) and the mode
+  CLAUDE.md ends with `@<MODE>-MODE.md`.
+- **The user-level `~/.claude/CLAUDE.md` is exempt from containment** (tested both forms) — so
+  `ALWAYS.md` imports directly, no symlink. Wired same day.
+- **`audit.py` grew the imports check before anything shipped on imports** — flags missing
+  targets (incl. dead symlinks) and containment escapes across `~/.claude/CLAUDE.md` +
+  container/project/mode CLAUDE.mds; proven able to fail by a negative test (both failure modes
+  flagged in a fabricated broken tree). *Why first:* a silent failure mode with no tripwire is
+  how every prior generation died.
+- **Demotions executed only where recall-neutral:** `# Files & versions` left the global
+  CLAUDE.md (ALWAYS.md loads in every session — equivalent recall); the `No option menus` bullet
+  left `plan/CLAUDE.md` (this project is wired). `# Planning a build` **stays** in the global
+  CLAUDE.md with a Phase-3 removal comment — PLAN-MODE.md only loads in mode-wired projects,
+  which is just this one until Phase 3 stamps the rest; removing it tonight would lose the rule
+  everywhere else.
+- **The 48 folded topics (36 mode-principle + 12 Always) deleted after fold + probe verification**,
+  index lines stripped. Backup first: `~/Claude/_archive/container-stores_2026-08-06/` (136 + 11
+  files, verified by count). The transcript-fold step of the handoff was vacuous — EnterWorktree
+  mid-session does *not* re-key a transcript to the worktree; only launching in one does.
+- **Mempalace is out (Carter):** "i dont ever use it" — the handoff's re-mine step was stopped
+  mid-run and the preference saved as native feedback (`feedback-no-mempalace`). Ignore mempalace
+  steps in old plans; flag them for removal instead of executing.

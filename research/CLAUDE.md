@@ -25,3 +25,7 @@ Findings land in `sources/` here. When a finding is settled enough to act on, it
 in `../.claude/memory/decisions.md` and the design changes in `../plan/`.
 
 **Write only inside `research/`.** If something belongs in `plan/` or `make/`, say so and stop.
+
+## Mode principles (single source: ~/.claude/modes/RESEARCH-MODE.md, via the symlink beside this file)
+
+@RESEARCH-MODE.md

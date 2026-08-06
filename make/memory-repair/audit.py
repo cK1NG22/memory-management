@@ -72,6 +72,63 @@ def resolve(slug):
     return full, best[0], "/".join(tokens[best[1]:])
 
 
+CONTAINERS = ("Projects", "Clients", "Sandbox", "Optimal", "Research", "Vault", "School")
+
+
+def git_root(d):
+    while True:
+        if os.path.exists(os.path.join(d, ".git")):
+            return d
+        parent = os.path.dirname(d)
+        if parent == d:
+            return None
+        d = parent
+
+
+def check_imports():
+    """Every @import line in a CLAUDE.md must load, and a broken one is SILENT
+    (verified on 2.1.223 — no warning, the line just sits as literal text).
+    Two ways to break: the target doesn't resolve (incl. a dead symlink), or —
+    for project-level files only — the literal path escapes the project
+    (containment is checked before symlink resolution, so an in-project symlink
+    to ~/.claude/modes/ is the sanctioned escape; a direct home path is not).
+    The user-level ~/.claude/CLAUDE.md is exempt from containment (verified)."""
+    home = os.path.expanduser("~")
+    files = [os.path.join(home, ".claude", "CLAUDE.md")]
+    for c in CONTAINERS:
+        files += glob.glob(os.path.join(home, c, "*", "CLAUDE.md"))
+        files += glob.glob(os.path.join(home, c, "*", "*", "CLAUDE.md"))
+    bad = []
+    for f in files:
+        if not os.path.isfile(f):
+            continue
+        base = os.path.dirname(f)
+        user_level = f.startswith(os.path.join(home, ".claude") + os.sep)
+        fenced = False
+        for line in open(f, errors="ignore"):
+            line = line.strip()
+            if line.startswith("```"):
+                fenced = not fenced
+                continue
+            if fenced or not line.startswith("@") or len(line) < 2:
+                continue
+            raw = line.split()[0][1:]
+            if "/" not in raw and not raw.endswith(".md"):
+                continue                             # "@handle" prose, not an import path
+            target = os.path.expanduser(raw)
+            if not os.path.isabs(target):
+                target = os.path.join(base, target)
+            literal = os.path.normpath(target)
+            if not os.path.exists(literal):          # follows symlinks: dead link fails here
+                bad.append((f, raw, "target missing — import fails silently"))
+                continue
+            if not user_level:
+                root = git_root(base) or base
+                if os.path.commonpath([literal, root]) != root:
+                    bad.append((f, raw, "literal path outside the project — never loads"))
+    return bad
+
+
 def audit():
     orphans, dangling, unindexed, live = [], [], [], []
     total_topics = 0
@@ -121,6 +178,15 @@ def audit():
         print(f"❌ DANGLING INDEX LINKS ({len(dangling)}) — MEMORY.md points at a file that is gone.\n")
         for where, link in dangling:
             print(f"   {where}  ->  {link}")
+        print()
+
+    broken_imports = check_imports()
+    if broken_imports:
+        problems += len(broken_imports)
+        print(f"❌ BROKEN CLAUDE.md IMPORTS ({len(broken_imports)}) — these fail with no warning at all.\n")
+        for f, raw, why in broken_imports:
+            print(f"   {f}")
+            print(f"      @{raw}  ->  {why}")
         print()
 
     if unindexed:
