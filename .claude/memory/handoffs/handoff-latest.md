@@ -12,8 +12,9 @@ shape: gen4-modes
 ## Next Action (in order)
 
 1. From `~/Projects/memory-management`, **merge `worktree-phase25-manifest` into `main`**
-   (no remote — local merge only; `git log main..worktree-phase25-manifest --oneline` shows the
-   8 commits coming).
+   (no remote — local merge only; `git log main..worktree-phase25-manifest --oneline` shows
+   exactly what's coming — trust the command, not a count). The closing session already
+   **exited the worktree with "keep"**, so it sits unlocked on disk, all work committed.
 2. **Fold this session's transcript BEFORE deleting the worktree:**
    `python3 make/memory-repair/transcript_consolidate.py` (dry-run, review, then `--execute`) to
    fold the worktree-keyed dir `…-memory-management--claude-worktrees-phase25-manifest` up into
@@ -73,4 +74,7 @@ shape: gen4-modes
   session must end by stepping OUT of the worktree (ExitWorktree, keep — never remove) so Agent
   View can close without blocking on the keep/remove worktree decision. "Keep" is always the
   answer in this workflow: the branch merges later and the transcript folds later.
+  **A ⚠️ PENDING UPDATE note carrying this step is already placed at the top of
+  `~/.claude/skills/close-session/SKILL.md`** — self-applying until the full rewrite, so
+  interim close-session runs perform the exit step on their own.
 - Worktree memory promotion review (ROADMAP Phase 2.5) — still open, untouched by design.
