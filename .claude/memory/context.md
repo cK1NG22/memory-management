@@ -50,7 +50,10 @@ Full list in `plan/ROADMAP.md` (new Phase 2.5).
    orphan message, and close-session's Phase-5 text all still claim exact-cwd keying. Also update
    the **`close-session` and `new-session` skills** to the new memory patterns (git-root keying,
    one store per session, launch convention, worktree handoff case) — Carter's ask, 2026-08-06.
-4. Still open from before: **sentinel-test the folder-level skills symlink** (today's memory tests
+4. **Review worktree memory promotion** (Carter's ask, 2026-08-06): project memory in worktrees
+   merges via git (fine); the *native* store a worktree session keys is ephemeral and orphans on
+   worktree deletion — no promotion path exists. Details in `plan/ROADMAP.md` Phase 2.5.
+5. Still open from before: **sentinel-test the folder-level skills symlink** (today's memory tests
    do NOT cover the skills loader — different mechanism); post-relocation floor re-measure;
    `/context-dashboard`.
 

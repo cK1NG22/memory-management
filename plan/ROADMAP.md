@@ -84,6 +84,16 @@ work, not cleanup.
       files stay as `~/Projects`' reference library). Use the memory-repair runbook flow
       (dump/route/mkindex, explicit manifests, `LEFT 0`); **capture the process** for the dream
       ladder. Awaiting Carter's rulings.
+- [ ] **Review how worktree memory gets promoted** (Carter, 2026-08-06). Two layers, only one
+      understood: (a) *project* memory (`.claude/memory/`) edited in a worktree is git-tracked and
+      merges back with the branch — the current handoff pattern, working but dependent on sessions
+      committing; (b) the *native* store of a worktree session — each worktree is its own git
+      toplevel, so it keys its own ephemeral store, and anything saved there is silently orphaned
+      when the worktree is deleted. No promotion path exists; the mode-memory design deliberately
+      deferred it ("revisit only if a worktree session ever saves a memory worth keeping").
+      Worktree sessions are now routine (background jobs, night shifts), so decide: promote on
+      merge? forbid native saves in worktrees? a sweep tool? Fold into the transcript-housekeeping
+      cadence?
 - [ ] **Build the four `audit.py` checks** from `mode-memory-design.md` (stranded repo-subdir
       stores, lstat-level symlink resolution, containment invariant, fork tripwire) — required
       before any memory symlink is created.
