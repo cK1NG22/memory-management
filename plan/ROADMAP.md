@@ -53,8 +53,14 @@ work, not cleanup.
 
 - [ ] **`decisions.md` → skill**, farmed by `dream`. Bar: ≥3 occurrences across ≥2 projects; propose,
       never auto-create.
+- [x] **"Mode memory" explored and resolved — 2026-08-06.** Native memory is keyed to the **git
+      root** on Claude Code 2.1.223 (sentinel-tested), so the modes of a repo project already share
+      one store; no mode-memory layer gets built. The one adopted mechanism is the **shared topic
+      file** (canonical copy + file symlink + per-store index line). Design and required `audit.py`
+      checks: `mode-memory-design.md`; experiments:
+      `../research/sources/native-memory-keying-and-symlink-experiments.md`.
 - [ ] **Explore promotion out of native memory**, which currently has only one destination. Candidates:
-      → a **skill** · → a **"mode memory"** type · → the **mode `CLAUDE.md` template**, where
+      → a **skill** · → the **mode `CLAUDE.md` template**, where
       `plan/CLAUDE.md` is the *same file across every project*. *Why this matters:* a rule in the mode
       template applies everywhere that mode is used at zero recall cost, which is strictly better than
       a memory file that must be matched and loaded. **Open question: what earns promotion to a

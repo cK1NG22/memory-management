@@ -232,6 +232,41 @@ store resolves to a directory that exists. Backup at `~/Claude/_archive/orphan-s
 
 ---
 
+## 2026-08-06 — Mode memory: resolved by the platform, not by us
+
+Sentinel experiments (isolated throwaway trees, Claude Code 2.1.223 — full record in
+`research/sources/native-memory-keying-and-symlink-experiments.md`):
+
+- **No mode-memory layer gets built.** *Why:* native memory turned out to be keyed to the **git
+  root**, not the exact cwd — a session in `research/` reads *and* writes the repo-root store, so
+  the three modes already share one store. The planned symlink layer would duplicate a platform
+  behavior while adding a proven fork surface. The 2026-08-04 finding "does not walk up" was
+  **overgeneralized from non-git test dirs** — it still holds outside repos. *Lesson:* platform
+  findings carry a version stamp; re-test the load-bearing ones before building on them.
+- **The one shared-memory mechanism adopted: shared topic files.** One canonical copy where the
+  fact was born; any other store that needs it gets a file symlink **plus its own `MEMORY.md`
+  index line** (mandatory — description-match recall through symlinks is untested; the index-read
+  path is proven). Routing-rule extension: *a native memory lives in exactly one store; copying is
+  forking.*
+- **Rejected: sharing `MEMORY.md` across stores** — works mechanically (tested), but the index is
+  a store's recall surface, and coupling indexes makes every save in one store load in the other.
+- **Rejected: store-dir symlinks as design** (kept as repair tool only, for non-repo trees that
+  can't `git init`). *Why:* E5 showed their failure mode is worse than the skill deaths — a
+  dangling `memory/` link reads as silently *empty* memory, and the **next write recreates the
+  stale target, so the link resolves again**: a self-camouflaging fork that resolve-checks pass.
+- **`audit.py` grows four checks before any symlink is created** (spec in
+  `plan/mode-memory-design.md`): stranded repo-subdir stores (a *new* stranding class — invisible
+  memories with the folder still on disk; measured 0-of-24 today, the check keeps it zero),
+  lstat-level symlink resolution inside stores (two verified blind spots today: a store whose dir
+  link dangles vanishes from the report; a dangling topic link globs as healthy), a containment
+  invariant (memory links may only target inside `~/.claude/projects/*/memory/`), and a warn-only
+  duplicate-topic-name fork tripwire.
+- **Migration deliberately not executed** — this session was research + design only. First
+  candidate when approved: the loading-mechanics reference, whose canonical copy lives in the
+  `~/Projects` store and is therefore invisible to every session inside this repo.
+
+---
+
 ## 2026-08-05 — Wrap-up: pushes, nested repo, next session staged
 
 - **`skill-factory` is a repo nested inside `optimal-claude-skills` — resolved by gitignoring it,
