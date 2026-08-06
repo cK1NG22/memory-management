@@ -285,7 +285,7 @@ transcript-cleanup-skills, workspace-mcp-attachments-dir.
 | 1 — mechanical routes | 53 | Carter's go |
 | 2 — move-out / delete / fold | 5 (`plan-pmg-life-app`, `notion-multi-workspace-safety`, `model-configuration-guide`, `newsession-focus-ghostty` **ruled: delete**, `feedback-subskill-vs-reference` **fold into skill-factory reference, then delete**) | per-file confirmation (2 of 5 ruled) |
 | 3 — HOLD (automations 5, shifts 1) + ASK 8 + PARKED 12 | 26 | Phase 3.5 / per-file rulings |
-| 4 — GLOBAL: 36 fold into mode files · 12 → `ALWAYS.md` (proposal) · 42 stay as the library (3 user **approved** + 39 references) | 90 | mode-files go + `ALWAYS.md` confirm |
+| 4 — GLOBAL: 36 fold into mode files · 12 → `ALWAYS.md` · 42 stay as the library (3 user + 39 references) | 90 | **approved (Carter, 2026-08-06)** — contingent on the `@import` sentinel test |
 | **Total** | **174** | |
 
 ## Tranche 4 — the global tier (the one real decision)
@@ -362,7 +362,10 @@ so nothing forks (E5 was about symlinked stores that get written back; imports n
 Mode sessions in every project then auto-load their mode's principles — this closes the
 auto-recall gap for mode work that "the honest cost" paragraph names. **Sentinel-test the
 home-path `@import` once before Phase 3 stamps it everywhere** (cheap pre-flight; `@import`
-itself is verified in `reference-claude-code-loading-mechanics`).
+itself is verified in `reference-claude-code-loading-mechanics`). Test both directions: that a
+home-path import loads, and what a **broken** import does — silent or loud. A silent failure
+would be E5's camouflage problem in new clothing and needs an audit check; Carter's trust in
+`ALWAYS.md` explicitly rides on this test.
 
 **Platform fact folded in:** inside a repo project there is no mode-level *store* — all modes
 share the project's one store (git-root keying, sentinel-proven). So "mode-level memory" = the
@@ -404,8 +407,10 @@ CLAUDE.mds explain and navigate; memory remembers.
 references): the **36 mode-principle files** (Research + Plan + Make buckets) **fold into the
 three mode files, then delete** — the subskill-vs-reference pattern at scale; the **12 Always
 rules** fold into `ALWAYS.md`, a fourth file `@import`-ed from `~/.claude/CLAUDE.md` so it still
-loads in every session while the CLAUDE.md itself stays a thin navigator (**proposal, pending
-Carter**); the **3 user + 39 references stay** in the `~/Projects` store as the global library
+loads in every session while the CLAUDE.md itself stays a thin navigator (**approved — Carter,
+2026-08-06 — contingent on the `@import` sentinel test**; a block of text cannot be symlinked,
+only whole files, so the import line *is* the block-level include Carter asked about); the
+**3 user + 39 references stay** in the `~/Projects` store as the global library
 (making that store deliberately dual-role: container memory for `~/Projects` *and* the machine's
 library shelf — the one sanctioned exception to "container memory only explains the container"):
 

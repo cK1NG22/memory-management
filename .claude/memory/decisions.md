@@ -328,3 +328,9 @@ Sentinel experiments (isolated throwaway trees, Claude Code 2.1.223 — full rec
   what explains the container + potential future projects · Project memory: that project's
   progress and decisions · Mode sections of project memory: that mode's work in that project +
   the mode-file pointer, with general lessons promoted up into the mode file.
+- **`ALWAYS.md` approved — contingent on the `@import` sentinel test.** Carter asked whether a
+  *block* of text can be symlinked; it cannot (symlinks are whole files/folders only), and the
+  `@import` line is precisely the block-level include he wanted. *Why the contingency:* the one
+  untested behavior is a broken import — if a missing target fails silently, that is E5's
+  camouflage in a new mechanism, and the pre-flight must prove it loud (or add an audit check)
+  before every-session rules ride on it.

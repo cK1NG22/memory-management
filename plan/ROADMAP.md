@@ -146,7 +146,9 @@ work, not cleanup.
       `CLAUDE.md` stays a thin faux system prompt (which mode + directions) plus one
       `@~/.claude/modes/<MODE>-MODE.md` import — editing the mode file changes every project at
       once, which is the point. `ALWAYS.md` (every-mode rules, imported from `~/.claude/CLAUDE.md`)
-      proposed, pending Carter. Content seeds: the 36 mode-principle memories fold in per the
+      **approved (Carter, 2026-08-06), contingent on the `@import` sentinel test** — which must
+      also check what a *missing* import target does (silent or loud; silent = E5 in new
+      clothing → needs an audit check). Content seeds: the 36 mode-principle memories fold in per the
       manifest's Tranche 4 (then delete); this project's three mode CLAUDE.mds are the first
       drafts. **Sentinel-test the home-path `@import` first** (cheap pre-flight).
       **CLAUDE.md-vs-memory tiering (Carter, 2026-08-06): CLAUDE.mds explain and navigate; memory
