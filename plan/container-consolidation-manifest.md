@@ -1,21 +1,32 @@
 # Container-store consolidation — the manifest (Phase 2.5)
 
 **Status: PROPOSAL — nothing has moved.** Drafted 2026-08-06 from `dump.py` descriptions of every
-file in every dormant container store. Per the orphan-repair precedent: full manifest first, no move
-without Carter's approval. Once ruled on, this file is the source for the `route.py` manifests.
+file in the six container stores; premise corrected same day (Carter: container-level launches are
+part of the convention). Per the orphan-repair precedent: full manifest first, no move without
+Carter's approval. Once ruled on, this file is the source for the `route.py` manifests.
 
 **Falsifier:** if Carter's rulings reroute more than ~15% of Tranche 1, the routing rule used here
 ("narrowest directory from which every session that needs it starts") is not operational and Phase 2.5
 needs a different rule before execution.
 
-## Scope and evidence
+## Scope: placement, not rescue
 
-Under the session-launch convention (sessions open only at `<project>/` or `<project>/<mode>/`),
-six container-level stores never load again. Transcript evidence, checked 2026-08-06:
+**The premise, corrected by Carter 2026-08-06:** sessions launch at `<container>/` (`~/Projects`,
+`~/Clients`, `~/Sandbox`, …), `<project>/`, or `<project>/<mode>/`. Container stores therefore
+**stay live** — `~/Projects`' 135 topics load whenever a session opens at `~/Projects`. An earlier
+draft called these stores dormant; that was wrong.
+
+What makes this migration worth doing anyway (sentinel-proven 2026-08-06): **exactly one store
+loads per session — ancestors never stack.** So a project-specific fact filed at container level
+loads in container sessions only; it *never* loads in the project sessions that actually consume
+it. The balkanski QA notes have never once loaded in a balkanski session. Consolidation is a
+**placement** fix: put each fact in the store of the sessions that need it.
+
+Launch history per store, for context on how often container sessions have happened:
 
 | Store | Topics | Last session launched there |
 | --- | --- | --- |
-| `~/Projects` | 135 | 2026-08-05 (day before the convention) |
+| `~/Projects` | 135 | 2026-08-05 |
 | `~/Optimal` | 19 | never (0 transcripts) |
 | `~/Sandbox` | 10 | 2026-07-22 |
 | `~/Sandbox/builds` | 5 | 2026-07-17 |
@@ -24,10 +35,10 @@ six container-level stores never load again. Transcript evidence, checked 2026-0
 
 **In scope: 174 topic files.** Baseline before any move: `audit.py` clean, 24 stores / 315 topics.
 
-**Explicitly OUT of scope — these stores still load:**
+**Explicitly OUT of scope:**
 - `/` (1 topic) — cron/headless sessions launch at `/` daily (34 transcripts, newest 2026-08-06);
-  its one topic (`project-headless-mcp-path-fix`) is exactly what those sessions need. Keep.
-- `~` home (0 topics) — also live daily; nothing to move anyway.
+  its one topic (`project-headless-mcp-path-fix`) serves exactly those sessions. Correctly placed.
+- `~` home (0 topics) — live daily; nothing to place anyway.
 - The deep-but-live stores (`attio-network-database`, `skill-factory`, `education-philosophy`,
   `memory-systems`) — they load whenever Carter opens sessions there. `skill-factory` is its own git
   toplevel, so it is legal under git-root keying. Whether task-level stores fit the launch convention
@@ -42,10 +53,13 @@ git toplevel (`balkanski`, `claude-architect`, `memory-management`, `velocity`, 
 ## Actions vocabulary
 
 - `→ <path>` — **Tranche 1**, mechanical route to that project's store. Executable on approval.
+  The trade of every route: the file gains recall in the project's own sessions and leaves
+  container-session recall. That is the right trade for project-specific facts — a project session
+  needing its own facts is the common case — but it is a trade, not a free win.
 - `GLOBAL` — **Tranche 4**, stays put pending the global-tier ruling (the one real decision, below).
 - `HOLD` — **Tranche 3**, destination project doesn't exist yet (automations, shifts); move when it does.
-- `PARKED` — **Tranche 3**, dormant idea with no folder; a dormant store is the honest place for a
-  dormant idea. Stays.
+- `PARKED` — **Tranche 3**, dormant idea with no project folder to route to; it stays in the
+  container store, which is the honest shelf for it.
 - `MOVE-OUT` / `DELETE?` — **Tranche 2**, leaves the memory system entirely. Carter confirms each.
 - `ASK` — genuinely ambiguous; Carter rules per-file.
 
@@ -118,7 +132,8 @@ launcher that `/new-session` no longer uses (it stages Agent View now — see
 - `project-move-project-skill-idea` → memory-management (this repo's roadmap links it)
 - `project-orchestrator-agent-deferred` — PARKED — flag: arguably memory-management (context-window management is its domain)
 - `project-sandbox-build-ideas` — ASK: describes `~/Sandbox/builds/BUILD-IDEAS.md`; `builds/` is a
-  sub-container whose own store is dormant. Narrowest real consumer unclear (velocity? each build?).
+  sub-container between container and project. Narrowest real consumer unclear (velocity? each build?
+  `builds/` itself, if Carter launches sessions there?).
 - `project-slack-cron-convergence` — HOLD (automations)
 - `project-team-cli-agent`, `-idea`, `-philosophy`, `-substrate-shape`, `-v01-build-notes`,
   `-automations-vision` (6 files) — PARKED (dormant R&D, no code folder exists)
@@ -244,13 +259,14 @@ transcript-cleanup-skills, workspace-mcp-attachments-dir.
 ## Tranche 4 — the global tier (the one real decision)
 
 91 files — the feedback rules, user profiles, and machine references — are needed by sessions in
-*every* project, and under the launch convention **no native store loads everywhere**. Native memory
-has no global tier; exactly one store loads per session. So "consolidate into project stores" cannot
-apply to these: copying into N project stores is forking (decided 2026-08-06), and symlinking 86
-files × N stores is the fork surface E5 warned about, at scale.
+*every* project. But **no native store loads everywhere**: exactly one store loads per session, so
+in a project session the `~/Projects` store (where these files live) does not load. That gap
+predates the launch convention and survives it. "Consolidate into project stores" cannot apply
+here: copying into N project stores is forking (decided 2026-08-06), and symlinking 91 files × N
+stores is the fork surface E5 warned about, at scale.
 
-**Proposal:** declare `~/Projects` the **canonical global store** — the reference library — and
-accept that it is cold storage reached by pointer, not recall:
+**Proposal:** keep `~/Projects` as the **canonical global library** — and it genuinely loads for
+container-level sessions, which is where cross-project work happens:
 
 1. The files stay where they are. No moves, no copies, no symlink fan-out.
 2. Truly universal *rules* get promoted up the ladder (`~/.claude/CLAUDE.md`, mode templates) —
@@ -263,9 +279,9 @@ accept that it is cold storage reached by pointer, not recall:
    Model-Configuration-Guide pointer), so any session can *fetch* the library even though nothing
    auto-loads it.
 
-The honest cost: these 86 files lose `description:`-match recall. They effectively had already —
-the store stopped loading when the launch convention landed. The fix for recall is promotion, not
-relocation.
+The honest cost: these 91 files still have no auto-recall inside project sessions — same as today.
+The per-file fixes are promotion (universal rules), a shared-file symlink (project-relevant
+references, post-audit-checks), or the pointer fetch. Relocation fixes none of it.
 
 ## Execution procedure (runbook seed — capture as `docs/` runbook when run)
 

@@ -300,3 +300,19 @@ Sentinel experiments (isolated throwaway trees, Claude Code 2.1.223 — full rec
   session inherits nothing; the prompt encodes the entry points, the test-first rule, and the
   experiments ranked by value (store-level symlink first — it would collapse per-mode store
   fragmentation). This is ROADMAP Phase 2's "mode memory" item beginning.
+
+---
+
+## 2026-08-06 — Launch convention corrected (Carter, during Phase 2.5 manifest review)
+
+- **Sessions launch at three levels, not two: `<container>/` (`~/Projects`, `~/Research`,
+  `~/Clients`, `~/Sandbox`, …), `<project>/`, and `<project>/<mode>/`.** The earlier 2026-08-06
+  entry recorded project + mode only; Carter corrected it when the first Phase 2.5 manifest
+  claimed the container stores were dormant. *Why it matters:* container stores stay **live**, so
+  Phase 2.5 is a **placement** migration — a project-specific fact filed in a container store
+  loads only in container sessions, never in the project sessions that need it (one store per
+  session, ancestors never stack) — not a dormancy rescue. Transcript folding is unaffected: the
+  consolidate tool already leaves container- and project-level dirs alone.
+- *Lesson (recurring):* the last correction of this class was git-root keying, overgeneralized
+  from non-git test dirs. A convention attributed to Carter gets re-confirmed with Carter before
+  any migration is built on it.

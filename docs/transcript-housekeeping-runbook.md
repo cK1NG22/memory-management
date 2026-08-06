@@ -32,9 +32,14 @@ see `research/sources/native-memory-keying-and-symlink-experiments.md`.
 
 ## Procedure B — consolidate deep transcript dirs
 
-*Rule (Carter, 2026-08-06):* sessions are launched only at `<project>/` or `<project>/<mode>/`;
-anything keyed deeper folds up into the project-level dir. Mode-level dirs
+*Rule (Carter, 2026-08-06; corrected same day to include container level):* sessions are launched
+at `<container>/`, `<project>/`, or `<project>/<mode>/`; anything keyed deeper than project folds
+up into the project-level dir. Container- and project-level dirs are left alone; mode-level dirs
 (`<project>/research|plan|make`) stay.
+
+**Known limit:** the tool assumes projects sit exactly at `<container>/<project>/`. A *nested*
+project (e.g. `~/Sandbox/builds/velocity`) looks "deep" to it and would fold up wrongly — review
+the dry run for nested projects before every `--execute`.
 
 1. `python3 make/memory-repair/transcript_consolidate.py` — dry run; prints every planned move.
 2. Review, then re-run with `--execute`.

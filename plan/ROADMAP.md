@@ -72,15 +72,20 @@ work, not cleanup.
 ## Phase 2.5 — Memory consolidation & correction sweep (added 2026-08-06)
 
 - [x] **Transcript housekeeping** — done 2026-08-06. 46 dead-path dirs (294 MB) archived, 83 deep
-      transcript items folded to project level per the new session-launch convention (sessions open
-      only at `<project>/` or `<project>/<mode>/`). Standing tools: `make/memory-repair/`
+      transcript items folded to project level per the session-launch convention (sessions open at
+      `<container>/`, `<project>/`, or `<project>/<mode>/` — corrected 2026-08-06, container level
+      was missing from the first record). Standing tools: `make/memory-repair/`
       `transcript_sweep.py` + `transcript_consolidate.py`; procedure:
       `docs/transcript-housekeeping-runbook.md`.
-- [ ] **Consolidate the container stores** (`~/Projects` 135 topics, `~/Sandbox`, `~/Clients/…`,
-      home, `/`) into project-level stores — under the session-launch convention these stores
-      rarely load, so their ~200 memories are going dormant. Use the memory-repair runbook flow
+- [ ] **Consolidate the container stores** (`~/Projects` 135 topics, `~/Optimal`, `~/Sandbox`,
+      `~/Sandbox/builds`, `~/Vault`, `~/Research`) — a **placement** migration, not a dormancy
+      rescue (Carter's 2026-08-06 correction: container-level launches are part of the convention,
+      so these stores stay live). The issue: project-specific facts filed at container level load
+      only in container sessions, never in the project sessions that need them — one store per
+      session. Full per-file proposal: `container-consolidation-manifest.md` (54 mechanical routes,
+      91 global files stay as `~/Projects`' reference library). Use the memory-repair runbook flow
       (dump/route/mkindex, explicit manifests, `LEFT 0`); **capture the process** for the dream
-      ladder. Planned with Carter for the next session.
+      ladder. Awaiting Carter's rulings.
 - [ ] **Build the four `audit.py` checks** from `mode-memory-design.md` (stranded repo-subdir
       stores, lstat-level symlink resolution, containment invariant, fork tripwire) — required
       before any memory symlink is created.
