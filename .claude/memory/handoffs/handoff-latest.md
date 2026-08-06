@@ -69,4 +69,8 @@ shape: gen4-modes
 - ⚠️ Carried two sessions without movement: the correction sweep (root CLAUDE.md table,
   memory-repair runbook, audit.py orphan message, close-session Phase-5 text still claim
   exact-cwd keying) + updating the close-session/new-session skills to the new memory patterns.
+  **Add to the close-session skill update (recurring pain, Carter 2026-08-06):** a worktree
+  session must end by stepping OUT of the worktree (ExitWorktree, keep — never remove) so Agent
+  View can close without blocking on the keep/remove worktree decision. "Keep" is always the
+  answer in this workflow: the branch merges later and the transcript folds later.
 - Worktree memory promotion review (ROADMAP Phase 2.5) — still open, untouched by design.
