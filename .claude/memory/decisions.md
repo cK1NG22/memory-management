@@ -267,6 +267,26 @@ Sentinel experiments (isolated throwaway trees, Claude Code 2.1.223 — full rec
 
 ---
 
+## 2026-08-06 — Session-launch convention + transcript housekeeping (Carter, same day)
+
+- **Sessions get opened only at `<project>/` or `<project>/<mode>/` from now on** (Carter's call).
+  *Why:* transcripts key to the exact launch cwd (tested), so launch discipline is the only thing
+  that keeps the `~/.claude/projects/` map readable; memory already converges to the git root on
+  its own.
+- **Existing transcripts consolidated to match, safely** — moving a session's `.jsonl` (+ its
+  UUID workspace folder) between store dirs was sentinel-tested first: resume works after the
+  move, and **resume-by-id turned out to be global**, so placement only affects the per-folder
+  resume picker. 83 items folded up (dad's three deep dirs, attio→mana-ventures, two shift
+  worktrees); mode-level dirs kept; `memory/` folders never moved.
+- **Transcript debris archived, never deleted:** 46 dead-path dirs (294 MB) →
+  `~/Claude/_archive/projects-transcripts_2026-08-06/`. Two recurring tools added to
+  `make/memory-repair/`: `transcript_sweep.py` (archive dirs whose cwd is gone) and
+  `transcript_consolidate.py` (fold deep dirs up; skips anything active in the last hour).
+  *Why tools:* worktrees and background jobs recreate deep transcript dirs constantly — this is
+  standing maintenance, not a one-off.
+
+---
+
 ## 2026-08-05 — Wrap-up: pushes, nested repo, next session staged
 
 - **`skill-factory` is a repo nested inside `optimal-claude-skills` — resolved by gitignoring it,
