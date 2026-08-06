@@ -48,6 +48,14 @@ must keep it that way (see the design in `plan/mode-memory-design.md`).
 outermost repo; worktrees are their own `git` toplevel, so each worktree keys to its own store —
 consistent with the two `…--claude-worktrees-…` store dirs observed on this machine **[machine]**.
 
+**[controlled, added 2026-08-06]** Transcript `.jsonl` files are portable and resume-by-id is
+**global**: a session created in dir A, its transcript moved by hand into dir B's store, resumed
+with full recall (sentinel intact) from B — **and also from A**, where the file no longer was. So
+the per-cwd transcript dirs are organizational only; `claude --resume <id>` searches all of
+`~/.claude/projects/`. Sorting transcripts into project-level dirs is safe and affects only which
+sessions the interactive resume picker lists for a given folder (picker listing itself untested —
+it is interactive). Move a session's UUID-named workspace folder along with its `.jsonl`.
+
 **[controlled, added 2026-08-06]** Ancestor stores never stack — unlike CLAUDE.md. Two probes:
 (A) non-git `child/` with sentinels planted in both its own store and its parent folder's store —
 only the child's loaded; (B) a git repo with a sentinel planted in the store of the folder *above*
