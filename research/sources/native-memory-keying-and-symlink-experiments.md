@@ -48,6 +48,13 @@ must keep it that way (see the design in `plan/mode-memory-design.md`).
 outermost repo; worktrees are their own `git` toplevel, so each worktree keys to its own store —
 consistent with the two `…--claude-worktrees-…` store dirs observed on this machine **[machine]**.
 
+**[controlled, added 2026-08-06]** Ancestor stores never stack — unlike CLAUDE.md. Two probes:
+(A) non-git `child/` with sentinels planted in both its own store and its parent folder's store —
+only the child's loaded; (B) a git repo with a sentinel planted in the store of the folder *above*
+the repo — only the repo-root store loaded. **Exactly one store loads per session, ever.** CLAUDE.md
+walks the whole tree upward and stacks; MEMORY.md resolves to one store (git root, else exact cwd)
+and reads nothing else.
+
 ---
 
 ## E4 — logical vs physical cwd: physical wins
