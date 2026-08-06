@@ -44,9 +44,33 @@ Launch history per store, for context on how often container sessions have happe
 - `~/.claude/skills/restructure-project` (1 topic) — a one-off launch-convention violation, not a
   container store. Footnote for a later sweep.
 
+**Sequencing vs the Gen 4 restructure (Carter's question, 2026-08-06):** Carter noted the
+deep-but-live folders don't follow the Gen 4 mode structure and asked whether every project should
+be restructured *before* memory consolidation. Answer: no — the two are independent, with one
+ordering rule. A store keys to the project's **path** (its git root), and the Gen 4 restructure
+reorganizes folders *inside* a project — the project's path doesn't change, so memory routed now
+stays valid through a later restructure. The hazard runs the other way: any restructure that
+**moves or renames a project folder** strands its store. Rule: **route memory only into projects
+whose paths are final**; if a Phase 3 restructure will relocate a folder, restructure first or
+hold that project's routes. Every Tranche 1 destination is a project root and expected stable.
+
 **Destination safety check (done 2026-08-06):** every proposed destination below is either its own
 git toplevel (`balkanski`, `claude-architect`, `memory-management`, `velocity`, `agentic-education`,
 `skill-factory`) or a plain non-repo directory — no route creates a stranded repo-subdir store.
+
+**Git-toplevel rules** (Carter asked for the re-explanation; full plan in `plan/ROADMAP.md` Phase 3):
+- **Containers** (`~/Projects`, `~/Clients`, `~/Sandbox`, `~/Optimal`, `~/Vault`, …) — **never**
+  repos. A container repo would make every non-repo project inside it key to the container's git
+  root: all their memory collapses into one shared store.
+- **Projects** — **each its own repo.** The git root is exactly what makes all of a project's mode
+  folders share one store instead of fragmenting per launch folder.
+- **Modes** (`research/`, `plan/`, `make/`) — **never** their own repos. They sit inside the
+  project repo; a mode with its own git root gets its own separate store, which is the
+  fragmentation git-root keying just solved.
+- **Nested projects** (e.g. `velocity` inside `~/Sandbox/builds`) — own repo is fine; the
+  *innermost* git root wins.
+- **Pre-flight:** never `git init` above an existing keyed store without checking first — a new
+  repo above a subfolder-keyed store strands it retroactively.
 
 ## Actions vocabulary
 
@@ -67,7 +91,8 @@ git toplevel (`balkanski`, `claude-architect`, `memory-management`, `velocity`, 
 
 ### feedback-* (50)
 
-**48 → GLOBAL** (they are rules about how Claude works with Carter anywhere — see Tranche 4):
+**47 → GLOBAL** (they are rules about how Claude works with Carter anywhere — see Tranche 4;
+was 48 until `newsession-focus-ghostty` was ruled DELETE):
 automation-observability, bg-isolation-worktree-gitignore, browser-auth-no-arc,
 carter-owns-folder-structure, check-conformance-suites, claude-slack-connector-single-workspace,
 colocate-co-evolving-tools, cos-as-memory-system-cross-harness, cost-vs-quality-defaults,
@@ -75,7 +100,7 @@ default-args-and-mock-patch, design-tokens, dogfood-in-real-contexts, dual-surfa
 edit-dev-clone-not-plugin, experiment-md-framing, file-versioning-convention,
 folder-proximity-two-audiences, incremental-build-not-scaffold-first, independent-verifier,
 insight-blocks, kpi-stress-test, l0l1l2-data-model, main-session-stays-interactive,
-mid-plan-clarifications, newsession-focus-ghostty, nmt-annotation, no-option-menus,
+mid-plan-clarifications, nmt-annotation, no-option-menus,
 no-secrets-in-ai-edited-files, no-softening-asks, no-unverified-state, orchestrator-pattern,
 output-home-convention, parallel-jobs-worktree-isolation, parallel-sonnet-research,
 personal-apps-free-tier, plain-naming-no-jargon, plan-mode-compact, private-first-iteration,
@@ -85,20 +110,28 @@ subagent-model-selection, test-principles-not-projects, unattended-no-dynamic-wo
 
 Two exceptions, routed:
 - `feedback-pareto-honesty` → `~/Projects/balkanski` — it is a balkanski-specific guardrail.
-- `feedback-subskill-vs-reference` → `~/Optimal/optimal-claude-skills/skill-factory` — codified there as BP-034.
+- `feedback-subskill-vs-reference` — **reframed (Carter, 2026-08-06):** fold it into a
+  skill-writing reference file inside the skill-factory repo (it is already codified there as
+  BP-034), so it loads when skills are being written rather than sitting as a memory topic.
+  Once the reference verifiably covers it, the memory copy is redundant → DELETE.
+  (Was Tranche 1: route to the skill-factory store. Now Tranche 2: fold + delete.)
 
-Inside the GLOBAL block, three are **already promoted** into `~/.claude/CLAUDE.md` and are
-DELETE? candidates once the CLAUDE.md text is verified to fully cover them:
+Inside the GLOBAL block, three were **already promoted** into `~/.claude/CLAUDE.md`:
 `check-conformance-suites` ("Planning a build"), `file-versioning-convention` ("Files & versions"),
-`no-option-menus` (promoted into `plan/CLAUDE.md`'s mode rules).
-And one is likely **superseded**: `newsession-focus-ghostty` describes the Ghostty split-right
+`no-option-menus` (also in `plan/CLAUDE.md`'s mode rules).
+**Direction reversed (Carter, 2026-08-06): these come OUT of the global CLAUDE.md.** The topic
+files stay canonical and get indexed under mode sections in the sorted MEMORY.md (template below);
+mode-`CLAUDE.md` templates are the eventual delivery path into project sessions (Phase 3). No
+longer delete candidates. The trade, named honestly: the global CLAUDE.md is the only layer that
+loads in *every* session — after demotion these rules auto-load only where a MEMORY.md section or
+a mode CLAUDE.md carries them.
+And one was **superseded**: `newsession-focus-ghostty` describes the Ghostty split-right
 launcher that `/new-session` no longer uses (it stages Agent View now — see
-`reference-new-session-agent-view`). DELETE? pending Carter.
-(These four stay counted in Tranche 4 until ruled on — each file lives in exactly one tranche.)
+`reference-new-session-agent-view`). **RULED: DELETE (Carter, 2026-08-06)** — moved to Tranche 2.
 
 ### user-* (3)
 
-- `meta-user-profile`, `user-carter-schema-design`, `user-profile-consulting` — GLOBAL (facts about Carter, needed everywhere).
+- `meta-user-profile`, `user-carter-schema-design`, `user-profile-consulting` — GLOBAL (facts about Carter, needed everywhere). **APPROVED (Carter, 2026-08-06).**
 
 ### project / tooling / misc (41)
 
@@ -238,38 +271,41 @@ transcript-cleanup-skills, workspace-mcp-attachments-dir.
 | --- | --- | --- |
 | memory-management (this repo) | 8 | **create** (repo-root store is currently empty) |
 | `~/Clients/outreach` | 9 | yes (7 topics) — hand-append index |
-| skill-factory | 9 | yes (8) — hand-append index |
+| skill-factory | 8 | yes (8) — hand-append index (was 9; `subskill-vs-reference` reframed to Tranche 2) |
 | `~/Sandbox/agentic-education` | 6 | yes (13) — hand-append index |
 | `~/Projects/loops` | 5 | **create** |
 | `~/Projects/balkanski` | 3 | **create** |
 | `~/Optimal/custom-agents` | 2 | **create** |
 | dad, claude-architect, ai-engineering, hoth, neon-learning, health-insurance, velocity, interviewer, mana-drive-reorg, compliance, Rebrand, future-of-work | 1 each (12) | dad/claude-architect/velocity/mana-drive-reorg exist; other 8 **create** |
-| **Tranche 1 total** | **54** | 12 stores to create, 7 existing |
+| **Tranche 1 total** | **53** | 12 stores to create, 7 existing |
 
 | Tranche | Files | Blocked on |
 | --- | --- | --- |
-| 1 — mechanical routes | 54 | Carter's go |
-| 2 — move-out / delete candidates | 3 (`plan-pmg-life-app`, `notion-multi-workspace-safety`, `model-configuration-guide`) | per-file confirmation |
+| 1 — mechanical routes | 53 | Carter's go |
+| 2 — move-out / delete / fold | 5 (`plan-pmg-life-app`, `notion-multi-workspace-safety`, `model-configuration-guide`, `newsession-focus-ghostty` **ruled: delete**, `feedback-subskill-vs-reference` **fold into skill-factory reference, then delete**) | per-file confirmation (2 of 5 ruled) |
 | 3 — HOLD (automations 5, shifts 1) + ASK 8 + PARKED 12 | 26 | Phase 3.5 / per-file rulings |
-| 4 — GLOBAL (incl. 4 delete-candidate flags: the 3 promoted rules + `newsession-focus-ghostty`) | 91 | the global-tier decision below |
+| 4 — GLOBAL (incl. the 3 CLAUDE.md-demotion files; mode-sorted in the template below) | 90 | the global-tier decision below |
 | **Total** | **174** | |
 
 ## Tranche 4 — the global tier (the one real decision)
 
-91 files — the feedback rules, user profiles, and machine references — are needed by sessions in
+90 files — the feedback rules, user profiles, and machine references — are needed by sessions in
 *every* project. But **no native store loads everywhere**: exactly one store loads per session, so
 in a project session the `~/Projects` store (where these files live) does not load. That gap
 predates the launch convention and survives it. "Consolidate into project stores" cannot apply
-here: copying into N project stores is forking (decided 2026-08-06), and symlinking 91 files × N
+here: copying into N project stores is forking (decided 2026-08-06), and symlinking 90 files × N
 stores is the fork surface E5 warned about, at scale.
 
 **Proposal:** keep `~/Projects` as the **canonical global library** — and it genuinely loads for
 container-level sessions, which is where cross-project work happens:
 
 1. The files stay where they are. No moves, no copies, no symlink fan-out.
-2. Truly universal *rules* get promoted up the ladder (`~/.claude/CLAUDE.md`, mode templates) —
-   that is Phase 2's promotion question, already on the roadmap, and three files show it works
-   (conformance-suites, file-versioning, no-option-menus are already living in CLAUDE.md).
+2. Universal *rules* are **not** promoted into `~/.claude/CLAUDE.md` — **reversed by Carter,
+   2026-08-06.** Topic files stay canonical; the sorted MEMORY.md's mode sections (template
+   below) are the index; the three rules currently living in the global CLAUDE.md get demoted
+   back out once their topic files verifiably cover the CLAUDE.md text. Mode-`CLAUDE.md`
+   templates (Phase 3, Gen 4 restructure) become the delivery path for mode rules into project
+   sessions — they load per-mode in every project, which MEMORY.md sections cannot do.
 3. High-value *references* needed by a specific project get the shared-topic-file mechanism (one
    symlink + index line into that project's store) — **after** the four audit.py checks are built.
    First candidate stays `reference-claude-code-loading-mechanics` → this repo's store.
@@ -277,9 +313,10 @@ container-level sessions, which is where cross-project work happens:
    Model-Configuration-Guide pointer), so any session can *fetch* the library even though nothing
    auto-loads it.
 
-The honest cost: these 91 files still have no auto-recall inside project sessions — same as today.
-The per-file fixes are promotion (universal rules), a shared-file symlink (project-relevant
-references, post-audit-checks), or the pointer fetch. Relocation fixes none of it.
+The honest cost: these 90 files still have no auto-recall inside project sessions — same as today.
+The per-file fixes are a mode-`CLAUDE.md` template line (mode rules, Phase 3), a shared-file
+symlink (project-relevant references, post-audit-checks), or the pointer fetch. Relocation fixes
+none of it.
 
 ## Execution procedure (runbook seed — capture as `docs/` runbook when run)
 
@@ -291,9 +328,69 @@ references, post-audit-checks), or the pointer fetch. Relocation fixes none of i
    every file named, run until every store reports `LEFT 0` for the tranche.
 5. Indexes: `mkindex.py` ONLY for newly created stores; **hand-append** for the 6 existing
    destination indexes (mkindex overwrites hand-merged lines). Remove moved lines from source
-   `MEMORY.md`s — a dangling index line is exactly what audit flags.
+   `MEMORY.md`s — a dangling index line is exactly what audit flags. Every index written or
+   rewritten follows the **sorted MEMORY.md template** (below); mkindex output is flat, so
+   section it by hand at execution.
 6. Fix-in-passing items: the two broken frontmatters (`reference-report-tone-conventions`,
    `feedback-skill-input-design`), the stale interviewer path.
 7. `audit.py` again → exit 0. Expected end state: same 315 files minus deletions, more stores,
    `~/Projects` down to the global tier only.
-8. Tranches 2/3 per Carter's per-file rulings; Tranche 4 per the global-tier decision.
+8. Tranches 2/3 per Carter's per-file rulings; Tranche 4 per the global-tier decision — including
+   demoting the three promoted rules out of `~/.claude/CLAUDE.md` after verifying each topic file
+   fully covers the removed text.
+
+## The sorted MEMORY.md (new dimension — Carter, 2026-08-06)
+
+Carter's addition to the manifest: every MEMORY.md index sorts its entries into
+**project-specific** and **mode-specific** sections, so a session sees at a glance which rules
+apply to what it is doing. MEMORY.md auto-loads in full every session — the sections don't change
+*what* loads, they tell the agent which lines to act on and which topics to fetch for its mode.
+
+**Template — project store:**
+
+```markdown
+# MEMORY.md
+
+## Project — always relevant here
+- [Title](file.md) — hook
+
+## Research — investigating
+## Plan — deciding & designing
+## Make — building
+(same one-line shape under each)
+
+## References — fetch on demand, any mode
+```
+
+**Template — the global library (`~/Projects` store):** same shape, with `Project` replaced by
+two sections: `User` (who Carter is) and `Always` (rules that apply in every mode).
+
+**The 90 Tranche 4 files, sorted** (48 feedback + 3 user + 39 references):
+
+- **User (3):** meta-user-profile, user-carter-schema-design, user-profile-consulting.
+- **Always (12):** bg-isolation-worktree-gitignore, browser-auth-no-arc, cost-vs-quality-defaults,
+  file-versioning-convention, insight-blocks, main-session-stays-interactive, nmt-annotation,
+  no-secrets-in-ai-edited-files, no-softening-asks, no-unverified-state, plain-naming-no-jargon,
+  unattended-no-dynamic-workflows.
+- **Research (6):** independent-verifier, parallel-sonnet-research, research-spike-card-shape,
+  research-to-reference-docs, root-page-is-not-spec, test-principles-not-projects.
+- **Plan (15):** check-conformance-suites, colocate-co-evolving-tools,
+  cos-as-memory-system-cross-harness, dogfood-in-real-contexts, dual-surface-parity,
+  folder-proximity-two-audiences, kpi-stress-test, l0l1l2-data-model, mid-plan-clarifications,
+  no-option-menus, orchestrator-pattern, personal-apps-free-tier, plan-mode-compact,
+  research-tech-stack-on-scaffolding, simplify-first.
+- **Make (15):** automation-observability, carter-owns-folder-structure,
+  claude-slack-connector-single-workspace, default-args-and-mock-patch, design-tokens,
+  edit-dev-clone-not-plugin, experiment-md-framing, incremental-build-not-scaffold-first,
+  no-model-names-in-claude-md, output-home-convention, parallel-jobs-worktree-isolation,
+  private-first-iteration, skill-knowledge-mapping, structured-template-scaffolds,
+  subagent-model-selection.
+- **References (39):** the machine/tool references already listed per-store above — one flat
+  section, not mode-sorted; they are fetched on demand, not bound to a mode.
+
+Borderline calls, moves welcome: test-principles-not-projects (Research vs Plan),
+research-tech-stack-on-scaffolding (Plan vs Research), private-first-iteration (Make vs Plan),
+nmt-annotation (Always vs Plan).
+
+Tranche 1 destination indexes use the project template at execution; most routed files land under
+**Project**, with per-file mode calls made while hand-appending (e.g. the balkanski QA notes → Make).
