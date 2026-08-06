@@ -12,7 +12,7 @@ shape: gen4-modes
 
 ## Next Action
 From `~/Projects/memory-management`, merge branch `worktree-mode-memory-research` into `main`
-(8 commits, no remote — local merge only).
+(no remote — local merge only; `git log main..worktree-mode-memory-research --oneline` shows what's coming).
 
 Then, in order (details in `context.md` next-steps): run
 `python3 make/memory-repair/transcript_consolidate.py` (dry-run, then `--execute`) to fold the
@@ -38,7 +38,7 @@ closed session's transcript out of the worktree-keyed dir — **fold BEFORE dele
 - Four audit.py checks are required before any memory symlink exists (spec in design doc)
 
 ## In-Flight Work
-- Branch `worktree-mode-memory-research` — 8 commits awaiting local merge; working tree clean
+- Branch `worktree-mode-memory-research` — awaiting local merge; working tree clean
 - The closed session's transcript (`22ce04ba….jsonl`) still sits in the worktree-keyed dir
   `~/.claude/projects/-Users-carterking-Projects-memory-management--claude-worktrees-mode-memory-research/`
 

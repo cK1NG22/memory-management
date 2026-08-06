@@ -87,6 +87,14 @@ work, not cleanup.
 - [ ] **Correction sweep for git-root keying wording** — still stating exact-cwd keying: the root
       `CLAUDE.md` two-system table, `docs/memory-repair-runbook.md`, `audit.py`'s orphan message,
       and the close-session skill's Phase-5 native-memory text.
+- [ ] **Update `close-session` + `new-session` skills to the new memory patterns** (Carter,
+      2026-08-06). close-session Phase 5: replace "keyed to the exact working directory / does not
+      walk up" with git-root keying + the one-store-per-session rule; route native facts to the
+      repo-root store. new-session: codify the worktree case (handoff written and committed on the
+      branch) and set the launch dir per the session-launch convention — **project root or the
+      mode folder that fits the next action** (`<project>/` or `<project>/<mode>/`), never a
+      deeper path — and drop any exact-cwd assumptions. Both live in `~/.claude/skills/` — outside this repo, so it's a hand edit, not
+      part of a branch merge.
 
 ## Phase 3 — Restructure the projects
 
