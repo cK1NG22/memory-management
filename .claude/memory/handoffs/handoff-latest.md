@@ -1,48 +1,72 @@
 ---
 project: memory-management
-task: mode-memory-research (worktree branch)
-session_ended: 2026-08-06T20:42:57Z
+task: phase25-manifest (worktree branch) → Phase 2.5 execution
+session_ended: 2026-08-06 (evening)
 cwd: /Users/carterking/Projects/memory-management
-git_branch: worktree-mode-memory-research
-git_sha: 9d7d465
+git_branch: worktree-phase25-manifest
 shape: gen4-modes
 ---
 
-# Handoff — memory-management / mode-memory research session
+# Handoff — Phase 2.5: manifest approved, execution is yours
 
-## Next Action
-From `~/Projects/memory-management`, merge branch `worktree-mode-memory-research` into `main`
-(no remote — local merge only; `git log main..worktree-mode-memory-research --oneline` shows what's coming).
+## Next Action (in order)
 
-Then, in order (details in `context.md` next-steps): run
-`python3 make/memory-repair/transcript_consolidate.py` (dry-run, then `--execute`) to fold the
-closed session's transcript out of the worktree-keyed dir — **fold BEFORE deleting the worktree**
-— then begin Phase 2.5: container-store memory consolidation, capturing the process as a runbook
-(Carter wants every procedure recorded for the dream/skill pipeline).
+1. From `~/Projects/memory-management`, **merge `worktree-phase25-manifest` into `main`**
+   (no remote — local merge only; `git log main..worktree-phase25-manifest --oneline` shows the
+   8 commits coming).
+2. **Fold this session's transcript BEFORE deleting the worktree:**
+   `python3 make/memory-repair/transcript_consolidate.py` (dry-run, review, then `--execute`) to
+   fold the worktree-keyed dir `…-memory-management--claude-worktrees-phase25-manifest` up into
+   the project dir. The 1-hour activity guard will skip it right after close — wait it out or
+   hand-fold per the runbook's Procedure C. **Fold, then delete the worktree — never the reverse**
+   (a dead dir gets archived by sweep, not folded).
+3. **Run the `@import` sentinel test** before anything touches `~/.claude/modes/`: (a) a
+   `@~/.claude/modes/TEST.md` import line in a mode CLAUDE.md loads its content; (b) what a
+   **missing** import target does — loud or silent (silent = E5's camouflage → needs an audit
+   check first). ALWAYS.md and the whole mode-files delivery are **contingent on this test**.
+   Record the results in `reference-claude-code-loading-mechanics` (native store, from project
+   root) — deliberately left unwritten by the worktree session.
+4. **Collect Carter's remaining gates** before moving files: Tranche 1 go (53 routes) · 3 unruled
+   Tranche 2 files (`plan-pmg-life-app`, `notion-multi-workspace-safety`,
+   `model-configuration-guide`) · the 8 ASKs (Tranche 3).
+5. **Execute per the manifest's procedure** (`plan/container-consolidation-manifest.md`, bottom):
+   audit clean → backups to `~/Claude/_archive/container-stores_<date>/` → destination toplevel
+   re-check → route.py to `LEFT 0` → **sectioned indexes per the sorted-MEMORY.md template** →
+   fold the 36 mode-principle + 12 Always files into `~/.claude/modes/` files, then delete →
+   demote the three promoted rules out of `~/.claude/CLAUDE.md` → fix-in-passing items → audit
+   exit 0. **Capture the runbook as it runs** (`docs/`), per Carter's standing rule.
+6. After merge: **re-mine this memory dir into mempalace** (wing `memory-management`) — skipped at
+   close because the worktree path would have indexed wrong.
 
 ## Pointers
-- Task memory entry point: `.claude/memory/context.md` (regenerated 2026-08-06; next-steps list is current)
-- Decisions log: `.claude/memory/decisions.md` (two entries dated 2026-08-06)
-- The design: `plan/mode-memory-design.md` · roadmap: `plan/ROADMAP.md` (new Phase 2.5)
-- Experiments: `research/sources/native-memory-keying-and-symlink-experiments.md`
-- Procedures: `docs/transcript-housekeeping-runbook.md` · `docs/memory-repair-runbook.md`
-- Tools: `make/memory-repair/` (`audit.py`, `transcript_sweep.py`, `transcript_consolidate.py`)
-- NOTE until merged: all of the above live on the branch — read them via this worktree's copy at
-  `.claude/worktrees/mode-memory-research/…`
 
-## Decisions This Session
-- Native memory keys to the **git root** (sentinel-proven) → no mode-memory layer gets built
-- Shared topic files = the one cross-store mechanism (canonical copy + symlink + index line); copying is forking
-- Sessions open at `<container>/`, `<project>/`, or `<project>/<mode>/` (Carter's launch convention)
-- Transcript housekeeping is standing maintenance: sweep + consolidate tools, archive never delete
-- Four audit.py checks are required before any memory symlink exists (spec in design doc)
+- **The deliverable:** `plan/container-consolidation-manifest.md` — Carter reviewed it in full;
+  rev 2 (mode files) is his design. All rulings and the tiering table are recorded inline.
+- Task memory entry: `.claude/memory/context.md` · decisions: `.claude/memory/decisions.md`
+  (2026-08-06 mode-files entry + the in-place-correction exception in the header)
+- Roadmap: `plan/ROADMAP.md` (Phase 3 mode-files bullet carries the full tiering spec)
+- Runbooks: `docs/transcript-housekeeping-runbook.md` · `docs/memory-repair-runbook.md`
+- NOTE until merged: everything above lives on the branch — read via the worktree copy at
+  `.claude/worktrees/phase25-manifest/…`
 
-## In-Flight Work
-- Branch `worktree-mode-memory-research` — awaiting local merge; working tree clean
-- The closed session's transcript (`22ce04ba….jsonl`) still sits in the worktree-keyed dir
-  `~/.claude/projects/-Users-carterking-Projects-memory-management--claude-worktrees-mode-memory-research/`
+## Decisions This Session (all Carter's)
+
+- Mode principles live **once** at `~/.claude/modes/<MODE>-MODE.md`, `@import`-ed by mode
+  CLAUDE.mds — never copied. Routing test: project-specific → MEMORY.md (Project Awareness);
+  mode principle → mode file (Situational Awareness).
+- **CLAUDE.mds explain and navigate; memory remembers** (container/project/mode tiering — table
+  in the manifest).
+- ALWAYS.md approved **contingent on the `@import` sentinel test** (incl. broken-import check).
+- Rulings: ghostty DELETE · user-* approved · subskill-vs-reference fold-then-delete · the three
+  promoted rules leave `~/.claude/CLAUDE.md`.
+- Misrecorded decisions are corrected **in place**, never by appended correction.
+- Execution happens in a **new session** (this handoff), with everything persisted first.
 
 ## Open Questions / Blockers
-- Phase 2.5 routing will need Carter's rulings on borderline files (orphan-repair precedent:
-  propose full manifest first, move nothing without approval)
-- Still untested: folder-level **skills** symlink (memory experiments do not cover the skills loader)
+
+- The four audit.py checks are still unbuilt — they gate the shared-file symlinks (Tranche 4's
+  library remainder), not the mode files.
+- ⚠️ Carried two sessions without movement: the correction sweep (root CLAUDE.md table,
+  memory-repair runbook, audit.py orphan message, close-session Phase-5 text still claim
+  exact-cwd keying) + updating the close-session/new-session skills to the new memory patterns.
+- Worktree memory promotion review (ROADMAP Phase 2.5) — still open, untouched by design.

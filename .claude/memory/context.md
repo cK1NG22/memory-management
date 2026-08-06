@@ -1,6 +1,6 @@
 # Context — memory-management
 
-**Last updated:** 2026-08-06
+**Last updated:** 2026-08-06 (session 2 — manifest review, mode-files design)
 
 ## 🎯 Goal
 
@@ -9,88 +9,85 @@ folder.** Optimizing for context curation, explicitly not for traditional coding
 
 ## 🧭 Where we are now
 
-**The mode-memory question is resolved — by the platform, not by us.** Sentinel experiments
-(2026-08-06, Claude Code 2.1.223) proved native memory is keyed to the **git root**: every session
-inside a repo project reads and writes ONE store, so research/plan/make already share memory.
-No mode-memory layer gets built.
+**The Phase 2.5 manifest is reviewed and the architecture is settled.** Carter reviewed
+`plan/container-consolidation-manifest.md` line by line and the design went through two revisions
+in one sitting, both his:
 
-- **Full experiment record:** `research/sources/native-memory-keying-and-symlink-experiments.md`
-  (git-root keying · exactly one store per session, ancestors never stack — the opposite of
-  CLAUDE.md · physical-path keying · all three symlink forms load · E5: a dangling memory symlink
-  is silently empty and the next write forks it self-camouflagingly · transcripts are portable and
-  resume-by-id is global).
-- **The design:** `plan/mode-memory-design.md` — shared topic files only (one canonical copy +
-  file symlink + per-store index line), MEMORY.md never shared, store-dir symlinks demoted to
-  repair tool. Four audit.py checks specified and **required before any symlink exists**.
-- **Transcript housekeeping executed:** 46 dead dirs (294 MB) archived, 83 deep transcript items
-  folded to project level. **Session-launch convention (Carter):** sessions open at
-  `<container>/` (`~/Projects`, `~/Clients`, …), `<project>/`, or `<project>/<mode>/` —
-  never deeper. Tools: `make/memory-repair/transcript_sweep.py` +
-  `transcript_consolidate.py`; procedure: `docs/transcript-housekeeping-runbook.md` (the seed for
-  a future dream skill).
-- **Consequence now queued:** container stores stay live for
-  container sessions, but a project-specific fact filed there never loads in the project sessions
-  that need it — one store per session, ancestors never stack. Phase 2.5 is therefore a
-  **placement** migration, not a dormancy rescue; full proposal in
-  `plan/container-consolidation-manifest.md`, awaiting Carter's rulings.
-- `worktree-skill-relocation` is **merged** (main moved to a31e76c; branch gone). This session's
-  branch `worktree-mode-memory-research` (7 commits) awaits merge.
-- Machine state verified clean twice today: 24 stores, 315 topic files, audit exit 0.
+- **Rev 1 — the sorted MEMORY.md:** index entries sorted into Project / Research / Plan / Make /
+  References sections.
+- **Rev 2 — the mode files:** mode *principles* leave memory entirely and live once at
+  `~/.claude/modes/RESEARCH-MODE.md` / `PLAN-MODE.md` / `MAKE-MODE.md`, pulled into each project's
+  mode `CLAUDE.md` by one `@import` line (a reference, not a copy — nothing forks). The routing
+  test (Carter, verbatim): project-specific → MEMORY.md (*Project Awareness*); mode principle →
+  `<MODE>-MODE.md` (*Situational / Mode Awareness*). CLAUDE.md-vs-memory tiering recorded:
+  **CLAUDE.mds explain and navigate; memory remembers.**
+- **Ruled:** `newsession-focus-ghostty` DELETE · user-* GLOBAL approved · `subskill-vs-reference`
+  fold-into-skill-factory-reference then delete · the three CLAUDE.md-promoted rules come back OUT
+  of the global CLAUDE.md · **ALWAYS.md approved contingent on the `@import` sentinel test**
+  (must also prove a *broken* import fails loud — silent would be E5 again).
+- **Tranche state:** T1 53 routes (awaiting go) · T2 5 (2 of 5 ruled) · T3 26 (8 ASKs open) ·
+  T4 90 (approved: 36 → mode files, 12 → ALWAYS.md, 42 stay as the `~/Projects` library).
+- This session also: merged `worktree-mode-memory-research` into main (7fd111b), hand-folded that
+  session's transcript (Procedure C), corrected the misrecorded launch convention **in place**
+  (the decisions.md in-place-correction exception is now written in its header), answered the
+  git-toplevel rules (containers never / projects yes / modes never), and recorded the
+  worktree-memory-promotion TODO.
+- Machine state: audit clean (24 stores / 315 topics), zero moves executed — the manifest is
+  still a proposal in flight, exactly as designed.
 
 ## ⏭️ Next steps / open
 
-Full list in `plan/ROADMAP.md` (new Phase 2.5).
+Full list in `plan/ROADMAP.md`. **Carter's call: execution happens in a NEW session** — see
+`handoffs/handoff-latest.md` for the ordered next actions. In short:
 
-1. **Next session (planned with Carter):** merge `worktree-mode-memory-research`; run
-   `transcript_consolidate.py --execute` to fold this session's transcript out of the worktree dir
-   **before** removing the worktree (fold-then-delete order — see runbook); then start the
-   **container-store consolidation** (Phase 2.5), capturing the process as a runbook.
-2. **Build the four `audit.py` checks** (spec in `plan/mode-memory-design.md`).
-3. **Correction sweep** — root `CLAUDE.md` table, `docs/memory-repair-runbook.md`, `audit.py`
-   orphan message, and close-session's Phase-5 text all still claim exact-cwd keying. Also update
-   the **`close-session` and `new-session` skills** to the new memory patterns (git-root keying,
-   one store per session, launch convention, worktree handoff case) — Carter's ask, 2026-08-06.
-4. **Review worktree memory promotion** (Carter's ask, 2026-08-06): project memory in worktrees
-   merges via git (fine); the *native* store a worktree session keys is ephemeral and orphans on
-   worktree deletion — no promotion path exists. Details in `plan/ROADMAP.md` Phase 2.5.
-5. Still open from before: **sentinel-test the folder-level skills symlink** (today's memory tests
-   do NOT cover the skills loader — different mechanism); post-relocation floor re-measure;
-   `/context-dashboard`.
+1. **Merge `worktree-phase25-manifest` into main** (8 commits, local only — no remote), then fold
+   this session's transcript out of the worktree-keyed dir **before** deleting the worktree.
+2. **Run the `@import` sentinel test** (home-path import loads; broken import loud or silent) —
+   gates ALWAYS.md and the whole mode-files delivery.
+3. **Get Carter's remaining gates:** Tranche 1 go (53 routes) · 3 unruled Tranche 2 files ·
+   8 ASKs.
+4. **Execute per the manifest's procedure** (backup → toplevel re-check → route.py → sectioned
+   indexes per the template → fold 36+12 into mode files → CLAUDE.md demotion → audit exit 0),
+   **capturing the runbook as it runs.**
+5. Carried forward: the four audit.py checks · correction sweep + close-session/new-session skill
+   updates (⚠️ two sessions old, unmoved) · worktree memory promotion review · skills-symlink
+   sentinel · floor re-measure · mempalace re-mine of this memory dir post-merge.
 
 ## 🧠 Recent decisions
 
-See `decisions.md` (two entries 2026-08-06). The load-bearing ones:
+See `decisions.md` (three entry groups dated 2026-08-06). Load-bearing:
 
-- **No mode-memory layer** — git-root keying makes it redundant; symlinks would add a proven
-  fork surface (E5).
-- **Shared topic files are the one adopted sharing mechanism**; copying is forking; index line
-  mandatory in each consuming store.
-- **Sessions open at container, project, or mode level** — transcripts key to the exact launch
-  cwd, so launch discipline is what keeps the transcript map readable.
-- **Housekeeping tools are standing maintenance, not one-offs** — worktrees and background jobs
-  recreate deep transcript dirs constantly.
+- **Mode principles live once, in shared mode files, delivered by `@import`** — copies drift,
+  references can't fork.
+- **The routing test:** Project Awareness vs Situational/Mode Awareness.
+- **CLAUDE.mds explain and navigate; memory remembers** — the three-tier division.
+- **Misrecordings are corrected in place, never by appending** — conflicting statements confuse
+  agents; a misunderstanding was never a decision.
+- **ALWAYS.md approved contingent on the `@import` sentinel test.**
 
 ## 💡 What we learned
 
-- **Platform findings carry a version stamp.** "Native memory does not walk up" was true of
-  non-git dirs and false inside repos — overgeneralized provenance, caught only by re-testing.
-- **Exactly one memory store loads per session; ancestor stores never stack** — the opposite
-  shape of the CLAUDE.md chain. Layered instructions vs one flat notebook per project.
-- **The worst symlink failure self-camouflages:** a dangling store link reads as empty memory,
-  and the next write recreates the stale target so resolve-checks pass again (E5).
-- **Transcripts are logs, not knowledge** — keyed to launch cwd, portable, resume-by-id global;
-  only `memory/` folders matter for recall.
-- **Capture the process the first time it runs** (Carter) — the runbook written at first
-  execution is the seed dream promotes into a skill.
+- **Symlinks are whole-file only; `@import` is the block-level include.** The mechanism Carter
+  wanted ("symlink a block of text") exists natively as the CLAUDE.md import line — one layer up,
+  no filesystem link to dangle.
+- **The recall gap closes at the instruction layer, not the memory layer.** Relocating memory
+  never made rules load everywhere; mode files + import do — instructions are
+  write-once-read-everywhere, memory is write-as-you-go, and June's failures came from mixing them.
+- **A reviewed manifest beats a clever plan.** Carter's notes rerouted ~2% of Tranche 1 (falsifier
+  threshold was 15%) but redesigned Tranche 4 entirely — the per-file layer was right, the
+  architecture layer needed him.
+- **Editor buffers aren't disk.** Carter's Cursor notes were invisible until Cmd+S — checksum
+  against git before concluding "no changes."
 
 ## 📂 Files touched · 🌿 git
 
-Project at `~/Projects/memory-management/`. This session (branch `worktree-mode-memory-research`,
-7 commits): `research/sources/native-memory-keying-and-symlink-experiments.md` (new),
-`plan/mode-memory-design.md` (new), `docs/transcript-housekeeping-runbook.md` (new),
-`make/memory-repair/transcript_sweep.py` + `transcript_consolidate.py` (new), `plan/ROADMAP.md`,
-`decisions.md`, this file. Outside the repo: `~/.claude/projects/` (83 dirs → 30: 46 archived to
-`~/Claude/_archive/projects-transcripts_2026-08-06/`, 6 dirs folded up),
-`reference-claude-code-loading-mechanics.md` in the `~/Projects` store (corrected + extended),
-`~/Claude/personal-backlog.md` (terminal side-panel renderer TODO),
-`~/Claude/session-logs/thinking-patterns.md`.
+Project at `~/Projects/memory-management/`. This session (branch `worktree-phase25-manifest`,
+8 commits incl. close): `plan/container-consolidation-manifest.md` (new — the deliverable),
+`plan/ROADMAP.md` (mode-files decision, git-init item, worktree-promotion TODO),
+`decisions.md` (in-place exception header + mode-files entry), `handoffs/handoff-latest.md`,
+this file. Outside the repo: prior session's transcript hand-folded into
+`~/.claude/projects/-Users-carterking-Projects-memory-management/`;
+`~/Claude/session-logs/thinking-patterns.md` + `2026-08-06.md`. **Native memory deliberately not
+written from this worktree** (worktree stores orphan on deletion — the exact trap the promotion
+TODO covers); the `@import` sentinel results belong in `reference-claude-code-loading-mechanics`
+when the execution session runs the test from the project root.
