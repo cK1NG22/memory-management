@@ -76,7 +76,10 @@ work, not cleanup.
       `<container>/`, `<project>/`, or `<project>/<mode>/` — never deeper). Standing tools: `make/memory-repair/`
       `transcript_sweep.py` + `transcript_consolidate.py`; procedure:
       `docs/transcript-housekeeping-runbook.md`.
-- [ ] **Consolidate the container stores** (`~/Projects` 135 topics, `~/Optimal`, `~/Sandbox`,
+- [x] **Consolidate the container stores** — **done 2026-08-06** (all four tranches; 65 moves,
+      3 deletes, 12 new stores, audit exit 0 at 37 stores / 264 topics). Per-file record + ASK
+      rulings + lessons: the manifest's "Execution record" section. Original scope:
+      (`~/Projects` 135 topics, `~/Optimal`, `~/Sandbox`,
       `~/Sandbox/builds`, `~/Vault`, `~/Research`) — a **placement** migration: container stores
       stay live under the launch convention, but one store loads per session, so project-specific
       facts filed at container level never load in the project sessions that need them. Full
@@ -139,7 +142,10 @@ work, not cleanup.
       encoded absolute root path either way; `audit.py` before/after any move stays mandatory.
       Currently non-repo (from the manifest's destination check): dad, hoth, loops, ai-engineering,
       neon-learning, health-insurance, outreach, mana-ventures, custom-agents.
-- [ ] **Build the mode files + mode `CLAUDE.md` templates** — update model **DECIDED (Carter,
+- [x] **Build the mode files + mode `CLAUDE.md` templates** — **done 2026-08-06** for the files
+      + this project's wiring (sentinel test overturned the home-path import; delivery is an
+      in-project symlink + `@import`, see `docs/mode-files-runbook.md`; stamping the other
+      projects rides the restructure item above). Original decision: **DECIDED (Carter,
       2026-08-06): single-source, referenced.** Mode principles live once at
       `~/.claude/modes/RESEARCH-MODE.md` / `PLAN-MODE.md` / `MAKE-MODE.md` (same home as the
       per-mode skills below — a mode's instructions and tooling side by side). Each project's mode
@@ -187,7 +193,7 @@ work, not cleanup.
    evidence for whether Gen 4 is worth it.
 2. **File-type skills** (`xlsx`/`docx`/`pptx`/`pdf`, >10% of the catalog) key off *file type*, not
    activity. Placement under a mode structure is genuinely ambiguous.
-3. **`reference-notion-multi-workspace-safety.md`** is now unreferenced — delete when ready.
+3. ~~`reference-notion-multi-workspace-safety.md`~~ — deleted 2026-08-06 (Tranche 2).
 
 ---
 
