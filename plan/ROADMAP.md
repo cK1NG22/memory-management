@@ -51,6 +51,36 @@ work, not cleanup.
 - [ ] **`/mine-conversation`** — have agents read this conversation (and future long ones) and extract
       thoughts, patterns, and possibilities that got dropped. *Why:* this session produced far more
       than survived into the docs; the losses were silent, which is the recurring failure here.
+- [ ] **Shared memory-write reference** (added 2026-08-07, from the skill drift sweep) — one
+      canonical file holding the write rules every memory writer follows: the routing test,
+      git-root keying, the frontmatter shape, the **mandatory** `MEMORY.md` index line, the
+      sectioned-index template, no-unverified-state. Every writer becomes a thin wrapper that
+      reads it: `close-session`, `brain-dump`, `capture-feedback`, `/capture-reference` (above),
+      `dream`/`morning-shift` (proposal + apply), the `research-deep-dive` agent. *Why:* the sweep
+      found the copies have already forked — `capture-feedback` writes top-level `type:` where
+      close-session's guide says `metadata.type:`. Copies drift, references can't fork — the mode-
+      files mechanism applied to skills. Also turns Phase 2's "change all four writers together"
+      into a one-file edit.
+- [ ] **`/share-topic`** (added 2026-08-07) — mechanize the shared-topic-file procedure from
+      `mode-memory-design.md`: one `ln -s` + one index line per consuming store; removal = links
+      first, canonical last; `audit.py` before/after. **Blocked on the four audit.py checks**
+      (Phase 2.5). First customer, already queued: link
+      `reference-claude-code-loading-mechanics.md` from the `~/Projects` store into this repo's
+      store.
+- [ ] **Skill-dependency map + retired-token tripwire + the cross-skill change protocol** (added
+      2026-08-07). The map is **derived, never hand-drawn** — a hand-maintained map is one more
+      copy that drifts. A small script greps `~/.claude/skills/*/SKILL.md` +
+      `~/.claude/agents/*.md` for load-bearing tokens (memory paths, formats, skill-to-skill
+      references) and emits who-depends-on-what — automating the 2026-08-07 sweep so it can rerun
+      any time. `audit.py` gains a **retired-token list** (`history.md`, `mempalace`, the old hub
+      path, `task-types/`, exact-cwd keying wording): any skill or agent still carrying a retired
+      convention fails the audit loudly instead of drifting silently. **The protocol for any
+      change that touches a shared convention:** (1) name the convention changing, (2) generate
+      the map to list dependents, (3) change every dependent in one change set — a convention
+      change that doesn't update all its dependents is a fork, not a change, (4) add the old
+      token to the retired list so stragglers surface. Protocol text lives beside the shared
+      write reference. `claude-audit` gains a memory section that runs `audit.py` (incl. the
+      imports check) so "audit my setup" covers memory wiring.
 - [x] **Retire `history.md` + the `auto_log_history.py` Stop hook.** Done 2026-08-05. The Stop hook
       is unwired from `~/.claude/settings.json` and archived (with its test) to
       `~/.claude/hooks/_archive/`; `close-session` no longer appends it; `new-session` Phase 4 is
@@ -120,6 +150,26 @@ work, not cleanup.
       mode folder that fits the next action** (`<project>/` or `<project>/<mode>/`), never a
       deeper path — and drop any exact-cwd assumptions. Both live in `~/.claude/skills/` — outside this repo, so it's a hand edit, not
       part of a branch merge.
+- [ ] **Skill drift fixes — 2026-08-07 sweep** (all hand edits in `~/.claude/skills/` +
+      `~/.claude/agents/`; do together with, or right after, the close-session/new-session item
+      above — ideally as thin wrappers over the shared memory-write reference, Phase 1).
+      **close-session** additionally: drop the mempalace phase (ruled dead), the hardcoded
+      `-Users-carterking-Projects` Phase-1 scan, and the task-type feedback step; add the
+      **worktree guard** — in a worktree, write project memory + handoff only, never the native
+      store (worktree stores orphan on deletion), and end with ExitWorktree "keep."
+      **brain-dump**: route to the session's git-root store instead of the hardcoded `~/Projects`
+      store (today every in-project dump misfiles into the library), canonical frontmatter, index
+      line mandatory. **capture-feedback**: rule-shaped feedback routes to `ALWAYS.md` /
+      `<MODE>-MODE.md` per the tiering (CLAUDE.mds explain and navigate; memory remembers);
+      align frontmatter; drop the Gen 3 task-type bootstrap. **memory-review**: review the store
+      for the cwd — 37 stores exist, it knows one — and the sectioned-index template.
+      **memory-janitor agent**: run `audit.py` across all stores instead of hardcoding one.
+      **research-deep-dive agent**: route the memory write to the store the research belongs to.
+      **dream + morning-shift**: bake the write conventions into proposal + apply **before
+      roadmap 4.4 flips writes on**. **opusplan**: plans save to `plan/` (present-tense home),
+      never "the memory directory" — fix when it moves to the plan mode home (phase3.md).
+      Clean, no action: day/night-shift, save-summary, file-versioning, skill-creator, learn
+      (separate gstack system by design).
 
 ## Phase 3 — Restructure the projects
 
@@ -139,6 +189,14 @@ work, not cleanup.
       The post-relocation number comes free from the next normal session start.
 - [ ] **Restructure all project folders to the mode shape.** Sequence deliberately: fix → prune →
       measure → *then* migrate. Gen 3 tasks map to modes where they fit and stay put where they don't.
+- [ ] **Rewrite `restructure-project` + `new-project` to Gen 4 before the stamping starts** (added
+      2026-08-07). `restructure-project` still scaffolds `history.md` (retired 2026-08-05) and the
+      full Gen 3 COS shape (PROJECT.md/TASK.md/task-types); `new-project` assumes the same
+      container shape. Rewrite `restructure-project` in place as the Gen 4 mode stamper (mode
+      CLAUDE.mds + symlinks + `git init` + the store-keying pre-flight — the runbook's step 5), or
+      park it until then. Leaving it live while Phase 3 rolls out scaffolds the previous
+      generation in parallel — the exact "three generations coexisted" failure this roadmap's
+      standing principles name.
 - [ ] **`git init` every project folder as part of the mode migration** (Carter, 2026-08-06). A
       non-repo project fragments native memory: every mode-folder launch keys its own store
       (exact-cwd keying), so `plan/` and `make/` sessions each get a separate empty store — the
