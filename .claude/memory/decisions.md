@@ -415,3 +415,26 @@ resolved and indexed). Full record + per-file rulings: the manifest's "Execution
   skills cost ~1.1K tokens total because each description is one terse line; the ~43 other global
   skills carry the rest of the catalog. Same lever as relocation, nothing moves — but trim fat,
   not signal, since the description is what makes a skill fire.
+
+---
+
+## 2026-08-07 — Skill-listing budget root-caused; sentinel gate closed (research session)
+
+- **The name-only skill mystery is the skills-listing BUDGET, not symlinks, YAML, or parsing.**
+  Four-lane research (docs, GitHub, community, binary forensics) + a controlled experiment:
+  the listing gets ~1% of the model's context window; Anthropic-bundled skills are exempt; the
+  rest keep descriptions in usage-priority order (`usageCount × max(0.5^(days/7), 0.1)` from
+  `~/.claude/skill-usage.json`) and the overflow renders as bare names, silently. Raising
+  `skillListingBudgetFraction` in a fixture restored a dropped description **through the two-hop
+  symlink chain** — causation, not correlation. Full record:
+  `research/sources/skill-description-drop.md`.
+- **The Phase 3 sentinel gate is closed as PASSED:** names, descriptions, and natural-language
+  triggering all load through folder-level + two-hop skill symlinks; symlinked skill dirs are
+  officially documented as supported. Broken links still vanish silently — the one-place audit
+  scan stays mandatory.
+- **The frontmatter-trim item is reframed as the fix for a live triggering bug**, not a token
+  optimization: this machine is ~4× over budget (~31K chars vs ~8K), so 15+ least-used skills
+  are name-only per session and cannot natural-language trigger. *Why trim rather than raise the
+  budget:* the budget is aggregate (every verbose description evicts someone else's), and raising
+  it charges every session's context; trimming fixes both at once. Budget raise stays available
+  as a deliberate second lever.
