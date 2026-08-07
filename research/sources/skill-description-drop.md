@@ -43,11 +43,13 @@ everyone else: bare `- name` — silent (a warn line exists only in debug logs)
 - **The evicted set varies session to session.** Usage scores decay weekly and the budget scales
   with the model's context window, so the same catalog drops different skills under different
   models and on different days. It looks like the model being forgetful, not like breakage.
-- **This machine is far over budget**: ~31,350 chars of catalog vs ~8,000 default budget at 200K
-  context. Baseline captured 2026-08-07: one session showed 16 bare names (`youtube-slide-transcript`,
-  `unfreeze`, `init`, `security-review`, all `ponytail:*`, four `superpowers:*`); this session
-  showed a different set (`sources-cited`, `tdd`, `sync-gbrain`). Every never/rarely-used skill is
-  at risk every session.
+- **This machine is measurably over budget** (live `--debug-file` warning, 2026-08-07):
+  `130 skills, 35948 chars > 30000 budget` on the default model → ~16 skills bare per session.
+  Smaller-context models fare far worse: at 200K context the budget is only ~8,000 chars — same
+  catalog, ~4× over — which is why headless sonnet/haiku probes always evicted the fixture skill.
+  Baseline sets captured 2026-08-07 differ per session (`youtube-slide-transcript`, `unfreeze`,
+  `init`, `security-review`, `ponytail:*`, `superpowers:*` in one; `sources-cited`, `tdd`,
+  `sync-gbrain` in another). Every never/rarely-used skill is at risk every session.
 
 ## Evidence trail (provenance labels)
 

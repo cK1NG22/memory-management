@@ -433,8 +433,9 @@ resolved and indexed). Full record + per-file rulings: the manifest's "Execution
   officially documented as supported. Broken links still vanish silently — the one-place audit
   scan stays mandatory.
 - **The frontmatter-trim item is reframed as the fix for a live triggering bug**, not a token
-  optimization: this machine is ~4× over budget (~31K chars vs ~8K), so 15+ least-used skills
-  are name-only per session and cannot natural-language trigger. *Why trim rather than raise the
+  optimization: this machine measures 35,948 chars vs a 30,000-char budget on the default model
+  (and only ~8K budget for 200K-context models), so ~16 least-used skills are name-only per
+  session and cannot natural-language trigger. *Why trim rather than raise the
   budget:* the budget is aggregate (every verbose description evicts someone else's), and raising
   it charges every session's context; trimming fixes both at once. Budget raise stays available
   as a deliberate second lever.
