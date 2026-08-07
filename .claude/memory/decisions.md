@@ -402,3 +402,16 @@ resolved and indexed). Full record + per-file rulings: the manifest's "Execution
   exists in the `~/Projects` library (older, general) and in this project's native store (the
   @import matrix, written tonight). Phase 3's shared-file symlink plan for this topic must
   reconcile them first.
+
+---
+
+## 2026-08-07 — Phase 3 plans approved (Carter)
+
+- **`plan/phase3.md` approved as written** (renamed from `skill-relocation-plan.md` when the
+  restructure plan joined it): sentinel test → Plan B (restamp every project) → Plan A (move the
+  last 15 skills) → re-measure. The two ❓ calls inside Plan A — the file-type four's destination
+  and `resolve-vulns` — stay open; approval did not rule them.
+- **New Phase 3 item: trim skill frontmatter to the gstack shape** (Carter). *Why:* the 53 gstack
+  skills cost ~1.1K tokens total because each description is one terse line; the ~43 other global
+  skills carry the rest of the catalog. Same lever as relocation, nothing moves — but trim fat,
+  not signal, since the description is what makes a skill fire.

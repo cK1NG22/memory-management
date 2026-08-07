@@ -3,8 +3,9 @@
 *(was `skill-relocation-plan.md` — renamed 2026-08-07 when the restructure plan joined it, so both
 review together)*
 
-**Status:** two plans awaiting Carter's review. Everything below "Plan record" is the measured
-record from 2026-08-05/06 — unchanged, still the inventory of what already moved.
+**Status:** approved (Carter, 2026-08-07). The two ❓ calls in Plan A stay open — approval didn't
+rule them. Everything below "Plan record" is the measured record from 2026-08-05/06 — unchanged,
+still the inventory of what already moved.
 
 ## The order (one gate, then B unblocks A)
 

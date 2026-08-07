@@ -125,6 +125,12 @@ work, not cleanup.
       `~/Optimal/.claude/skills/` — global is now 102 skills, ~1,440 tokens lighter everywhere.
       Remaining tranches are Carter's call (physical moves + the gstack question).
       Plan and full inventory: `phase3.md`.
+- [ ] **Trim skill frontmatter to the gstack shape** (Carter, 2026-08-07). The 53 gstack skills
+      cost only ~1.1K tokens because each `description:` is one terse line (~20 tokens); the ~43
+      non-gstack global skills carry the rest of the catalog (~120+ tokens each — long
+      trigger-phrase lists are the bulk). Review each against the gstack shape. Trim fat, not
+      signal: the description is what makes a skill fire, so keep the trigger phrases that earn
+      their keep. Same lever as relocation, no files move.
 - [ ] **Re-measure the floor** after pruning. **Baseline captured 2026-08-05 (before relocating):
       44K–55K tokens at session start across eight recent sessions**, from the `.jsonl` token data.
       The post-relocation number comes free from the next normal session start.
