@@ -272,7 +272,7 @@ This file exists so that deletion is safe. Finish the migration.
   June reorg.
 
 **Full detail:** `mode-review-verdict.md` · `mode-structure-spec.md` · `mode-review-round1.md` ·
-`skill-relocation-plan.md` (all in this folder) · memory
+`phase3.md` (all in this folder) · memory
 `reference-claude-code-loading-mechanics`
 
 ---

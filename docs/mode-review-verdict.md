@@ -440,7 +440,7 @@ rest combined.**
 1. **Move skills out of global.** ~130 skills load into every session at roughly 11,000 tokens.
    Decide which you genuinely want everywhere, and relocate the rest into the projects or modes
    where they're used. This is the real context-curation win, it's verified, and it's the one thing
-   the folder structure is genuinely good for. *(Plan: `skill-relocation-plan.md`. Do the dead-symlink
+   the folder structure is genuinely good for. *(Plan: `phase3.md`. Do the dead-symlink
    fix first — see below.)*
 2. **Fix the seven dead skill symlinks** from the June reorg. They fail silently. Three of four
    targets are recoverable in `~/School/`, `~/Optimal/`, `~/Claude/`. Independent of everything else

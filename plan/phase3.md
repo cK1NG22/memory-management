@@ -1,7 +1,114 @@
-# Skill relocation — measured plan + execution record
+# Phase 3 plan — restamp projects, then move the last skills
 
-**Status:** baseline measured and first tranche executed 2026-08-05. What remains is either
-Carter's call or blocked on it. Numbers below are measured, not estimated.
+*(was `skill-relocation-plan.md` — renamed 2026-08-07 when the restructure plan joined it, so both
+review together)*
+
+**Status:** two plans awaiting Carter's review. Everything below "Plan record" is the measured
+record from 2026-08-05/06 — unchanged, still the inventory of what already moved.
+
+## The order (one gate, then B unblocks A)
+
+```
+sentinel test ──→ B. restamp every project ──→ A. move the last 15 skills ──→ re-measure floor
+(does a symlinked   (git init the 9 + wire      (build mode skill homes,      (free — next normal
+ skills/ folder      mode CLAUDE.mds+links)      delete global entries)        session start)
+ load? unverified)
+```
+
+B before A: the 15 skills will load *through* project wiring — move them first and they load
+nowhere. The sentinel test is first because it's cheap and gates both.
+
+---
+
+## Plan A — finish moving skills out of global
+
+Where the 96 remaining global skills go (81 already ruled — only the bottom two rows move):
+
+```
+global 96 ─┬─ 53 gstack           → stay   (installer puts them back; only ~1.1K tokens)
+           ├─ 17 cross-cutting    → stay   (used from anywhere by design)
+           ├─  8 cron/path-locked → stay   (automations project frees them later — Phase 3.5)
+           ├─  2 special          → stay   (ui-ux-pro-max managed elsewhere; retire
+           │                                restructure-project after Plan B replaces it)
+           ├─  1 resolve-vulns    → ❓ Carter (candidate: future automations project)
+           └─ 15 mode-home        → MOVE after Plan B:
+                  plan/      ← kpi-setter · opusplan
+                  research/  ← sources-cited · youtube-slide-transcript
+                  make/      ← api-design · architecture-review · database-design · dung
+                             · mcp-builder · tdd · vercel-deploy-claimable
+                  make/❓    ← docx · pdf · pptx · xlsx  (Carter: make/, or stay global?)
+```
+
+Steps:
+
+```
+1. sentinel test: symlink a whole skills/ folder → does it load?
+      FAIL → fall back to per-skill links per project (more links, same result)
+2. build the mode homes:  ~/.claude/modes/<mode>/skills/<skill> → canonical home
+3. AFTER Plan B: delete the 15 global entries
+4. verify each skill loads from exactly ONE place (extend audit.py scan) — then re-measure floor
+```
+
+**Deletes:** the 15 global entries (step 3) — verified gone by the step-4 one-place scan.
+**Falsifier:** probe a stamped project's mode dir; if a moved skill doesn't load, the chain is
+broken → relink to global (nothing is deleted until probes pass).
+
+---
+
+## Plan B — restamp every project to the mode shape
+
+Target shape (this repo is the working model):
+
+```
+<project>/                    ← its own git repo (9 still aren't — init below)
+├── CLAUDE.md                 ← what this project is + how to navigate it
+├── research/
+│   ├── CLAUDE.md             ← thin: which mode + directions, ends with @RESEARCH-MODE.md
+│   ├── RESEARCH-MODE.md      → ~/.claude/modes/RESEARCH-MODE.md      (symlink, abs target)
+│   └── .claude/skills        → ~/.claude/modes/research/skills/      (symlink — Plan A)
+├── plan/   ← same three-piece wiring
+├── make/   ← same three-piece wiring
+└── .claude/memory/           ← once, at project root — never per mode
+```
+
+Per project (= mode-files runbook step 5, plus the git pre-flight):
+
+```
+audit.py clean
+   ↓
+pre-flight: any native store keyed to a SUBfolder of this project?
+   → resolve it first (git init above it would strand it)
+   ↓
+git init — only the 9 non-repos: dad · hoth · loops · ai-engineering · neon-learning
+           · health-insurance · outreach · mana-ventures · custom-agents
+   ↓
+make mode folders → write thin CLAUDE.mds → ln -s the three mode files
+   ↓
+probe: claude -p from a mode dir — is a mode-file-only phrase in context?
+   ↓
+audit.py exit 0   (its imports check now watches this project forever)
+```
+
+Rules that bound the work:
+
+- **Containers (`~/Projects` etc.) stay non-repos** — a repo there swallows every project's store.
+- Gen 3 task folders map into modes **where they fit; stay put where they don't.** No forcing.
+- One project at a time, probe each — a failed probe stops the line, not the audit three
+  projects later.
+
+After ALL projects pass:
+
+- remove `# Planning a build` from `~/.claude/CLAUDE.md` (marked with a comment) — only now is
+  the removal recall-neutral (its content lives in PLAN-MODE.md, which needs the wiring to load)
+- Plan A steps 3–4 unblock
+
+**Deletes:** the `# Planning a build` section (recall-neutral check above is its verification).
+**Falsifier:** any post-stamp probe fails → the wiring pattern is wrong; stop stamping, fix the
+pattern, re-probe the already-stamped projects before continuing.
+
+---
+
+# Plan record — skill relocation, measured (2026-08-05/06)
 
 ## The measurement (2026-08-05, before any relocation)
 

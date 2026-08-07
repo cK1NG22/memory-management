@@ -124,7 +124,7 @@ work, not cleanup.
       the 11 project-scoped symlinks moved to `~/School/.claude/skills/` and
       `~/Optimal/.claude/skills/` — global is now 102 skills, ~1,440 tokens lighter everywhere.
       Remaining tranches are Carter's call (physical moves + the gstack question).
-      Plan and full inventory: `skill-relocation-plan.md`.
+      Plan and full inventory: `phase3.md`.
 - [ ] **Re-measure the floor** after pruning. **Baseline captured 2026-08-05 (before relocating):
       44K–55K tokens at session start across eight recent sessions**, from the `.jsonl` token data.
       The post-relocation number comes free from the next normal session start.
@@ -175,14 +175,14 @@ work, not cleanup.
       **Sentinel-test first:** a symlinked parent `skills/` folder loading is unverified.
       **Symlinks are the known-fragile part** — 12 died silently in the June reorg — so this needs a
       resolve-check plus a load-twice check (one loading location per skill), and
-      `/move-project --check` is where both belong. Per-mode assignments: `skill-relocation-plan.md`.
+      `/move-project --check` is where both belong. Per-mode assignments: `phase3.md`.
 
 ## Phase 3.5 — Automations
 
 - [ ] **Create the automations project** (Carter's idea, endorsed 2026-08-05) — one workspace for
       the cron jobs, with `WorkingDirectory` pinned in each plist so the cron-locked skills can
       leave global too. Dream stays with memory-management (its rules are memory policy — the
-      colocate principle). Details: `skill-relocation-plan.md`.
+      colocate principle). Details: `phase3.md`.
 - [ ] **Shifts under the mode structure** — Carter's direction: execution lands in the relevant
       project's `make/`, possibly `make/shift-work/`; the foreman stays cross-project. Resolve
       when the mode rollout reaches the projects the shifts touch.

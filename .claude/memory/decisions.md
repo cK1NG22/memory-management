@@ -189,7 +189,7 @@ store resolves to a directory that exists. Backup at `~/Claude/_archive/orphan-s
   fight. The token weight is in the other 60 skills anyway.
 - **Physical moves are proposed, not executed.** *Why:* Carter owns folder structure; the remaining
   candidates are real directories, and moving them decides where things live. The proposals (with
-  destinations and token values) are in `plan/skill-relocation-plan.md`.
+  destinations and token values) are in `plan/phase3.md`.
 - **No fresh headless session for the re-measure.** *Why:* `claude -p` bills the separate
   programmatic credit pool; the next normal session start measures the same thing for free.
 
@@ -212,7 +212,7 @@ store resolves to a directory that exists. Backup at `~/Claude/_archive/orphan-s
   everything correctly" is vigilance, and vigilance drifts — the 7-vs-12 symlink count proved it
   again this session.
 - **The full per-skill destination map is generated from disk, complete, and lives in
-  `plan/skill-relocation-plan.md`** — every one of the 113 skills appears exactly once.
+  `plan/phase3.md`** — every one of the 113 skills appears exactly once.
 
 ---
 
