@@ -133,8 +133,9 @@ work, not cleanup.
       their keep. Same lever as relocation, no files move. **This is the fix for a live
       triggering bug** (root-caused 2026-08-07, `research/sources/skill-description-drop.md`):
       the skills listing has a **budget** (~1% of context window) and least-used skills
-      silently lose their descriptions when it overflows — this machine is ~4× over
-      (~31K chars vs ~8K), so 15+ skills are name-only per session (`sources-cited`, `tdd`,
+      silently lose their descriptions when it overflows — measured live 2026-08-07:
+      35,948 chars vs a 30,000 budget on the default model (only ~8K for 200K-context
+      models), so ~16 skills are name-only per session (`sources-cited`, `tdd`,
       `sync-gbrain`, `ponytail:*`, …) and cannot natural-language trigger. The budget is
       aggregate: every verbose description evicts someone else's. Meters: `/doctor` before and
       after; `/skills` shows per-skill state. Optional second lever:
