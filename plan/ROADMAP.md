@@ -34,6 +34,15 @@ work, not cleanup.
       **Half of this already exists:** `docs/memory-repair-runbook.md` is the written procedure, and
       `make/memory-repair/audit.py` is `--check` for the memory half (runs with no args, exit 1 when
       dirty). What `/move-project` adds is *doing the move* and covering symlinks + config references.
+- [ ] **`/capture-reference`** — sibling of `capture-feedback`: capture a pointer to an external
+      resource (URL, dashboard, doc, tool note) as a `reference-<slug>.md`. The skill owns two
+      things: the **file format** (frontmatter with `name`, a one-line `description` that recall
+      matches on, `type: reference`) and the **save location** — the native store keyed to the
+      current project, *plus* the index line in that store's `MEMORY.md`, since a reference file
+      without its index line never autoloads. For a reference that matters to more than one store,
+      use the shared-topic-file mechanism (canonical copy + symlink + an index line in each store —
+      `mode-memory-design.md`), so it shows up with the other references and tooling notes
+      everywhere it applies.
 - [ ] **`/context-dashboard`** — show the makeup of the context window given current memory settings:
       what `MEMORY.md` costs, what the global skill catalog costs, what the CLAUDE.md chain costs,
       what each mode adds. *Why:* every decision in this project has been argued from estimates. Real
