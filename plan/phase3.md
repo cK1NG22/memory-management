@@ -11,9 +11,8 @@ still the inventory of what already moved.
 
 ```
 sentinel test ──→ B. restamp every project ──→ A. move the last 15 skills ──→ re-measure floor
-(does a symlinked   (git init the 9 + wire      (build mode skill homes,      (free — next normal
- skills/ folder      mode CLAUDE.mds+links)      delete global entries)        session start)
- load? unverified)
+(✅ PASSED          (git init the 9 + wire      (build mode skill homes,      (free — next normal
+ 2026-08-07)         mode CLAUDE.mds+links)      delete global entries)        session start)
 ```
 
 B before A: the 15 skills will load *through* project wiring — move them first and they load
@@ -43,8 +42,9 @@ global 96 ─┬─ 53 gstack           → stay   (installer puts them back; on
 Steps:
 
 ```
-1. sentinel test: symlink a whole skills/ folder → does it load?
-      FAIL → fall back to per-skill links per project (more links, same result)
+1. ✅ sentinel test PASSED (2026-08-07, CLI 2.1.224, headless haiku probes + decoy control):
+      folder-level symlinked skills/ loads · full two-hop chain loads · a DEAD folder link
+      is SILENT (exit 0, no warning) → step 4's one-place scan is mandatory, not optional
 2. build the mode homes:  ~/.claude/modes/<mode>/skills/<skill> → canonical home
 3. AFTER Plan B: delete the 15 global entries
 4. verify each skill loads from exactly ONE place (extend audit.py scan) — then re-measure floor
