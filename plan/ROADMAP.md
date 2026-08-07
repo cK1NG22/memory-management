@@ -189,12 +189,15 @@ work, not cleanup.
       non-gstack global skills carry the rest of the catalog (~120+ tokens each — long
       trigger-phrase lists are the bulk). Review each against the gstack shape. Trim fat, not
       signal: the description is what makes a skill fire, so keep the trigger phrases that earn
-      their keep. Same lever as relocation, no files move. **Also fixes live triggering bugs**
-      (found 2026-08-07): several skills list name-only in the catalog today — their
-      descriptions silently drop by an unidentified rule (`sources-cited`, `tdd`,
-      `discovery-call-prep`, `youtube-slide-transcript`, …; not length, not YAML style, all
-      parse valid) — and a name-only skill cannot natural-language trigger at all. Rewrite,
-      then verify each entry actually shows a description in a fresh session.
+      their keep. Same lever as relocation, no files move. **This is the fix for a live
+      triggering bug** (root-caused 2026-08-07, `research/sources/skill-description-drop.md`):
+      the skills listing has a **budget** (~1% of context window) and least-used skills
+      silently lose their descriptions when it overflows — this machine is ~4× over
+      (~31K chars vs ~8K), so 15+ skills are name-only per session (`sources-cited`, `tdd`,
+      `sync-gbrain`, `ponytail:*`, …) and cannot natural-language trigger. The budget is
+      aggregate: every verbose description evicts someone else's. Meters: `/doctor` before and
+      after; `/skills` shows per-skill state. Optional second lever:
+      `skillListingBudgetFraction` in settings (costs context in every session).
 - [ ] **Re-measure the floor** after pruning. **Baseline captured 2026-08-05 (before relocating):
       44K–55K tokens at session start across eight recent sessions**, from the `.jsonl` token data.
       The post-relocation number comes free from the next normal session start.
