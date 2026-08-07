@@ -130,7 +130,12 @@ work, not cleanup.
       non-gstack global skills carry the rest of the catalog (~120+ tokens each — long
       trigger-phrase lists are the bulk). Review each against the gstack shape. Trim fat, not
       signal: the description is what makes a skill fire, so keep the trigger phrases that earn
-      their keep. Same lever as relocation, no files move.
+      their keep. Same lever as relocation, no files move. **Also fixes live triggering bugs**
+      (found 2026-08-07): several skills list name-only in the catalog today — their
+      descriptions silently drop by an unidentified rule (`sources-cited`, `tdd`,
+      `discovery-call-prep`, `youtube-slide-transcript`, …; not length, not YAML style, all
+      parse valid) — and a name-only skill cannot natural-language trigger at all. Rewrite,
+      then verify each entry actually shows a description in a fresh session.
 - [ ] **Re-measure the floor** after pruning. **Baseline captured 2026-08-05 (before relocating):
       44K–55K tokens at session start across eight recent sessions**, from the `.jsonl` token data.
       The post-relocation number comes free from the next normal session start.
