@@ -371,3 +371,34 @@ Sentinel experiments (isolated throwaway trees, Claude Code 2.1.223 — full rec
 - **Mempalace is out (Carter):** "i dont ever use it" — the handoff's re-mine step was stopped
   mid-run and the preference saved as native feedback (`feedback-no-mempalace`). Ignore mempalace
   steps in old plans; flag them for removal instead of executing.
+
+
+## 2026-08-06 — Tranches 1–3 executed on blanket approval (execution session, part 2)
+
+**Carter approved "tranch 1-3 approved"; everything left in the manifest executed the same
+night.** 65 moves, 3 deletes, 12 new stores, ending audit exit 0 (37 stores / 264 topics, all
+resolved and indexed). Full record + per-file rulings: the manifest's "Execution record" section.
+
+- **Blanket approval was read as "execute with judgment on the ASKs, list every call."** The 8
+  ASKs were ruled by the manifest's own routing test and the files' actual content — the notable
+  overrides of the manifest's leanings: `generalize-distributed-docs` went to skill-factory
+  instead of staying (its content is distributed-skills-repo rules), and `standard-works-vault`
+  was routed (the vault folder was located at `~/Standard Works`) instead of PARKED. All moves
+  are reversible; nothing was deleted on a judgment call.
+- **`subskill-vs-reference` deleted only after reading BP-034 in the skill-factory repo** and
+  confirming it carries the rule, the why, the enforcement point (`skill-spec-validator`), and
+  the factory exception. The fold half of Carter's ruling was already true; only the delete half
+  needed executing.
+- **The space-encoding trap was caught by probe, not luck:** the CLI keys `~/Standard Works` to
+  `-Users-carterking-Standard-Works` — `route.py`'s naive `/`→`-` encoding would have built a
+  store the CLI never loads. That file was moved with the probe-verified slug, and `audit.py`'s
+  slug resolver learned space-joins (negative-tested: a fake slug still flags as orphaned).
+- **Three merged index lines produced the only audit failures of the run** — curated multi-link
+  lines reused at destinations where only one linked file lives. Trimmed to in-store links;
+  partner files independently indexed. Lesson recorded in the manifest.
+- **`~/Optimal`, `~/Vault`, `~/Research` are now 0-topic stores with explanatory stubs** — kept
+  as live dirs (sessions may still launch there), pointing at the manifest for where things went.
+- **Same-name topic in two stores flagged, not resolved:** `reference-claude-code-loading-mechanics`
+  exists in the `~/Projects` library (older, general) and in this project's native store (the
+  @import matrix, written tonight). Phase 3's shared-file symlink plan for this topic must
+  reconcile them first.

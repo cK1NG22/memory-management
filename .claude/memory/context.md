@@ -1,6 +1,6 @@
 # Context — memory-management
 
-**Last updated:** 2026-08-06 (session 3 — Phase 2.5 execution: merge, sentinel test, mode files delivered)
+**Last updated:** 2026-08-06 (session 3, part 2 — Tranches 1–3 executed; Phase 2.5 consolidation COMPLETE)
 
 ## 🎯 Goal
 
@@ -8,6 +8,14 @@ A memory and context system where **nothing fails silently** and **nothing is st
 folder.** Optimizing for context curation, explicitly not for traditional coding conventions.
 
 ## 🧭 Where we are now
+
+**Phase 2.5 is COMPLETE — all four tranches executed, audit exit 0 (37 stores / 264 topics).**
+Carter's "tranch 1-3 approved" landed the same night as the mode-files delivery: 65 moves, 3
+deletes, 12 new project stores, `~/Optimal`/`~/Vault`/`~/Research` emptied to explanatory stubs,
+`~/Projects` rewritten as the dual-role library (59 files: user + norms + parked/holds +
+references). ASK rulings, fix-in-passing, and the run's three lessons (space-encoding, merged
+index lines, stay-set assertion) are in the manifest's "Execution record" section and
+`decisions.md`. Pre-move backup: `~/Claude/_archive/container-stores_2026-08-06-pre-tranche123/`.
 
 **Tranche 4's mode-files delivery is EXECUTED.** The `@import` sentinel test overturned the
 approved mechanism — home-path imports silently never load (containment is lexical, pre-symlink)
@@ -52,11 +60,10 @@ Full list in `plan/ROADMAP.md`. **Carter's call: execution happens in a NEW sess
 
 1. ~~Merge · transcript fold · sentinel test · mode-files delivery~~ **done 2026-08-06 (session
    3).** The fold was vacuous — EnterWorktree mid-session doesn't re-key transcripts.
-2. **Get Carter's remaining gates:** Tranche 1 go (53 routes) · 3 unruled Tranche 2 files
-   (`plan-pmg-life-app`, `notion-multi-workspace-safety`, `model-configuration-guide`) · 8 ASKs.
-3. **Execute Tranches 1–3 per the manifest** (route.py to LEFT 0 → sectioned indexes per the
-   template → fix-in-passing → audit exit 0), extending the runbook as it runs.
-4. **Phase 3 carries:** stamping mode CLAUDE.mds + symlinks in every project (the runbook's step
+2. ~~Gates + Tranches 1–3 execution~~ **done 2026-08-06 (session 3, part 2)** on Carter's blanket
+   approval — ASK rulings are listed in the manifest's execution record for reversal if any reads
+   wrong.
+3. **Phase 3 carries:** stamping mode CLAUDE.mds + symlinks in every project (the runbook's step
    5), then removing `# Planning a build` from the global CLAUDE.md (marked with a comment).
 5. Carried forward: the four audit.py checks (shared-file symlinks gate — the imports check is
    built, the four store-level ones are not) · correction sweep + close-session/new-session skill
@@ -93,6 +100,12 @@ See `decisions.md` (three entry groups dated 2026-08-06). Load-bearing:
   contingent on the load-bearing mechanic.
 - **A tripwire isn't built until it has failed on purpose.** The audit imports check shipped with
   a negative test that fabricates both failure modes.
+- **Probe the encoding before keying a store to an unusual path.** The CLI turns spaces into
+  dashes too (`~/Standard Works` → `-Users-carterking-Standard-Works`); naive `/`→`-` encoding
+  builds stores the CLI never reads. One haiku probe settles it.
+- **Merged index lines are couplings.** They save per-session tokens in a library store, but the
+  moment two co-linked files route to different destinations, every reused copy dangles. Reuse a
+  curated line only when all its links travel together.
 
 ## 📂 Files touched · 🌿 git
 

@@ -51,21 +51,27 @@ def resolve(slug):
         if i >= len(tokens):
             return base
         for j in range(i + 1, len(tokens) + 1):
-            name = "-".join(tokens[i:j])
-            if not name:
+            span = tokens[i:j]
+            if not "".join(span):
                 continue
-            cand = os.path.join(base, name)
-            if os.path.isdir(cand):
-                got = walk(cand, j)
-                if got:
-                    return got
-            # a dot-directory encodes as an empty token before the name
-            if tokens[i] == "" and j > i + 1:
-                cand = os.path.join(base, "." + "-".join(tokens[i + 1:j]))
+            # the CLI encodes both "/" and " " as "-" (probe-verified on
+            # ~/Standard Works, 2026-08-06), so a multi-token span may be a
+            # dashed name or a spaced name.
+            # ponytail: mixed "-"/" " in one name would need per-gap choice — none exist yet
+            for name in {"-".join(span), " ".join(span)}:
+                cand = os.path.join(base, name)
                 if os.path.isdir(cand):
                     got = walk(cand, j)
                     if got:
                         return got
+            # a dot-directory encodes as an empty token before the name
+            if span[0] == "" and j > i + 1:
+                for sep in ("-", " "):
+                    cand = os.path.join(base, "." + sep.join(tokens[i + 1:j]))
+                    if os.path.isdir(cand):
+                        got = walk(cand, j)
+                        if got:
+                            return got
         return None
 
     full = walk("/", 0)

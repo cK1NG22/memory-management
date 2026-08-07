@@ -1,12 +1,49 @@
 # Container-store consolidation — the manifest (Phase 2.5)
 
-**Status: PROPOSAL — nothing has moved.** Drafted 2026-08-06 from `dump.py` descriptions of every
-file in the six container stores. Per the orphan-repair precedent: full manifest first, no move
-without Carter's approval. Once ruled on, this file is the source for the `route.py` manifests.
+**Status: EXECUTED 2026-08-06 — all four tranches done.** Drafted 2026-08-06 from `dump.py`
+descriptions of every file in the six container stores; Tranche 4 executed earlier the same day
+(mode files), Tranches 1–3 executed on Carter's blanket "tranch 1-3 approved". The per-file lists
+below are the historical record of what moved where.
 
 **Falsifier:** if Carter's rulings reroute more than ~15% of Tranche 1, the routing rule used here
 ("narrowest directory from which every session that needs it starts") is not operational and Phase 2.5
 needs a different rule before execution.
+
+## Execution record (2026-08-06, Tranches 1–3)
+
+**Result: audit exit 0 — 37 live stores, 264 topics, every store and link resolves, everything
+indexed.** 65 files moved (53 T1 + 6 ASK routes + 5 into the `~/Projects` library + pmg move-out),
+3 deleted (`notion-multi-workspace-safety`, `model-configuration-guide`,
+`subskill-vs-reference` after verifying BP-034 coverage in the skill-factory repo), 12 stores
+created, 57 stays verified by exact stay-set assertion. Fresh pre-move backup:
+`~/Claude/_archive/container-stores_2026-08-06-pre-tranche123/` (count-verified).
+`~/Optimal`, `~/Vault`, `~/Research` emptied to 0 topics (explanatory stub indexes).
+
+**ASK rulings applied (blanket approval — reversible, all files intact):**
+`sandbox-build-ideas` → `~/Sandbox/builds` (describes that dir's own BUILD-IDEAS.md) ·
+`generalize-distributed-docs`, `keep-standalone-on-plugin-cutover`, `skill-input-design` →
+skill-factory (all three are distributed-skills-repo rules; the first was proposed "stay" but its
+content is about the repo skill-factory owns) · `pricing-model-v2` → `~/Optimal/Rebrand` ·
+`drill-design-principles` + `never-leak-answer-keys` → `~/Projects` library (consumers span
+claude-architect and education work; no single project covers both) · `standard-works-vault` →
+`~/Standard Works` (the vault folder exists at home level — located, so routed, not PARKED).
+
+**Fix-in-passing done:** both broken frontmatters rebuilt (`report-tone-conventions`,
+`skill-input-design`), stale June-reorg paths fixed in `project-interviewer` and
+`project-pricing-model-v2` (spec verified at `~/Optimal/pricing-v2-spec.md`).
+
+**Lessons for the next migration:**
+- **The CLI encodes spaces as dashes too** (probe: a session at `~/Standard Works` keys to
+  `-Users-carterking-Standard-Works`). `route.py`'s `cwd.replace("/", "-")` would have silently
+  created a store the CLI never reads — probe the encoding before creating a store at any path
+  with non-alphanumeric characters. `audit.py`'s resolver now tries space-joins as well.
+- **Merged index lines break when their files' destinies diverge.** Three curated `~/Projects`
+  lines each linked multiple topics; reusing them at destinations left dangling links to files
+  that stayed behind. The audit caught all three. Harvested lines are only safe when every link
+  travels together.
+- **Assert the stay-set, don't eyeball LEFT.** The execution script named every file's disposition
+  and refused to run until disk contents matched exactly — `LEFT 0` discipline extended to stores
+  where files intentionally remain.
 
 ## Scope: placement, not rescue
 
