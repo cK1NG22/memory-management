@@ -93,3 +93,49 @@ everyone else: bare `- name` — silent (a warn line exists only in debug logs)
 - Eviction tie-order among zero-usage skills is unspecified (greedy over a sort with ties) —
   explains why fixture drops flickered between projects. Not worth pinning.
 - Enterprise/policy settings scopes for `skillOverrides` unchecked (no such deployment here).
+
+## A/B test — 2026-08-08
+
+Ran the A/B experiment from `plan/skill-budget-ab.md`: does trimming the loaded catalog restore
+descriptions for skills silently evicted from it? Fixture built fresh at
+`~/Sandbox/skill-budget-ab-fixture/` — `baseline/` (no settings) and `subtraction/` (`.claude/
+settings.json` with a measured `skillOverrides` set), each its own project root.
+
+**Measured this session** (stale 2026-08-05/06 figure in `plan/phase3.md` not reused): 119 skill
+entries across `~/.claude/skills/*` (one level, symlinks resolved to canonical `SKILL.md`) plus
+the 4 plugins enabled in `enabledPlugins` (`modern-web-guidance`, `superpowers`, `ponytail`,
+`supabase` — `mana` installed but not enabled, excluded) = **31,362 catalog chars**.
+`skillListingBudgetFraction` unset everywhere checked → default 0.01 → budget **8,000 chars** →
+deficit **23,362 chars**. Sorted descending by `len("- name: description")`, excluding the 4
+targets, walked until cumulative freed ≥ deficit: **51 skills → `name-only`, freeing 23,437
+chars**, leaving 7,925 ≤ 8,000 budget (strong-form expectation held by construction).
+
+**Arms, 5 probes each (10 total), `claude -p --model sonnet`, identical result on every probe
+within each arm:**
+
+| target | baseline (5/5 probes) | subtraction (5/5 probes) |
+|---|---|---|
+| sources-cited | full | full |
+| tdd | full | full |
+| sync-gbrain | full | full |
+| youtube-slide-transcript | NAME-ONLY | full |
+| zzz-fixture-decoy-99 (decoy) | ABSENT | ABSENT |
+
+No decoy hallucination in any of the 10 probes.
+
+**Restoration rate:** baseline 15/20 (75%), subtraction 20/20 (100%), delta 25pp.
+
+**Verdict: FALSIFIED** per the plan's literal rule (delta < 60pp; success needed baseline ≤ 20%
+AND subtraction ≥ 80%). Reasoning: only 1 of the 4 targets (`youtube-slide-transcript`) was
+actually evicted in baseline this session — for that one target the mechanism worked exactly as
+predicted, a clean 0% → 100% swing reproduced on every probe. The other 3 targets
+(`sources-cited`, `tdd`, `sync-gbrain`) already showed full descriptions in the untouched,
+over-budget baseline, consistent with this doc's own "evicted set varies session to session"
+finding — their usage priority has apparently risen enough since the last research pass to clear
+budget on their own. This inflates the aggregate baseline rate well past the ≤20% bar the plan
+needed for a clean confirmation, even though no part of the underlying mechanism was contradicted.
+Per the plan: do not act on the trim/relocation plan items on this result alone — what's
+unconfirmed is whether trimming fixes the *aggregate* multi-skill problem, since this run's target
+set turned out to be mostly non-evicted going in, not whether the mechanism itself is wrong.
+
+Full report: `.superpowers/sdd/skill-budget-ab/task-1-report.md`. Plan: `plan/skill-budget-ab.md`.
