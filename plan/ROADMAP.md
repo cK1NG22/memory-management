@@ -27,6 +27,10 @@ work, not cleanup.
 
 ## Phase 1 — Build the skills this work identified
 
+*Tooling note 2026-08-08:* `mattpocock-skills@mattpocock` installed as a plugin (25 skills) so
+`writing-for-agents` — the adopted standard these skills get written against — is live, not just
+reference notes. Managed like gstack: plugin-owned, outside all relocation plans.
+
 - [ ] **`/move-project`** — relocate a project *and* everything path-coupled to it: the cwd-keyed
       native store, symlinks in both directions, ~23 config references, worktrees holding absolute
       paths. **A `--check` audit mode is the more valuable half** — it would have caught the June
@@ -199,6 +203,13 @@ work, not cleanup.
       aggregate: every verbose description evicts someone else's. Meters: `/doctor` before and
       after; `/skills` shows per-skill state. Optional second lever:
       `skillListingBudgetFraction` in settings (costs context in every session).
+      **Status 2026-08-08 — execution started** in a make/ session (`plan/trim-skills.md`; flips
+      landed 12:58). The concurrent A/B collided with the flips — two of four targets dead
+      (`youtube-slide-transcript` flipped ABSENT; local `tdd` archived to `~/Claude/_archive/`
+      after the dedup ruling: managed plugin copy wins duplicates). Verdict path owned by that
+      session's close. New budget facts: `mattpocock-skills` adds ~1,620 tok always-on, and
+      **plugin skills can't be `skillOverrides`-trimmed** (runtime forces plugins on) — plugin
+      enable/disable is the only lever on that slice of the catalog.
 - [ ] **Re-measure the floor** after pruning. **Baseline captured 2026-08-05 (before relocating):
       44K–55K tokens at session start across eight recent sessions**, from the `.jsonl` token data.
       The post-relocation number comes free from the next normal session start.
