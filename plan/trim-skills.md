@@ -44,6 +44,50 @@ Symlinked dirs (e.g. `ui-ux-pro-max`) resolve to canonical file — edit there. 
 sources-cited (735), pptx (694), youtube-slide-transcript (625), restructure-project (617),
 new-session (597), capture-feedback (596), new-project (570).
 
+## 1b. Invocation split (Carter, 2026-08-08 — from mattpocock/skills `writing-for-agents`)
+
+**Zero bare names is the wrong target.** A description exists so the *agent* can fire the skill
+from natural words. Skills only ever fired by Carter typing the name need NO description in the
+listing — bare/absent is their correct, deliberate state.
+
+Three states (all probe-verified on this machine):
+
+| State | Mechanism | Listing cost | Who can fire it |
+|---|---|---|---|
+| model-invoked | `description:` (trimmed) | description chars | agent from your words · you · other skills |
+| name-only | `skillOverrides: {"<name>": "name-only"}` | ~name chars | you · agent/skills by exact name |
+| user-invoked | `disable-model-invocation: true` in frontmatter | **zero** (ABSENT) | you by `/name` only |
+
+Classification of the 47 non-gstack global skills:
+
+**FLIP to user-invoked** (`disable-model-invocation: true` — frees their full chars, no rewrite):
+`memory-review` · `claude-audit` · `new-project` · `restructure-project` (retiring anyway) ·
+`autoresearch` · `kpi-setter` · `opusplan` · `learn` · `resolve-vulns` (parked) ·
+`youtube-slide-transcript` (625; has no working description today anyway)
+→ frees ≈ 4K chars before any trimming.
+
+**NAME-ONLY deliberately** (skill-to-skill reach by exact name must survive):
+`sources-cited` (735 — invoked by name from 411-case; description was dead weight)
+
+**KEEP model-invoked → trim to band** (agent must fire these itself):
+- file-type routing: `xlsx` `docx` `pptx` `pdf` — fattest, trim hardest
+- agent self-fire guardrails: `capture-feedback` (fires when Carter corrects) · `file-versioning`
+  (fires before making a v2/copy) — the agent, not Carter, must catch the moment
+- natural-phrase workflow: `close-session` (Carter wants "close session" in words to work) ·
+  `new-session` · `brain-dump` · `clean-transcript` · `transcribe-media` · `doc-coauthoring` ·
+  `skill-creator` · `scout-stack` · `decide` · `locker` · `ui-ux-pro-max`
+- task-shape (all leaving for the make/ mode home in Plan A): `tdd` `api-design`
+  `architecture-review` `database-design` `mcp-builder` `dung`
+
+**⚠️ FLAG before flipping — cron/shift family:** `email-tracker` `github-digest` `workout-bot`
+`dream` `day-shift` `night-shift` `morning-shift`. They fire from launchd/headless prompts —
+if any plist prompt phrases naturally instead of `/name`, flipping breaks it silently. Read each
+plist's prompt first; flip only the ones invoked by literal `/name`. Default: keep described.
+
+**Out of scope:** gstack (installer-owned, already terse) · plugins (`superpowers:*`,
+`ponytail:*` — the runtime hardcodes plugin skills to "on"; settings overrides are ignored;
+`/plugin` disable is the only lever) · Anthropic built-ins (budget-exempt).
+
 ## 2. Backup — before any edit
 ```bash
 cd ~/.claude/skills && tar czhf ~/Claude/_archive/skill-trim_$(date +%F).tar.gz */SKILL.md
@@ -72,20 +116,23 @@ go-ahead — a bad trim kills triggering as silently as a bare name does.
 - Re-run §1 → compare total chars to baseline 18,440.
 - Headless bare-name probe: `claude -p "In your system prompt there is a skill list, each 'name:
   description' or bare name-only. Without tools, output ONLY '<described-count>,<bare-count>'."`
-  Verified baseline: `114,16`. Target: bare-count → 0.
+  Verified baseline: `114,16`. Target: zero *unintentional* bare names — every KEEP-list skill
+  described in every probe; FLIP-list skills ABSENT; only `sources-cited` bare by design.
 - Aggregate budget line: `claude --debug-file <path> -p "ok"; grep -i "over budget" <path>` —
   no WARN, or chars drop materially. Baseline: `130 skills, 35948 chars > 30000 budget`.
 - Authoritative: Carter runs `/doctor` before/after — only view with per-skill eviction, not just
   the aggregate.
 
-**Target: non-gstack catalog under ~12K chars** (from 18,440). If short: Plan A relocation (15
-more skills leave global — ROADMAP) next; `skillListingBudgetFraction: 0.02` is the deliberate
-last resort (costs context every session, not free).
+**Target: non-gstack catalog under ~9K chars** (from 18,440: ≈4K freed by §1b flips + ≈5–6K by
+trims). If short: Plan A relocation (15 more skills leave global — ROADMAP) next;
+`skillListingBudgetFraction: 0.02` is the deliberate last resort (costs context every session).
 
 ## 6. Falsifier
-Bare-name count unchanged (~16) after the char cut lands (18,440 → ~12K) means trimming didn't fix
+KEEP-list skills still showing bare after the cut lands (18,440 → ~9K) means trimming didn't fix
 triggering — eviction keys on something besides char budget (stale usage-ledger cache, or a
 priority formula weighted differently than researched). Re-open research; don't re-trim harder.
+A FLIP-list skill still *listed* after its flip means `disable-model-invocation` isn't honored
+for that skill type — fall back to `skillOverrides: name-only` for it.
 
 ## 7. What gets deleted
 Description prose — marketing language, example lists, restated names. Nothing else moves.
