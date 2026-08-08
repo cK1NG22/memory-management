@@ -1,6 +1,6 @@
 # Context — memory-management
 
-**Last updated:** 2026-08-08 (session 4 — Phase 3 approved; skill-budget root cause; both execution plans ready)
+**Last updated:** 2026-08-08 (session 5, bg — mattpocock-skills plugin installed; tdd dedup; trim/A/B collision flagged)
 
 ## 🎯 Goal
 
@@ -40,6 +40,16 @@ skills bare per session, set varies by session and model.
 `/capture-reference` skill, the shared memory-write reference, `/share-topic`, and the
 skill-dependency map + retired-token tripwire + change protocol.
 
+**Session 5 (bg, 2026-08-08), while the make/ session ran the A/B + trim:**
+`mattpocock-skills@mattpocock` installed as a plugin (25 skills incl. `writing-for-agents`,
+~1,620 tok always-on; managed like gstack, outside Plan A). Dedup sweep: local `tdd` was the
+only live exact-name duplicate → archived to `~/Claude/_archive/tdd-skill_2026-08-08` per
+Carter's managed-over-local ruling. **Caught live: the trim flips (12:58) contaminated the A/B**
+— two of four targets dead (`youtube-slide-transcript` flipped, `tdd` archived); recommendation
+routed to the make/ session via Carter (pause at top-10 checkpoint; re-pick targets or fall back
+to before/after probes against the banked 114/16 baseline). Check that session's close for the
+verdict it chose.
+
 ## ⏭️ Next steps / open
 
 1. **Carter opens a `make/` session:** run the A/B (`plan/skill-budget-ab.md`), then the trim pass
@@ -48,10 +58,12 @@ skill-dependency map + retired-token tripwire + change protocol.
 2. **Plan B — restamp the projects** (git init the 9 non-repos + wire mode CLAUDE.mds/symlinks,
    probe each; runbook step 5), then remove `# Planning a build` from the global CLAUDE.md.
 3. **Plan A — move the 15 mode-home skills** (after B), then re-measure the floor (free).
-4. ⚠️ **Stale since 2026-08-06 (~4 sessions, no movement):** the correction sweep (exact-cwd
+4. ⚠️ **Stale since 2026-08-06 (~5 sessions, no movement):** the correction sweep (exact-cwd
    wording in root CLAUDE.md table, memory-repair runbook, audit.py orphan message) + the
    close-session/new-session **skill-content** updates (worktree exit step, git-root keying).
-   Partially overtaken: capture-feedback update is now a trim-pass rider.
+   Partially overtaken: capture-feedback update is now a trim-pass rider. Session 5 note: the
+   close-session run had to hand-skip its dead mempalace + task-types phases again — the skill
+   update is earning its priority.
 5. Carried: worktree memory promotion review · four audit.py checks (gate `/share-topic`) ·
    floor re-measure.
 
@@ -92,3 +104,8 @@ merges interleaved cleanly with a parallel session's ROADMAP commits). This sess
 `reference-claude-code-loading-mechanics.md` extended with the budget + skills-symlink results.
 Outside the repo: baseline tar `~/Claude/_archive/skill-trim_2026-08-07.tar.gz`; A/B fixture spec
 targets `~/Sandbox/skill-budget-ab-fixture/` (not yet created).
+
+Session 5 (branch `worktree-close-session-plugin-dedup`): `decisions.md` (1 entry) · this file.
+Outside the repo: mattpocock plugin installed (user settings); local `tdd` →
+`~/Claude/_archive/tdd-skill_2026-08-08`; native store `reference-writing-for-agents.md` updated
++ `feedback-prefer-managed-plugin-skills.md` new.

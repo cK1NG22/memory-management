@@ -458,3 +458,29 @@ resolved and indexed). Full record + per-file rulings: the manifest's "Execution
   user-invoked (~4K chars freed with no rewriting), 1 goes deliberately name-only, ~21 stay
   model-invoked and get trimmed, cron/shift family flagged for plist-prompt checks before
   flipping. New target: KEEP-list always described, FLIP-list absent, ~9K non-gstack catalog.
+
+---
+
+## 2026-08-08 — mattpocock-skills installed as a plugin; managed-over-local ruling (Carter's call)
+
+- **`mattpocock-skills@mattpocock` installed at user scope** (v1.2.3, 25 skills incl.
+  `writing-for-agents`, ~1,620 tok always-on). *Why:* Carter wants the writing-for-agents skill
+  live for Phase 1 work, not just as reference notes. Treated like gstack: plugin-managed,
+  never hand-edited, lives in the plugin cache outside `~/.claude/skills/` — untouched by the
+  Plan A mode-home moves. Cost note: it spends a real chunk of the headroom the same-day trim
+  freed, and **plugin skills can't be reduced via `skillOverrides`** (probe-verified above) —
+  the only levers are plugin enable/disable.
+- **Duplicated skills resolve to the managed plugin version (Carter's ruling).** The dedup sweep
+  found one live exact-name duplicate: local `tdd` vs `mattpocock-skills:tdd`. Local archived to
+  `~/Claude/_archive/tdd-skill_2026-08-08` (no references anywhere — agents/skills/workflows
+  grepped clean first). *Why:* a plugin copy updates upstream and can't drift; two same-name
+  listeners double-trigger. Known functional overlaps left alone: `superpowers:test-driven-development`,
+  built-in `/code-review` vs `mattpocock-skills:code-review`, gstack's internal name clashes
+  (gstack manages its own files).
+- **The trim/A/B parallel run collided — flagged live, resolution owned by the make/ session.**
+  Trim flips landed at 12:58 while the A/B assumed an untouched baseline catalog; two of four
+  A/B targets are now dead (`youtube-slide-transcript` flipped ABSENT, local `tdd` archived).
+  Recommendation sent via Carter: pause trim at its top-10 checkpoint, then either re-pick A/B
+  targets or skip the controlled A/B and use before/after probes (banked 114/16 baseline) as
+  the evidence. *Why recorded here:* worktree isolation cannot protect `~/.claude/` shared
+  state — the collision class the roadmap's dependency-map item exists for.
