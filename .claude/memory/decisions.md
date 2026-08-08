@@ -439,3 +439,22 @@ resolved and indexed). Full record + per-file rulings: the manifest's "Execution
   budget:* the budget is aggregate (every verbose description evicts someone else's), and raising
   it charges every session's context; trimming fixes both at once. Budget raise stays available
   as a deliberate second lever.
+
+---
+
+## 2026-08-08 — Invocation split: zero-bare is the wrong target (Carter's call)
+
+- **Skills divide into model-invoked and user-invoked** (source: mattpocock/skills
+  `writing-for-agents`), **and "zero bare descriptions" is rejected as the trim goal.** A
+  description exists so the *agent* can fire the skill from natural words; a skill Carter only
+  ever fires by typing its name should carry **no listing cost at all**. *Why:* every described
+  user-invoked skill spends budget that evicts a model-invoked skill's triggering.
+- **Mechanisms, probe-verified 2026-08-08:** `disable-model-invocation: true` in frontmatter →
+  skill ABSENT from the model listing (zero chars), `/name` still works. `skillOverrides:
+  name-only` → bare name stays listed, reachable by exact name (the state for skills other
+  skills invoke by name, e.g. `sources-cited` ← 411-case). Plugins can't be overridden
+  (runtime hardcodes plugin source to "on").
+- **The classification table lives in `plan/trim-skills.md` §1b** — 10 skills flip to
+  user-invoked (~4K chars freed with no rewriting), 1 goes deliberately name-only, ~21 stay
+  model-invoked and get trimmed, cron/shift family flagged for plist-prompt checks before
+  flipping. New target: KEEP-list always described, FLIP-list absent, ~9K non-gstack catalog.
