@@ -63,8 +63,9 @@ Classification of the 47 non-gstack global skills:
 **FLIP to user-invoked** (`disable-model-invocation: true` — frees their full chars, no rewrite):
 `memory-review` · `claude-audit` · `new-project` · `restructure-project` (retiring anyway) ·
 `autoresearch` · `kpi-setter` · `opusplan` · `learn` · `resolve-vulns` (parked) ·
-`youtube-slide-transcript` (625; has no working description today anyway)
-→ frees ≈ 4K chars before any trimming.
+`youtube-slide-transcript` (625; has no working description today anyway) ·
+`close-session` (303) · `new-session` (597) — both ruled user-invoked (Carter, 2026-08-08)
+→ frees ≈ 5K chars before any trimming.
 
 **NAME-ONLY deliberately** (skill-to-skill reach by exact name must survive):
 `sources-cited` (735 — invoked by name from 411-case; description was dead weight)
@@ -73,16 +74,13 @@ Classification of the 47 non-gstack global skills:
 - file-type routing: `xlsx` `docx` `pptx` `pdf` — fattest, trim hardest
 - agent self-fire guardrails: `capture-feedback` (fires when Carter corrects) · `file-versioning`
   (fires before making a v2/copy) — the agent, not Carter, must catch the moment
-- natural-phrase workflow: `close-session` (Carter wants "close session" in words to work) ·
-  `new-session` · `brain-dump` · `clean-transcript` · `transcribe-media` · `doc-coauthoring` ·
-  `skill-creator` · `scout-stack` · `decide` · `locker` · `ui-ux-pro-max`
+- natural-phrase workflow: `brain-dump` · `clean-transcript` · `transcribe-media` ·
+  `doc-coauthoring` · `skill-creator` · `scout-stack` · `decide` · `locker` · `ui-ux-pro-max`
 - task-shape (all leaving for the make/ mode home in Plan A): `tdd` `api-design`
   `architecture-review` `database-design` `mcp-builder` `dung`
-
-**⚠️ FLAG before flipping — cron/shift family:** `email-tracker` `github-digest` `workout-bot`
-`dream` `day-shift` `night-shift` `morning-shift`. They fire from launchd/headless prompts —
-if any plist prompt phrases naturally instead of `/name`, flipping breaks it silently. Read each
-plist's prompt first; flip only the ones invoked by literal `/name`. Default: keep described.
+- cron/shift family — **ruled model-invoked (Carter, 2026-08-08), do not flip:** `email-tracker`
+  `github-digest` `workout-bot` `dream` `day-shift` `night-shift` `morning-shift`. They fire
+  from launchd/headless prompts that may phrase naturally; trim their descriptions normally.
 
 **Out of scope:** gstack (installer-owned, already terse) · plugins (`superpowers:*`,
 `ponytail:*` — the runtime hardcodes plugin skills to "on"; settings overrides are ignored;
@@ -138,3 +136,14 @@ for that skill type — fall back to `skillOverrides: name-only` for it.
 Description prose — marketing language, example lists, restated names. Nothing else moves.
 Verified by the §1 diff (per-skill before/after chars) against the §2 tar, the only copy of the
 pre-trim text.
+
+## 8. Riders — same pass, same session (Carter, 2026-08-08)
+- **`opusplan` → `fable-plan`.** Rename the skill (dir + `name:`), update its body to invoke
+  Fable instead of Opus, and grep for callers/references to the old name (settings allow-rules,
+  other skills, memory files) before deleting the old dir. It's on the FLIP list — apply
+  `disable-model-invocation: true` in the same edit.
+- **`capture-feedback` needs a content review against the Gen 4 memory system.** Its routing
+  (task-type folders under `~/.claude/task-types/`) is the Gen 3 scheme; global rules now live in
+  `~/.claude/modes/ALWAYS.md` and mode principles in `<MODE>-MODE.md`. Update where captured
+  feedback gets written before (or while) trimming its description — a trimmed pointer to the
+  wrong destination is still a bug.
