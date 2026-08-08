@@ -254,7 +254,8 @@ work, not cleanup.
       **Shape decided 2026-08-05:** one **folder-level** symlink per mode per project
       (`<mode>/.claude/skills → ~/.claude/modes/<mode>/skills`), per-skill links only inside the
       mode home — so adding a skill to a mode reaches every project without rescaffolding.
-      **Sentinel-test first:** a symlinked parent `skills/` folder loading is unverified.
+      **Sentinel-tested ✓ 2026-08-07:** a symlinked parent `skills/` folder loads fully (names,
+      descriptions, natural triggering) — `research/sources/skill-description-drop.md`.
       **Symlinks are the known-fragile part** — 12 died silently in the June reorg — so this needs a
       resolve-check plus a load-twice check (one loading location per skill), and
       `/move-project --check` is where both belong. Per-mode assignments: `phase3.md`.
