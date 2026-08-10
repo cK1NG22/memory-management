@@ -203,12 +203,25 @@ reference notes. Managed like gstack: plugin-owned, outside all relocation plans
       aggregate: every verbose description evicts someone else's. Meters: `/doctor` before and
       after; `/skills` shows per-skill state. Optional second lever:
       `skillListingBudgetFraction` in settings (costs context in every session).
-      **Status 2026-08-08 — executed.** 11 skills now carry `disable-model-invocation: true`
-      (`autoresearch`, `claude-audit`, `close-session`, `fable-plan`, `kpi-setter`,
-      `memory-review`, `new-project`, `new-session`, `resolve-vulns`, `restructure-project`,
-      `youtube-slide-transcript`); the `opusplan` → `fable-plan` rename rider landed; global is
-      **101 skills** after `tdd` was archived. Remaining: the ~19 model-invoked descriptions still
-      need their 80–200-char trim, and the `capture-feedback` content rider is unapplied.
+      **Status 2026-08-08 — executed through §4; the gate is what's open, not the work.** The
+      trim ran and hit its target: non-gstack listing catalog **18,440 → 8,086 chars** (goal
+      <9K), live bare-name probe `114,16` → `128,1` across 3 identical runs, and the
+      over-budget WARN **gone**. The single remaining bare name is `sources-cited`, bare **by
+      design** via `skillOverrides: name-only`. Both riders shipped: `opusplan` → `fable-plan`,
+      and `capture-feedback` rerouted to Gen-4 destinations.
+      **The plan's own §4 stop-gate then halted it at the top 10 trims — deliberately, pending
+      Carter's ruling.** `trim-diff.md` (verbatim old/new + char counts) is the gate document,
+      in the kept worktree at
+      `.claude/worktrees/skill-budget-execution/.superpowers/sdd/trim-skills/`. The executing
+      session's standing recommendation: **stop here** — the target is met, further trimming
+      buys nothing.
+      **Re-verified on disk 2026-08-10:** 104 skills in `~/.claude/skills/` (+3 under
+      `~/.agents/skills/`), **11** carrying `disable-model-invocation: true`, `fable-plan`
+      present and `opusplan` gone, `skillOverrides: {"sources-cited": "name-only"}` set. 83
+      model-invoked non-gstack skills carry 13,248 description chars, 24 still over 200 — so
+      the untrimmed remainder is real, but it is **held by the stop-gate, not forgotten**.
+      (Corrections: the executing session's "12 flipped" was one high; the later close-session
+      claim that the `capture-feedback` rider was unapplied was wrong — it shipped.)
       New budget facts: `mattpocock-skills` adds ~1,620 tok always-on, and **plugin skills can't
       be `skillOverrides`-trimmed** (runtime forces plugins on) — plugin enable/disable is the
       only lever on that slice of the catalog.

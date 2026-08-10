@@ -172,8 +172,8 @@ def audit():
     if orphans:
         problems += len(orphans)
         print(f"❌ ORPHANED STORES ({len(orphans)}) — the working directory no longer exists.")
-        print("   These memories are invisible: native memory is keyed to the exact cwd")
-        print("   and does not walk up the tree.\n")
+        print("   These memories are invisible: native memory is keyed to the git root")
+        print("   (or the exact cwd outside a repo), and never walks up past it.\n")
         for n, slug, deepest, rem in sorted(orphans, key=lambda r: -r[0]):
             print(f"   {n:>4} files  {deepest}/[{rem}]")
             print(f"              slug: {slug}")
