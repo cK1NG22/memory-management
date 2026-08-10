@@ -585,3 +585,52 @@ resolved and indexed). Full record + per-file rulings: the manifest's "Execution
 - **The trim executed and is partly done.** 11 skills carry `disable-model-invocation: true`;
   `opusplan` → `fable-plan` rename landed; global is 101 skills. Still open: the ~19 model-invoked
   descriptions awaiting their 80–200-char trim, and the `capture-feedback` content rider.
+
+---
+
+## 2026-08-10 — Stale blockers cleared: four branches merged, correction sweep + skill updates shipped (session 7, bg)
+
+- **All four worktree branches are merged into `main`; nothing is unmerged.** Order: session 5's
+  orphaned work was committed first (`7f25bdd` — the `make/` session wrote `context.md` and
+  `decisions.md` straight to main and never committed them), then
+  `worktree-skill-budget-execution` (the A/B results, previously the only copy),
+  `worktree-todo-capture-reference`, then `worktree-close-session-plugin-dedup`.
+  `worktree-phase3-plan` was already at main.
+- **`decisions.md` conflicts were resolved as a chronological union, never "take theirs."** Three
+  writers each held entries no other copy had (4 unique across 20 total). *Why:* this file's
+  contract is append-only, which makes it semantically a **set union**; git only offers a
+  line-based latest-wins conflict, so accepting either side silently deletes history. `context.md`
+  took the opposite resolution — it is a regenerated snapshot, so both sides were discarded and it
+  was rewritten from verified state. *Apply:* **same merge, two files, opposite correct
+  strategies — chosen by each file's contract, not by git's default.**
+- **Two sessions' accounts of the trim disagreed; disk settled it and both were partly wrong.**
+  Session 5 (`make/`) claimed 12 flips and that the `capture-feedback` rider shipped; session 6
+  (close) claimed 11 flips, ~19 descriptions outstanding, and the rider unapplied. Verified
+  2026-08-10: **11** flips, and the rider **did** ship. The substantive correction is the framing —
+  the trim was not left unfinished, it was **stopped by its own §4 gate** pending Carter's ruling.
+  Measured: 83 model-invoked non-gstack skills carrying 13,248 description chars, 24 over 200.
+- **Native memory keys to the git root; *transcripts* key to the exact cwd.** Verified on disk:
+  `~/.claude/projects/` holds `…-memory-management-make`, `…-research`, and two worktree
+  directories — each with transcripts and **no** `memory/` folder — while only the git-root
+  directory has one (17 files). *Why it matters:* mode folders and worktrees **cannot** fragment
+  native memory, the opposite of what the root `CLAUDE.md` asserted for months. A repo *move* still
+  strands a store; a mode folder does not. This is also why a background job's memory writes are
+  visible to the main session.
+- **The correction sweep is closed** (open since 2026-08-06, ~6 sessions with no movement): the
+  root `CLAUDE.md` keying table and its mode-fragmentation rationale, the
+  `docs/memory-repair-runbook.md` mechanism section, and `audit.py`'s orphan message all now say
+  git-root. `audit.py` re-run clean afterward: 38 live stores, 281 topic files, 0 orphans.
+- **`close-session` and `new-session` are no longer stale.** close-session: the 2026-08-06 PENDING
+  UPDATE banner became a real **Phase 8** (exit the worktree with `keep`; runs in auto mode, since
+  the Phase 6 exception bars *removing* worktrees, not exiting them); Phase 3.7 rerouted off the
+  retired `~/.claude/task-types/` scheme onto Gen-4 scope routing copied from `capture-feedback`;
+  the mempalace phase removed per the standing `feedback-no-mempalace` memory, keeping only its
+  useful half (structure the capture around Task / Decisions / State); native keying corrected.
+  new-session: the `history.md` reference removed (retired — three writers, no readers) and a
+  **worktree guard** added, because `git rev-parse --show-toplevel` returns the *worktree* from
+  inside one, so a handoff would be written into a gitignored temp dir that dies with it; resolve
+  the real repo with `--git-common-dir` instead. Both git behaviours verified live before shipping.
+- **Deleting a user-authored warning tripped the permission classifier; converting it did not.**
+  The banner was *replaced* with a dated "Resolved 2026-08-10" note rather than removed. That is
+  the better practice regardless: a resolved instruction that leaves a trace lets a future reader
+  distinguish "handled" from "never existed."

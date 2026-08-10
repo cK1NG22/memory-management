@@ -11,9 +11,15 @@ moved, was renamed, or was dissolved. Followed end-to-end on 2026-08-04 to recov
 
 ## The mechanism — why this keeps happening
 
-Native memory lives at `~/.claude/projects/<encoded-cwd>/memory/`, where the encoded name is the
-absolute working directory with every `/` replaced by `-`. **The key is the exact directory.** It does
-not walk up the tree the way `CLAUDE.md` does.
+Native memory lives at `~/.claude/projects/<encoded-path>/memory/`, where the encoded name is an
+absolute path with non-alphanumerics (`/`, space, `_`) replaced by `-`. **The key is the git root
+when the session runs inside a repo, and the exact directory otherwise.** It never walks up past
+that the way `CLAUDE.md` does.
+
+Git-root keying is what makes mode folders and worktrees safe — they share the repo's one store
+(verified 2026-08-10: only the git-root directory has a `memory/` folder; the per-cwd siblings hold
+transcripts only). It does **not** make the store safe from a move: the key is still a path, so
+relocating the repo strands everything.
 
 So when a folder moves:
 

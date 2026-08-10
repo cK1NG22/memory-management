@@ -22,13 +22,20 @@ project's history:
 | | **Native memory** | **Project memory** |
 | --- | --- | --- |
 | Where | `~/.claude/projects/<encoded-cwd>/memory/` | `<project>/.claude/memory/` |
-| Keyed by | the **exact absolute cwd** — does *not* walk up | path relative to the project |
+| Keyed by | the **git root** when cwd is inside a repo, else the exact cwd | path relative to the project |
 | Loaded | `MEMORY.md` auto every session; topic files on `description:` match | **nothing auto-loads it** — a pointer must fetch it |
 | Survives a folder move | **no** — the store is stranded silently | **yes** |
 | Holds | facts about **Carter and this machine** | facts about **the work** |
 
 **Routing test for any fact: would this still be true if the project were deleted?**
 Yes → native memory. No → project memory.
+
+**Keying, precisely (verified on disk 2026-08-10):** *transcripts* key to the exact cwd, *memory*
+keys to the git root. That is why `~/.claude/projects/` holds a directory per working directory —
+`…-memory-management-make`, `…-memory-management-research`, one per worktree — while **only the
+git-root directory has a `memory/` folder**. Sessions run from `make/`, `research/`, or a worktree
+all read and write the one root store. A store still strands when the *repo* moves; it no longer
+strands per mode folder.
 
 ## The modes
 
@@ -37,8 +44,9 @@ Modes are a **loading mechanism, not a locking one** — they control which skil
 load, and they are a convention, never enforcement. Nothing available in Claude Code is a hard write
 boundary; see `docs/mode-review-verdict.md`.
 
-Memory lives **once, at this root** — not per mode. Native memory already fragments per cwd, and
-three mode folders would mean three empty stores per project.
+Memory lives **once, at this root** — not per mode. Git-root keying already puts it there: a
+`make/` or `research/` session writes to the root store, so the modes cannot fragment it. Project
+memory is kept at the root to match.
 
 ## Conventions
 
