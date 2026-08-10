@@ -484,3 +484,33 @@ resolved and indexed). Full record + per-file rulings: the manifest's "Execution
   targets or skip the controlled A/B and use before/after probes (banked 114/16 baseline) as
   the evidence. *Why recorded here:* worktree isolation cannot protect `~/.claude/` shared
   state — the collision class the roadmap's dependency-map item exists for.
+
+## 2026-08-10 — A/B verdict folded in: FALSIFIED on the metric, mechanism intact; collision never landed
+
+- **The skill-budget A/B is FALSIFIED per its own success rule** — baseline 75%, subtraction 100%,
+  delta 25pp against a 60pp bar (needed baseline ≤ 20% AND subtraction ≥ 80%). Only one of four
+  targets (`youtube-slide-transcript`) was actually evicted in the baseline arm; for that one the
+  restoration was a clean 0% → 100% reproduced on all 5 probes. The other three
+  (`sources-cited`, `tdd`, `sync-gbrain`) showed full descriptions in the untouched over-budget
+  baseline — their usage priority had risen since the 08-07 pass. *Why it matters:* the plan's own
+  falsifier clause ("both arms ≥ 80% already → no eviction present this session") fired exactly as
+  written. **What stays unconfirmed is the aggregate claim** — whether trimming fixes the
+  multi-skill problem — not the mechanism. Do not justify further trim/relocation on this result.
+  Results: `research/sources/skill-description-drop.md`, branch `worktree-skill-budget-execution`
+  (unmerged as of this close).
+- **Correction to the 2026-08-08 collision entry above: the collision was a real risk that did not
+  materialise.** Commit timestamps settle it — the A/B results committed 12:47, the trim flips
+  landed 12:58, `tdd` was archived 13:45. Every probe ran against a clean, untouched catalog; the
+  falsification has nothing to do with the flips. *Why recorded:* the warning was correct to send
+  (the two plans genuinely share `~/.claude/` state and the ordering was luck, not design), but the
+  post-hoc story must not blame contamination for a null result the experiment found honestly.
+  Lesson for future forensics: compare against the *result* timestamp, not the write timestamp.
+- **Second measurement of the catalog, under the sonnet probe model:** 119 skills + 4 enabled
+  plugins = 31,362 chars against an **8,000-char budget** (default `skillListingBudgetFraction`
+  0.01) → 23,362-char deficit; 51 skills had to go `name-only` to fit the subtraction arm. This
+  does not contradict the 08-07 figure (35,948 vs 30,000) — different model, different budget. The
+  budget is a fraction of the *model's* context window, so **the evicted set changes with the model
+  you run**, not just with usage drift.
+- **The trim executed and is partly done.** 11 skills carry `disable-model-invocation: true`;
+  `opusplan` → `fable-plan` rename landed; global is 101 skills. Still open: the ~19 model-invoked
+  descriptions awaiting their 80–200-char trim, and the `capture-feedback` content rider.
