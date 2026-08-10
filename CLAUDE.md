@@ -30,12 +30,17 @@ project's history:
 **Routing test for any fact: would this still be true if the project were deleted?**
 Yes → native memory. No → project memory.
 
-**Keying, precisely (verified on disk 2026-08-10):** *transcripts* key to the exact cwd, *memory*
-keys to the git root. That is why `~/.claude/projects/` holds a directory per working directory —
-`…-memory-management-make`, `…-memory-management-research`, one per worktree — while **only the
-git-root directory has a `memory/` folder**. Sessions run from `make/`, `research/`, or a worktree
-all read and write the one root store. A store still strands when the *repo* moves; it no longer
-strands per mode folder.
+**Keying, precisely (probe-verified 2026-08-10):** *transcripts* key to the **launch cwd**; native
+*memory* keys to the **main repo root**. That is why `~/.claude/projects/` holds a directory per
+working directory — `…-memory-management-make`, `…-research`, one per worktree — while **only the
+repo-root directory has a `memory/` folder**. Two probes: the `make/` session's transcript sits in
+the `…-make` store while its memory writes landed in the repo-root store; and a session launched
+inside `.claude/worktrees/stale-blockers` reported the **main repo's** store as its memory dir.
+
+Resolve the key with `git rev-parse --path-format=absolute --git-common-dir` minus the trailing
+`/.git` — **not** `--show-toplevel`, which returns the worktree. So mode folders and worktrees
+cannot fragment native memory, and deleting a worktree does not orphan it. A store still strands
+when the *repo* moves.
 
 ## The modes
 
