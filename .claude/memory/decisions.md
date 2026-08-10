@@ -532,3 +532,56 @@ resolved and indexed). Full record + per-file rulings: the manifest's "Execution
   scheme — the exact Gen-3 destination this session removed from `capture-feedback` — and its
   mempalace phase contradicts the standing `feedback-no-mempalace` memory (the MCP is now disabled
   too). Both skipped this run; both need folding into the skill's pending revision.
+## 2026-08-08 — mattpocock-skills installed as a plugin; managed-over-local ruling (Carter's call)
+
+- **`mattpocock-skills@mattpocock` installed at user scope** (v1.2.3, 25 skills incl.
+  `writing-for-agents`, ~1,620 tok always-on). *Why:* Carter wants the writing-for-agents skill
+  live for Phase 1 work, not just as reference notes. Treated like gstack: plugin-managed,
+  never hand-edited, lives in the plugin cache outside `~/.claude/skills/` — untouched by the
+  Plan A mode-home moves. Cost note: it spends a real chunk of the headroom the same-day trim
+  freed, and **plugin skills can't be reduced via `skillOverrides`** (probe-verified above) —
+  the only levers are plugin enable/disable.
+- **Duplicated skills resolve to the managed plugin version (Carter's ruling).** The dedup sweep
+  found one live exact-name duplicate: local `tdd` vs `mattpocock-skills:tdd`. Local archived to
+  `~/Claude/_archive/tdd-skill_2026-08-08` (no references anywhere — agents/skills/workflows
+  grepped clean first). *Why:* a plugin copy updates upstream and can't drift; two same-name
+  listeners double-trigger. Known functional overlaps left alone: `superpowers:test-driven-development`,
+  built-in `/code-review` vs `mattpocock-skills:code-review`, gstack's internal name clashes
+  (gstack manages its own files).
+- **The trim/A/B parallel run collided — flagged live, resolution owned by the make/ session.**
+  Trim flips landed at 12:58 while the A/B assumed an untouched baseline catalog; two of four
+  A/B targets are now dead (`youtube-slide-transcript` flipped ABSENT, local `tdd` archived).
+  Recommendation sent via Carter: pause trim at its top-10 checkpoint, then either re-pick A/B
+  targets or skip the controlled A/B and use before/after probes (banked 114/16 baseline) as
+  the evidence. *Why recorded here:* worktree isolation cannot protect `~/.claude/` shared
+  state — the collision class the roadmap's dependency-map item exists for.
+
+## 2026-08-10 — A/B verdict folded in: FALSIFIED on the metric, mechanism intact; collision never landed
+
+- **The skill-budget A/B is FALSIFIED per its own success rule** — baseline 75%, subtraction 100%,
+  delta 25pp against a 60pp bar (needed baseline ≤ 20% AND subtraction ≥ 80%). Only one of four
+  targets (`youtube-slide-transcript`) was actually evicted in the baseline arm; for that one the
+  restoration was a clean 0% → 100% reproduced on all 5 probes. The other three
+  (`sources-cited`, `tdd`, `sync-gbrain`) showed full descriptions in the untouched over-budget
+  baseline — their usage priority had risen since the 08-07 pass. *Why it matters:* the plan's own
+  falsifier clause ("both arms ≥ 80% already → no eviction present this session") fired exactly as
+  written. **What stays unconfirmed is the aggregate claim** — whether trimming fixes the
+  multi-skill problem — not the mechanism. Do not justify further trim/relocation on this result.
+  Results: `research/sources/skill-description-drop.md`, branch `worktree-skill-budget-execution`
+  (unmerged as of this close).
+- **Correction to the 2026-08-08 collision entry above: the collision was a real risk that did not
+  materialise.** Commit timestamps settle it — the A/B results committed 12:47, the trim flips
+  landed 12:58, `tdd` was archived 13:45. Every probe ran against a clean, untouched catalog; the
+  falsification has nothing to do with the flips. *Why recorded:* the warning was correct to send
+  (the two plans genuinely share `~/.claude/` state and the ordering was luck, not design), but the
+  post-hoc story must not blame contamination for a null result the experiment found honestly.
+  Lesson for future forensics: compare against the *result* timestamp, not the write timestamp.
+- **Second measurement of the catalog, under the sonnet probe model:** 119 skills + 4 enabled
+  plugins = 31,362 chars against an **8,000-char budget** (default `skillListingBudgetFraction`
+  0.01) → 23,362-char deficit; 51 skills had to go `name-only` to fit the subtraction arm. This
+  does not contradict the 08-07 figure (35,948 vs 30,000) — different model, different budget. The
+  budget is a fraction of the *model's* context window, so **the evicted set changes with the model
+  you run**, not just with usage drift.
+- **The trim executed and is partly done.** 11 skills carry `disable-model-invocation: true`;
+  `opusplan` → `fable-plan` rename landed; global is 101 skills. Still open: the ~19 model-invoked
+  descriptions awaiting their 80–200-char trim, and the `capture-feedback` content rider.

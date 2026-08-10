@@ -27,6 +27,10 @@ work, not cleanup.
 
 ## Phase 1 — Build the skills this work identified
 
+*Tooling note 2026-08-08:* `mattpocock-skills@mattpocock` installed as a plugin (25 skills) so
+`writing-for-agents` — the adopted standard these skills get written against — is live, not just
+reference notes. Managed like gstack: plugin-owned, outside all relocation plans.
+
 - [ ] **`/move-project`** — relocate a project *and* everything path-coupled to it: the cwd-keyed
       native store, symlinks in both directions, ~23 config references, worktrees holding absolute
       paths. **A `--check` audit mode is the more valuable half** — it would have caught the June
@@ -199,6 +203,28 @@ work, not cleanup.
       aggregate: every verbose description evicts someone else's. Meters: `/doctor` before and
       after; `/skills` shows per-skill state. Optional second lever:
       `skillListingBudgetFraction` in settings (costs context in every session).
+      **Status 2026-08-08 — executed.** 11 skills now carry `disable-model-invocation: true`
+      (`autoresearch`, `claude-audit`, `close-session`, `fable-plan`, `kpi-setter`,
+      `memory-review`, `new-project`, `new-session`, `resolve-vulns`, `restructure-project`,
+      `youtube-slide-transcript`); the `opusplan` → `fable-plan` rename rider landed; global is
+      **101 skills** after `tdd` was archived. Remaining: the ~19 model-invoked descriptions still
+      need their 80–200-char trim, and the `capture-feedback` content rider is unapplied.
+      New budget facts: `mattpocock-skills` adds ~1,620 tok always-on, and **plugin skills can't
+      be `skillOverrides`-trimmed** (runtime forces plugins on) — plugin enable/disable is the
+      only lever on that slice of the catalog.
+- [x] **A/B the budget mechanism** (`plan/skill-budget-ab.md`) — **run 2026-08-08, verdict
+      FALSIFIED on the plan's literal rule** (baseline 75%, subtraction 100%, delta 25pp vs a
+      60pp bar). *The mechanism was not contradicted:* only 1 of the 4 targets
+      (`youtube-slide-transcript`) was actually evicted in the baseline arm, and for that one the
+      swing was a clean 0% → 100% on all 5 probes. The other three had drifted back into budget on
+      their own since the 08-07 measurement — the plan's own falsifier clause ("both arms ≥ 80%
+      already → no eviction present this session") firing as written. Measured that session:
+      119 skills + 4 enabled plugins = **31,362 catalog chars vs an 8,000 budget** (default
+      `skillListingBudgetFraction` 0.01, sonnet probe model) → 23,362-char deficit. **What stays
+      unconfirmed** is whether trimming fixes the *aggregate* multi-skill problem; per the plan, do
+      not justify further trim/relocation work on this result alone. Results:
+      `research/sources/skill-description-drop.md` (on branch `worktree-skill-budget-execution`,
+      **unmerged**). Done 2026-08-08.
 - [ ] **Re-measure the floor** after pruning. **Baseline captured 2026-08-05 (before relocating):
       44K–55K tokens at session start across eight recent sessions**, from the `.jsonl` token data.
       The post-relocation number comes free from the next normal session start.
