@@ -143,24 +143,35 @@ reference notes. Managed like gstack: plugin-owned, outside all relocation plans
 - [ ] **Build the four `audit.py` checks** from `mode-memory-design.md` (stranded repo-subdir
       stores, lstat-level symlink resolution, containment invariant, fork tripwire) — required
       before any memory symlink is created.
-- [ ] **Correction sweep for git-root keying wording** — still stating exact-cwd keying: the root
-      `CLAUDE.md` two-system table, `docs/memory-repair-runbook.md`, `audit.py`'s orphan message,
-      and the close-session skill's Phase-5 native-memory text.
-- [ ] **Update `close-session` + `new-session` skills to the new memory patterns** (Carter,
-      2026-08-06). close-session Phase 5: replace "keyed to the exact working directory / does not
-      walk up" with git-root keying + the one-store-per-session rule; route native facts to the
-      repo-root store. new-session: codify the worktree case (handoff written and committed on the
-      branch) and set the launch dir per the session-launch convention — **project root or the
-      mode folder that fits the next action** (`<project>/` or `<project>/<mode>/`), never a
-      deeper path — and drop any exact-cwd assumptions. Both live in `~/.claude/skills/` — outside this repo, so it's a hand edit, not
-      part of a branch merge.
+- [x] **Correction sweep for git-root keying wording** — all four targets corrected: the root
+      `CLAUDE.md` two-system table (plus its now-wrong "modes fragment memory" rationale),
+      `docs/memory-repair-runbook.md`, `audit.py`'s orphan message, and the close-session skill's
+      Phase-5 native-memory text. `audit.py` re-run clean afterward (38 stores, 0 orphans).
+      The sweep also sharpened the rule: **transcripts key to the launch cwd, native memory keys
+      to the main repo root** — see the probe results on the `git init` item below.
+      **Done 2026-08-10.**
+- [~] **Update `close-session` + `new-session` skills to the new memory patterns** (Carter,
+      2026-08-06). Both live in `~/.claude/skills/` — outside this repo, so it's a hand edit, not
+      part of a branch merge. **Done 2026-08-10:** close-session Phase 5 now states repo-root
+      keying + the one-store-per-session rule and routes native facts to the repo-root store;
+      Phase 1's hardcoded `-Users-carterking-Projects` hub scan replaced with a resolved store;
+      new-session codifies the worktree case (handoff written **and committed on the branch**,
+      branch recorded in `git_branch`). Exact-cwd assumptions dropped from both.
+      **Still open:** new-session's launch-dir convention — **project root or the mode folder that
+      fits the next action** (`<project>/` or `<project>/<mode>/`), never a deeper path.
 - [ ] **Skill drift fixes — 2026-08-07 sweep** (all hand edits in `~/.claude/skills/` +
       `~/.claude/agents/`; do together with, or right after, the close-session/new-session item
       above — ideally as thin wrappers over the shared memory-write reference, Phase 1).
-      **close-session** additionally: drop the mempalace phase (ruled dead), the hardcoded
-      `-Users-carterking-Projects` Phase-1 scan, and the task-type feedback step; add the
-      **worktree guard** — in a worktree, write project memory + handoff only, never the native
-      store (worktree stores orphan on deletion), and end with ExitWorktree "keep."
+      **close-session** — **all four done 2026-08-10:** mempalace phase dropped (ruled dead), the
+      hardcoded `-Users-carterking-Projects` Phase-1 scan replaced with a resolved store, the
+      task-type feedback step rerouted to Gen-4 scopes, and a new **Phase 8** ends the session
+      with ExitWorktree "keep."
+      ⚠️ **The old worktree guard here was wrong and is withdrawn.** It said "in a worktree, write
+      project memory + handoff only, never the native store (worktree stores orphan on deletion)."
+      Probe-verified false 2026-08-10: a session launched inside `.claude/worktrees/stale-blockers`
+      reports its memory dir as the **main repo's** store, and the worktree's own store directory
+      holds a transcript and no `memory/` folder. Native memory from a worktree is safe and is
+      visible to the main session; deleting the worktree does not orphan it.
       **brain-dump**: route to the session's git-root store instead of the hardcoded `~/Projects`
       store (today every in-project dump misfiles into the library), canonical frontmatter, index
       line mandatory. **capture-feedback**: rule-shaped feedback routes to `ALWAYS.md` /
@@ -252,10 +263,14 @@ reference notes. Managed like gstack: plugin-owned, outside all relocation plans
       generation in parallel — the exact "three generations coexisted" failure this roadmap's
       standing principles name.
 - [ ] **`git init` every project folder as part of the mode migration** (Carter, 2026-08-06). A
-      non-repo project fragments native memory: every mode-folder launch keys its own store
-      (exact-cwd keying), so `plan/` and `make/` sessions each get a separate empty store — the
-      June accident, re-run per project. A repo converges every inside-the-project session onto one
-      root store. **Containers must stay non-repos** — a repo at `~/Projects` would swallow every
+      non-repo project fragments native memory: with no git root the key falls back to the exact
+      cwd, so `plan/` and `make/` sessions each get a separate empty store — the June accident,
+      re-run per project. A repo converges every inside-the-project session onto one root store.
+      **Both halves confirmed empirically 2026-08-10** (this project, a repo): the `make/` session's
+      *transcript* sits in the `…-memory-management-make` store while its *memory writes* landed in
+      the git-root store, and a session launched inside a worktree reported the **main repo's**
+      store as its memory dir. So in a repo, transcripts fragment by launch cwd and memory does
+      not — which is exactly the property `git init` is being bought for. **Containers must stay non-repos** — a repo at `~/Projects` would swallow every
       non-repo project under it into one store. Pre-flight per project: check for existing stores
       keyed to its *subfolders* — creating a repo above such a store strands it retroactively
       (audit check #1's inverse). `attio-network-database` verified safe 2026-08-06 (it is its own

@@ -16,10 +16,16 @@ absolute path with non-alphanumerics (`/`, space, `_`) replaced by `-`. **The ke
 when the session runs inside a repo, and the exact directory otherwise.** It never walks up past
 that the way `CLAUDE.md` does.
 
-Git-root keying is what makes mode folders and worktrees safe — they share the repo's one store
-(verified 2026-08-10: only the git-root directory has a `memory/` folder; the per-cwd siblings hold
-transcripts only). It does **not** make the store safe from a move: the key is still a path, so
-relocating the repo strands everything.
+Repo-root keying is what makes mode folders and worktrees safe — they share the repo's one store.
+Probe-verified 2026-08-10, two ways: a `make/` session's transcript sat in the `…-make` store while
+its memory writes landed in the repo-root store, and a session launched inside a worktree reported
+the **main repo's** store as its memory dir (the worktree's own store directory held a transcript
+and no `memory/` folder). Resolve the key with
+`git rev-parse --path-format=absolute --git-common-dir` minus the trailing `/.git` — `--show-toplevel`
+returns the *worktree* and is the wrong tool here.
+
+None of that makes the store safe from a **move**: the key is still a path, so relocating the repo
+strands everything. That is what this runbook exists for.
 
 So when a folder moves:
 

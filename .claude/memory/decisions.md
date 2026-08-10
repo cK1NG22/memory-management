@@ -634,3 +634,35 @@ resolved and indexed). Full record + per-file rulings: the manifest's "Execution
   The banner was *replaced* with a dated "Resolved 2026-08-10" note rather than removed. That is
   the better practice regardless: a resolved instruction that leaves a trace lets a future reader
   distinguish "handled" from "never existed."
+
+---
+
+## 2026-08-10 — Store keying probe-verified; an inference from the same session corrected (session 7 close)
+
+- **Native memory keys to the main repo root even from inside a worktree; transcripts key to the
+  launch cwd.** Probe-verified two independent ways: the `make/` session's transcript sat in
+  `…-memory-management-make` while its own memory writes landed in the repo-root store; and a
+  `claude -p` launched inside `.claude/worktrees/stale-blockers` reported the **main repo's** store
+  as its memory directory, leaving behind a worktree store dir holding a transcript and no
+  `memory/`. *Resolution command:* `git rev-parse --path-format=absolute --git-common-dir` minus
+  the trailing `/.git` — **not** `--show-toplevel`, which returns the worktree from inside one.
+- **Correcting an earlier claim made in this same session.** The first pass asserted "worktrees are
+  safe" from the *absence* of `memory/` folders in worktree store directories. That is exactly the
+  error `feedback-absence-is-not-proof` names — those sessions had simply never written native
+  memory (confirmed afterward: zero native-memory references in either transcript). The conclusion
+  turned out correct, but the evidence did not support it until it was probed. *Apply:* **when a
+  claim is about to be written into four files, probe it.** A lucky inference and a verified fact
+  are indistinguishable on disk, which is this project's founding failure mode.
+- **The roadmap's worktree guard is withdrawn as false.** It read "in a worktree, write project
+  memory + handoff only, never the native store (worktree stores orphan on deletion)." Deleting a
+  worktree cannot orphan native memory, because native memory was never in the worktree.
+- **Project memory and native memory move in opposite directions from a worktree.** Project memory
+  (`.claude/memory/`, including `new-session` handoffs) is tracked repo content that **follows the
+  branch** and must be committed there; native memory ignores the worktree and lands in the main
+  store. A skill that conflates the two gets one of them wrong — `new-session`'s handoff rule was
+  rewritten to match Carter's 2026-08-06 design (write and commit on the branch) after the first
+  pass had it backwards.
+- **A skill's staleness is invisible from inside it.** Running `close-session` is what exposed its
+  hardcoded `-Users-carterking-Projects` Phase-1 scan — one store out of ~38, so it misses the
+  memory of every session run inside a project — on top of the mempalace and task-types bugs found
+  the same way two sessions earlier.
