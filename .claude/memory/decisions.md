@@ -442,6 +442,31 @@ resolved and indexed). Full record + per-file rulings: the manifest's "Execution
 
 ---
 
+## 2026-08-07 — Skill drift sweep + the cross-skill change protocol (Carter)
+
+- **Three-agent sweep of every memory-touching skill and agent, spot-verified.** Ten drift from
+  the current memory model. Worst: `close-session` (mandatory mempalace phase vs the
+  no-mempalace ruling; hardcoded `~/Projects` hub scan; exact-cwd wording; worktree exit still a
+  PENDING note) · `brain-dump`/`capture-feedback`/`memory-review` + the `memory-janitor` and
+  `research-deep-dive` agents (all hardcode the `~/Projects` store, so in-project saves misfile
+  into the library) · `restructure-project` (still scaffolds retired `history.md` and the full
+  Gen 3 COS shape). *Root cause: every skill encodes the memory model by copy, and the model
+  changed three times underneath them* (git-root keying + consolidation, mode files, mempalace
+  death). Proof the copies fork: `capture-feedback` writes top-level `type:` where
+  close-session's guide says `metadata.type:`.
+- **Maintenance architecture decided (Carter: "Create the TO-DOs"):** a single-source
+  memory-write reference every writer wraps · a **derived** skill-dependency map (grep script
+  over skills + agents) · a retired-token tripwire in `audit.py` (`history.md`, `mempalace`, the
+  old hub path, `task-types/`) · the 4-step change protocol (name the convention → generate the
+  map → change all dependents in one change set → retire the old token). *Why derived, never
+  hand-drawn:* a hand-maintained map is one more copy that drifts — the disease it claims to
+  cure.
+- **Rejected:** a standalone `/remember` router (brain-dump's rewrite *becomes* the router) · a
+  standalone memory-audit skill (`claude-audit` gains a memory section instead) · any
+  hand-maintained dependency map.
+- **`/capture-reference` added to Phase 1** (Carter) — sibling of capture-feedback; owns the
+  reference-file format and the save-location rule (git-root store + the mandatory `MEMORY.md`
+  index line). All six sweep/reference to-dos merged to `main` (`d1203f3`).
 ## 2026-08-08 — Invocation split: zero-bare is the wrong target (Carter's call)
 
 - **Skills divide into model-invoked and user-invoked** (source: mattpocock/skills
