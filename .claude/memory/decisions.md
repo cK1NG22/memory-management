@@ -458,3 +458,52 @@ resolved and indexed). Full record + per-file rulings: the manifest's "Execution
   user-invoked (~4K chars freed with no rewriting), 1 goes deliberately name-only, ~21 stay
   model-invoked and get trimmed, cron/shift family flagged for plist-prompt checks before
   flipping. New target: KEEP-list always described, FLIP-list absent, ~9K non-gstack catalog.
+
+---
+
+## 2026-08-08 — Both execution plans run (session 5, `make/` mode, subagent-driven)
+
+- **The A/B's literal verdict was FALSIFIED (25pp restoration delta vs the ≥60pp bar) and the
+  trim gate was still adjudicated PROCEED.** *Why:* the failure was a **precondition failure, not
+  a mechanism failure** — 3 of the 4 probe targets (`sources-cited`, `tdd`, `sync-gbrain`) were
+  **not evicted at baseline**, so the aggregate bar was arithmetically unreachable no matter what
+  the mechanism did. The single genuinely-evicted target swung **0/5 → 5/5** on catalog
+  subtraction. The trim plan's own §6 falsifiers, run against the real 47-skill catalog, then
+  confirmed the mechanism at full scale. Recorded in the SDD ledger rather than silently passed.
+- **A pre-registered success bar can be unreachable for reasons unrelated to the hypothesis.**
+  The A/B assumed its targets were evicted; it never verified that assumption before banking the
+  bar. *Apply:* an eviction experiment must confirm each target is actually evicted at baseline —
+  otherwise the arm measures nothing and reports failure.
+- **The trim hit its target.** Non-gstack listing catalog **18,440 → 8,086 chars** (goal <9K).
+  Live bare-name probe **`114,16` → `128,1`** across 3 identical runs; the one remaining bare name
+  IS `sources-cited`, bare **by design** — zero *unintentional* bare names. The over-budget WARN
+  (`130 skills, 35948 chars > 30000 budget`) is **gone entirely**. 12 skills flipped to
+  `disable-model-invocation: true` and probe as ABSENT; decoy control clean (0 hallucinations).
+- **§4 stop-gate honored: stopped at the top 10.** `trim-diff.md` (verbatim old/new + char counts
+  for all 11 trims) is the gate document and **awaits Carter's ruling**. Standing recommendation:
+  stop here — the target is met, further trimming buys nothing.
+- **A parallel session's "the trim is contaminating the A/B" alarm was rejected on evidence, not
+  paused on caution.** The collision never happened: the A/B banked and committed all 10 probes
+  before the first flip landed. *The probe readings themselves carry the timestamp evidence* — an
+  evicted skill reads NAME-ONLY, a flipped one reads ABSENT. The suggested mitigation (drop
+  `youtube-slide-transcript`) was backwards: it was the **only** genuinely evicted target.
+- **Permission laundering refused.** `rm -r ~/.claude/skills/opusplan` was denied to the
+  implementer; neither the implementer nor the controller retried it. Surfaced to Carter as the
+  one manual step; he ran it. *Why:* a denial in one agent is never authorization for another.
+- **Riders shipped:** `opusplan` → `fable-plan` (rename + invoke Fable + flip); `capture-feedback`
+  rerouted from the retired Gen-3 `~/.claude/task-types/<type>/` scheme to Gen 4 (global →
+  `~/.claude/modes/ALWAYS.md`; mode principle → `<MODE>-MODE.md`; project-scoped → the native
+  store's `feedback-<slug>.md` + MEMORY.md pointer), and a hardcoded `~/Projects`-only path bug
+  fixed on the way.
+- **`/doctor` cleanup applied** (Carter: "keep React Bits, clean up everything else"): 3 MCP
+  servers disabled for this project (`claude-in-chrome`, `mempalace`, `notion` — 54 deferred tools
+  dropped live), `modern-web-guidance@googlechrome` disabled, duplicated Worktrees bullet removed
+  from the global `CLAUDE.md` (the richer copy already loads via `ALWAYS.md`).
+- **Review-tooling gotcha (durable):** the environment's default diff tool misrepresents YAML
+  folded-block (`>`) changes as whole-file rewrites. Use `/usr/bin/diff -u` when reviewing
+  frontmatter edits, or every one-line change reads as a rewrite.
+- **`close-session` is now itself out of date in two ways** (found while running it): its Phase 3.7
+  still writes durable working-norm feedback to the retired `~/.claude/task-types/<type>/feedback/`
+  scheme — the exact Gen-3 destination this session removed from `capture-feedback` — and its
+  mempalace phase contradicts the standing `feedback-no-mempalace` memory (the MCP is now disabled
+  too). Both skipped this run; both need folding into the skill's pending revision.

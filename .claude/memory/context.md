@@ -1,6 +1,6 @@
 # Context — memory-management
 
-**Last updated:** 2026-08-08 (session 4 — Phase 3 approved; skill-budget root cause; both execution plans ready)
+**Last updated:** 2026-08-08 (session 5 — both execution plans run; the trim landed; §4 gate open)
 
 ## 🎯 Goal
 
@@ -9,86 +9,95 @@ folder.** Optimizing for context curation, explicitly not for traditional coding
 
 ## 🧭 Where we are now
 
-**Phase 3 is APPROVED and its gate is passed.** Carter approved `plan/phase3.md` (renamed from
-`skill-relocation-plan.md`) — Plan A: move the last 15 skills to mode homes; Plan B: restamp every
-project to the mode shape; order: sentinel test → B → A → re-measure.
+**The skill-listing budget bug is fixed on disk.** Session 5 ran both approved plans in `make/`
+mode, subagent-driven (fresh implementer → task review → fix loop → final whole-work review).
 
-**The sentinel test detoured into the session's big find.** Names loaded through skill symlinks but
-descriptions didn't — four research agents (docs / GitHub / community / **binary forensics**) plus
-fixture experiments root-caused it: **the skills listing has a budget** (~1% of the model's context
-window; least-used skills silently lose descriptions; a name-only skill can't natural-language
-trigger). Symlinks were never the problem — the two-hop mode chain loads fully; the gate closed as
-PASSED. Full reference: `research/sources/skill-description-drop.md`. Live numbers: 130 skills,
-35,948 chars vs 30,000 budget on the default model (~8K budget for 200K-context models); ~16
-skills bare per session, set varies by session and model.
+- **`plan/skill-budget-ab.md` — run, verdict FALSIFIED, gate adjudicated PROCEED.** The 25pp
+  restoration delta missed the pre-registered ≥60pp bar for a reason unrelated to the hypothesis:
+  3 of 4 probe targets were never evicted at baseline, making the aggregate bar arithmetically
+  unreachable. The one genuinely-evicted target swung 0/5 → 5/5. Reasoning is in the SDD ledger,
+  not buried. Results appended to `research/sources/skill-description-drop.md`.
+- **`plan/trim-skills.md` — executed through §4.** Non-gstack listing catalog **18,440 → 8,086
+  chars** (goal <9K). Bare-name probe **`114,16` → `128,1`** ×3 identical; the single remaining
+  bare name is `sources-cited`, bare by design. The over-budget WARN is **gone entirely**. 12
+  skills flipped to `disable-model-invocation: true` (all probed ABSENT); decoy control clean.
+  Riders shipped: `opusplan` → `fable-plan`; `capture-feedback` rerouted to Gen-4 destinations.
+- **Final whole-work review: CLEAN.** All change classes spot-verified against the pre-edit tar
+  `~/Claude/_archive/skill-trim_2026-08-08.tar.gz`; verification arithmetic independently
+  recomputed exact; every deferred minor triaged RIDE.
 
-**Two execution-ready plans await Carter's `make/` session** (both reviewed, on main):
-
-- `plan/skill-budget-ab.md` — A/B confirming "smaller catalog → descriptions return"
-  (subtraction arm via project-scoped `skillOverrides`; 5 decoy-controlled probes/arm; ≥60pp
-  restoration delta; <$1). **Run this first.**
-- `plan/trim-skills.md` — the trim pass, reshaped by Carter's **invocation split** ruling (from
-  mattpocock/skills `writing-for-agents`): **zero bare names was the wrong goal.** 12 skills FLIP
-  to user-invoked via `disable-model-invocation: true` (probe-verified ABSENT; incl.
-  close-session + new-session per Carter), `sources-cited` goes deliberate name-only (411-case
-  reaches it by exact name), ~19 stay model-invoked and trim to 80–200 chars, cron/shift family
-  ruled model-invoked. Baselines banked: 47 non-gstack skills / 18,440 chars; probe 114
-  described / 16 bare; backup tar in `~/Claude/_archive/`. Riders: `opusplan` → `fable-plan`
-  (rename + invoke Fable), `capture-feedback` content update to Gen 4 memory routing.
-
-**A parallel session added ROADMAP items** (2026-08-07/08, not this session's work): the
-`/capture-reference` skill, the shared memory-write reference, `/share-topic`, and the
-skill-dependency map + retired-token tripwire + change protocol.
+**`/doctor` ran after** and its cleanup was applied per Carter ("keep React Bits, clean up
+everything else"): 3 MCP servers disabled for this project, `modern-web-guidance@googlechrome`
+off, duplicated Worktrees bullet removed from the global `CLAUDE.md`.
 
 ## ⏭️ Next steps / open
 
-1. **Carter opens a `make/` session:** run the A/B (`plan/skill-budget-ab.md`), then the trim pass
-   (`plan/trim-skills.md` — flips + trims + riders, stop after top 10 for his diff review).
-   `/doctor` before/after is the authoritative meter.
-2. **Plan B — restamp the projects** (git init the 9 non-repos + wire mode CLAUDE.mds/symlinks,
-   probe each; runbook step 5), then remove `# Planning a build` from the global CLAUDE.md.
-3. **Plan A — move the 15 mode-home skills** (after B), then re-measure the floor (free).
-4. ⚠️ **Stale since 2026-08-06 (~4 sessions, no movement):** the correction sweep (exact-cwd
-   wording in root CLAUDE.md table, memory-repair runbook, audit.py orphan message) + the
-   close-session/new-session **skill-content** updates (worktree exit step, git-root keying).
-   Partially overtaken: capture-feedback update is now a trim-pass rider.
-5. Carried: worktree memory promotion review · four audit.py checks (gate `/share-topic`) ·
-   floor re-measure.
+1. **⛔ Carter's §4 stop-gate ruling** — `trim-diff.md` (verbatim old/new + char counts for all 11
+   trims) lives in the kept worktree at
+   `.claude/worktrees/skill-budget-execution/.superpowers/sdd/trim-skills/`. Standing
+   recommendation: **stop at the top 10** — the <9K target is met, further trimming buys nothing.
+2. **Merge `worktree-skill-budget-execution`** (commit `25f962a`, unmerged) and fold its
+   transcript before the worktree is ever deleted. The workspace is deliberately kept: the skill
+   edits landed outside the repo and have **no git record** — that workspace *is* the record.
+3. **Update `plan/ROADMAP.md` line 187** — the "Trim skill frontmatter to the gstack shape" item
+   is now done. *Not edited this session:* `make/` mode forbids writing to `../plan/`. Needs a
+   `plan/` session or Carter's hand.
+4. **Fold the pending revisions into `close-session` + `new-session` skills** — worktree-exit
+   phase, git-root store keying, **and two newly-found staleness bugs**: Phase 3.7 still routes
+   durable feedback to the retired `~/.claude/task-types/` scheme, and the mempalace phase
+   contradicts the standing `feedback-no-mempalace` memory (MCP now disabled).
+5. ⚠️ **Stale since 2026-08-06 (~5 sessions, no movement):** the correction sweep — exact-cwd
+   wording in the root `CLAUDE.md` table, the memory-repair runbook, the `audit.py` orphan
+   message. The `capture-feedback` half of this item was cleared as a trim rider; the rest sat.
+6. **Phase 3 Plan B** — restamp the projects (git init the 9 non-repos + wire mode
+   CLAUDE.mds/symlinks, probe each), then remove `# Planning a build` from the global CLAUDE.md.
+   **Plan A** — move the 15 mode-home skills (after B), then re-measure the floor (free).
+7. Carried: worktree memory promotion review · four `audit.py` checks (gate `/share-topic`) ·
+   optional pruning of 4 zero-use inline plugins · optional removal of the claude.ai Gmail +
+   Calendar connectors (`google_workspace` covers both).
 
 ## 🧠 Recent decisions
 
-See `decisions.md` (entries 2026-08-07 → 2026-08-08). Load-bearing:
+See `decisions.md` (entry 2026-08-08 "Both execution plans run"). Load-bearing:
 
-- **Phase 3 approved as written** — sentinel → B → A; the two ❓ calls (file-type four,
-  resolve-vulns) stay open.
-- **Skill-listing budget root-caused; gate closed PASSED** — trim is the fix for a live
-  triggering bug, not a token optimization; budget raise is the deliberate second lever.
-- **Invocation split (Carter): zero-bare rejected.** Model-invoked skills earn descriptions;
-  user-invoked skills go absent via `disable-model-invocation`; name-only is for skill-to-skill
-  reach. close/new-session → user-invoked; cron/shift family → model-invoked.
+- **A falsified verdict can still be a PROCEED** when the failure is a *precondition* failure, not
+  a mechanism failure — but the reasoning gets written down, never quietly waved through.
+- **The parallel-session contamination alarm was rejected on evidence, not paused on caution** —
+  the A/B had banked and committed all 10 probes before the first flip landed.
+- **Permission laundering refused:** a denial in one agent is never authorization for another.
+  `rm -r ~/.claude/skills/opusplan` went to Carter as a manual step.
 
 ## 💡 What we learned
 
-- **The description budget is aggregate — a commons.** Every verbose description evicts some
-  other skill's triggering. gstack's terseness is what keeps the catalog alive.
-- **Probabilistic failures get blamed on the model.** The evicted set varies per session/model,
-  so broken triggering read as "model mood" for months. Deterministic bugs get found.
-- **Names load unconditionally; descriptions are rationed.** A sentinel test that probes names
-  proves the wrong half — triggering lives in the description.
-- **Usage telemetry decides visibility** (`~/.claude/skill-usage.json` ranks eviction) — new
-  skills start last in line exactly when discovery matters most.
-- **Probe by skill name, not description phrase**; and `disable-model-invocation: true` renders
-  a skill ABSENT from the listing while `/name` keeps working.
-- **A description is a context pointer** (writing-for-agents): pay for it only where the agent
-  must discover the skill; where the human is the index, spend cognitive load instead.
+- **An eviction experiment must verify its targets are actually evicted at baseline.** Otherwise
+  the arm measures nothing and reports failure — which is exactly what happened here.
+- **Probe readings carry timestamp evidence.** ABSENT vs NAME-ONLY vs described distinguishes
+  *which* mutation had landed when a session read the catalog. Deliberately leaving
+  probe-distinguishable states is what let a false conflict alarm be disproven from data.
+- **Worktrees isolate the repo, not the machine.** `~/.claude/skills/`, `settings.json`, and
+  `skill-usage.json` are shared mutable state across every parallel session. Sequencing
+  (measurement completes before mutation starts) and single ownership are the only protections.
+- **Edit the generated file *and* its template.** The `learn` skill's `.tmpl` source would have
+  silently reverted the flip on the next regen — this project's signature failure class.
+- **`/usr/bin/diff -u` for frontmatter reviews** — the default diff tool renders YAML
+  folded-block (`>`) changes as whole-file rewrites, which reads as "the agent rewrote everything."
+- **A skill that reroutes other people's writes can be stale about its own.** Running
+  `close-session` surfaced that its Phase 3.7 still writes to the very Gen-3 folder scheme this
+  session removed from `capture-feedback`.
 
 ## 📂 Files touched · 🌿 git
 
-All merged to `main` (worktree `phase3-plan` on branch `worktree-phase3-plan`, kept on disk;
-merges interleaved cleanly with a parallel session's ROADMAP commits). This session:
-`plan/phase3.md` (new, renamed) · `plan/skill-budget-ab.md` (new) · `plan/trim-skills.md` (new) ·
-`research/sources/skill-description-drop.md` (new) · `plan/ROADMAP.md` (trim item, sentinel line)
-· `decisions.md` (4 entries) · this file. Native store:
-`reference-claude-code-loading-mechanics.md` extended with the budget + skills-symlink results.
-Outside the repo: baseline tar `~/Claude/_archive/skill-trim_2026-08-07.tar.gz`; A/B fixture spec
-targets `~/Sandbox/skill-budget-ab-fixture/` (not yet created).
+Repo: one commit `25f962a` on branch **`worktree-skill-budget-execution`** (unmerged) —
+`research/sources/skill-description-drop.md` (A/B results). Worktree **kept** on disk; SDD
+workspace under `.superpowers/sdd/{skill-budget-ab,trim-skills}/` holds the ledgers, briefs,
+reports, `trim-diff.md`, and `task-5-verification.md`. This close-session wrote `decisions.md` +
+this file directly on `main`.
+
+Outside the repo (no git record — the workspace is the record): pre-edit tar
+`~/Claude/_archive/skill-trim_2026-08-08.tar.gz` (97 files, `tar czhf` to dereference symlinks) ·
+11 trimmed + 12 flipped SKILL.md files under `~/.claude/skills/` and `~/.agents/skills/` ·
+`~/.claude/skills/fable-plan/` (new; `opusplan/` deleted by Carter) · `~/.claude/settings.json`
+(`skillOverrides: {"sources-cited": "name-only"}`, plugin disable) · `~/.claude.json` (per-project
+MCP disables) · `~/.claude/CLAUDE.md` (dedup). Native store:
+`reference-global-state-parallel-sessions.md` (new) + MEMORY.md pointer. A/B fixture
+`~/Sandbox/skill-budget-ab-fixture/` cleaned up.
