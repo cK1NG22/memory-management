@@ -31,13 +31,13 @@ side, project root — never native memory, never `.claude/memory/` (past-tense,
 
 ## Phase 1 — The standard exists
 
-- [ ] **1.1: Seed `TODO.md` in this repo.**
+- [x] **1.1: Seed `TODO.md` in this repo.**
   Move the two open items from `.claude/memory/context.md` "Next steps / open" (§4 stop-gate
   ruling; A/B replacement decision) into a root `TODO.md`. Context.md's Next section shrinks to a
   pointer at the file. This repo proves the format.
   `blocked-by: none`
 
-- [ ] **1.2: One line in `~/.claude/modes/ALWAYS.md`** (under "State, secrets, and files"):
+- [x] **1.2: One line in `~/.claude/modes/ALWAYS.md`** (under "State, secrets, and files"):
   > **Project TO-DOs live in `TODO.md` at each project root** — flat checkboxes:
   > `- [ ] task — added <date>`, flip to `[x]` with `done <date>` when finished.
 
@@ -47,7 +47,7 @@ side, project root — never native memory, never `.claude/memory/` (past-tense,
 
 ## Phase 2 — The skill
 
-- [ ] **2.1: Create `~/.claude/skills/todos/SKILL.md`.** Two behaviors:
+- [x] **2.1: Create `~/.claude/skills/todos/SKILL.md`.** Two behaviors:
   - **No args, inside a project:** read root `TODO.md`, agree with Carter which items this session
     tackles, seed the built-in session task list from them, and write back to `TODO.md` the moment
     each completes (flip `[x]` + date; add items discovered mid-session). The durable file is
@@ -64,17 +64,17 @@ side, project root — never native memory, never `.claude/memory/` (past-tense,
 
 ## Phase 3 — Repoint the readers (all under `~/.claude` — global state, one owner, sequential)
 
-- [ ] **3.1: `close-session` Phase 4:** add a `TODO.md` step beside the roadmap sweep — flip items
+- [x] **3.1: `close-session` Phase 4:** add a `TODO.md` step beside the roadmap sweep — flip items
   completed this session, add unplanned work that got done or discovered, prune stale `[x]` lines.
   Same review/auto rules as the roadmap step.
   `blocked-by: 1.1`
 
-- [ ] **3.2: `weekly-digest.md`:** repoint step 5 ("Open TODOs") from grepping memory files to the
+- [x] **3.2: `weekly-digest.md`:** repoint step 5 ("Open TODOs") from grepping memory files to the
   sweep; flag items with an `added` date >2 weeks old as stale. Also fix step 4's stale
   pre-keying path (`-Users-carterking-Projects` no longer exists as the single store).
   `blocked-by: 1.1`
 
-- [ ] **3.3: `new-project` scaffold:** add a step creating `TODO.md` next to the scaffolded
+- [x] **3.3: `new-project` scaffold:** add a step creating `TODO.md` next to the scaffolded
   `ROADMAP.md` (header + one bracketed placeholder line, per the skill's leave-placeholders rule).
   New projects join the sweep from day one. Roadmap keeps phased build tasks; TODO.md keeps loose
   next actions.

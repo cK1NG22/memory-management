@@ -51,27 +51,8 @@ branch**).
 
 ## ⏭️ Next steps / open
 
-1. **⛔ Carter's §4 stop-gate ruling on the trim** — the one real decision outstanding.
-   `trim-diff.md` is the gate document, in the kept worktree at
-   `.claude/worktrees/skill-budget-execution/.superpowers/sdd/trim-skills/`. Executing session's
-   recommendation: **stop** — the <9K target is met.
-2. **Decide what replaces the falsified A/B as evidence for the aggregate claim** — re-run with
-   targets verified evicted *at probe time*, or accept the mechanism as proven and record the
-   aggregate as unmeasured. Do not silently drop it.
-3. **`new-session` launch-dir convention** — the one sub-item left from the skill update: launch at
-   the project root or the mode folder that fits the next action (`<project>/` or
-   `<project>/<mode>/`), never a deeper path.
-4. **Remaining skill-drift fixes** (roadmap 2026-08-07 sweep): `brain-dump` (route to the session's
-   repo-root store instead of the hardcoded `~/Projects` store), `memory-review`, `memory-janitor`,
-   `research-deep-dive`, `dream + morning-shift`.
-5. **Phase 3 Plan B — restamp the projects** (git init the 9 non-repos + wire mode
-   CLAUDE.mds/symlinks, probe each), then remove `# Planning a build` from the global CLAUDE.md.
-   **Plan A** — move the 15 mode-home skills (after B), then re-measure the floor (free).
-6. **Worktree housekeeping (Carter's call).** Six worktrees on disk, all merged:
-   `skill-budget-execution` (**keep** — its SDD workspace is the only record of skill edits made
-   outside the repo), `close-session-plugin-dedup`, `todo-capture-reference`, `phase3-plan`,
-   `stale-blockers`, plus the probe's store dir. Fold transcripts before deleting any.
-7. Carried: worktree memory promotion review · four `audit.py` checks (gate `/share-topic`).
+Moved to the root `TODO.md` (2026-08-19) — the per-project TO-DO file is the live list now
+(convention: `plan/todos.md`). This section is a pointer, not a list.
 
 ## 🧠 Recent decisions
 
