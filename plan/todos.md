@@ -38,14 +38,11 @@ side, project root — never native memory, never `.claude/memory/` (past-tense,
   `blocked-by: none`
 
 - [ ] **1.2: One line in `~/.claude/modes/ALWAYS.md`** (under "State, secrets, and files"):
-  > **Project TO-DOs live in `TODO.md` at each project root** — flat checkboxes, committed; flip
-  > `[ ]`→`[x]` with a `done <date>` note when finished; prune done lines freely (git is the
-  > record).
+  > **Project TO-DOs live in `TODO.md` at each project root** — flat checkboxes:
+  > `- [ ] task — added <date>`, flip to `[x]` with `done <date>` when finished.
 
-  Deliberately **no mention of the `/todos` command** (Carter's call 2026-08-18) — he invokes it
-  himself; sessions only need to know where TO-DOs live.
-
-  This is the auto-loaded layer — every session knows the convention without invoking anything.
+  Location + format only, nothing else. This is the auto-loaded layer — every session knows the
+  convention without invoking anything.
   `blocked-by: none`
 
 ## Phase 2 — The skill
