@@ -40,9 +40,10 @@ side, project root — never native memory, never `.claude/memory/` (past-tense,
 - [ ] **1.2: One line in `~/.claude/modes/ALWAYS.md`** (under "State, secrets, and files"):
   > **Project TO-DOs live in `TODO.md` at each project root** — flat checkboxes, committed; flip
   > `[ ]`→`[x]` with a `done <date>` note when finished; prune done lines freely (git is the
-  > record). Seed the session task list / query across projects with the **`/todos`** slash
-  > command (human-invoked; the model must not act on TO-DO questions without it beyond reading
-  > the current project's file).
+  > record).
+
+  Deliberately **no mention of the `/todos` command** (Carter's call 2026-08-18) — he invokes it
+  himself; sessions only need to know where TO-DOs live.
 
   This is the auto-loaded layer — every session knows the convention without invoking anything.
   `blocked-by: none`
@@ -59,8 +60,9 @@ side, project root — never native memory, never `.claude/memory/` (past-tense,
 
   Constraints (Carter's call 2026-08-18): **human-invoked slash command only.** Frontmatter:
   `disable-model-invocation: true`, **no description**, `argument-hint: "[all]"`. Zero chars
-  against the skill-listing budget; the model never auto-triggers it. Discovery therefore rides
-  entirely on the ALWAYS.md line (1.2), which must name `/todos` explicitly.
+  against the skill-listing budget; the model never auto-triggers it, and ALWAYS.md does not
+  mention it. Carter is the only trigger — typing `/todos` loads it regardless (same pattern as
+  `close-session`); it still appears in the human slash-picker.
   `blocked-by: 1.2`
 
 ## Phase 3 — Repoint the readers (all under `~/.claude` — global state, one owner, sequential)
