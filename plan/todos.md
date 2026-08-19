@@ -108,3 +108,39 @@ no web UI, API, or engine covered by a published standard. Checks 4.1–4.2 are 
 - Phases 2–3 edit **global files under `~/.claude`** — worktrees isolate none of it. One session
   applies them, sequentially. No subagents; the build is ~1 new file + 4 small edits + 1 seed.
 - Repo-side work (1.1, and this plan) rides worktree branches; **no remote** — local commits only.
+
+## Dependencies & parallelism (planned 2026-08-19)
+
+Full graph — stated `blocked-by` plus hidden deps:
+
+```
+1.1 seed TODO.md ──┬─→ 3.1 close-session ─→ 4.2 dry-run
+   (repo)          ├─→ 3.2 weekly-digest
+                   └─→ 4.1 /todos all ─→ 4.3 memory note
+1.2 ALWAYS.md line ─→ 2.1 skill ─→ 4.1
+3.3 new-project scaffold (independent)
+```
+
+Hidden dependencies:
+
+- **3.1/3.2 depend on the spec, not on 1.1's file.** The spec is frozen above, so they can be
+  written any time; 1.1 only gates their *verification* (4.2 needs a real `[ ]` line to flip).
+- **4.1 requires a fresh session.** The skill listing snapshots at session start — the 0-char
+  check and `/todos` cannot run in the session that writes 2.1. Verification is inherently a
+  second session (or Carter runs it interactively).
+- **4.3 is also gated by the verify-first rule** (never write unverified state into memory) —
+  it stays strictly behind a passing 4.1.
+
+Parallelism verdict: **no subagents.**
+
+- 1.2, 2.1, 3.1, 3.2, 3.3 all edit global `~/.claude` files — worktrees isolate none of it;
+  one owner, strictly sequential (global-state rule). Not subagent-safe.
+- 1.1 is the only parallelizable task (repo-side, ~2 small edits) — a worktree subagent costs
+  about what it saves. Read-only verification is two trivial checks; same conclusion.
+
+Build order:
+
+1. **Build session (one pass):** 1.1 → 1.2 → 2.1 → 3.3 → 3.1 → 3.2 — repo seed first (worktree
+   branch), then the five global edits in one sequential run (skill after its ALWAYS line;
+   reader repoints last). Commit repo side; merge.
+2. **Fresh session:** 4.1 → 4.2 → 4.3.
