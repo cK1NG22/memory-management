@@ -666,3 +666,50 @@ resolved and indexed). Full record + per-file rulings: the manifest's "Execution
   hardcoded `-Users-carterking-Projects` Phase-1 scan — one store out of ~38, so it misses the
   memory of every session run inside a project — on top of the mempalace and task-types bugs found
   the same way two sessions earlier.
+
+---
+
+## 2026-08-21 — TODO.md grilling session: every open ruling settled (execution plan in `plan/backlog.md`)
+
+A grilling session over the 7 open TODO.md items ended with an empty frontier. These are the
+rulings; `plan/backlog.md` holds the session sequence (S1–S7) that executes them.
+
+- **The §4 stop-gate closes only after one final classification pass.** Every non-gstack local
+  skill re-confirmed as model-invoked or user-invoked, evidence-based (invocation counts), via a
+  markdown table Carter marks. *Why:* the trim landed under budget (18,440 → 8,086 chars, bare
+  names 16 → 1), but the model/user split was ruled once, quickly, on 2026-08-08 — the cheap
+  moment to re-check it is now, before the catalog is declared stable. *Rejected:* closing the
+  gate on the numbers alone.
+- **The A/B test gets re-run, not recorded as unmeasured.** Same fixture
+  (`~/Sandbox/skill-budget-ab-fixture`) and success bar (baseline ≤20%, subtraction ≥80%, delta
+  ≥60pp), but targets are selected by probing the untouched baseline at run time and keeping only
+  verified-evicted skills; ≥4 valid targets required. *Why:* the first run falsified on a
+  precondition (only 1 of 4 chosen targets was actually evicted at baseline — that one went
+  0%→100%, so the mechanism is confirmed), and the classification flips will change the catalog
+  anyway. *Rejected:* Claude's recommendation to record "unmeasured" and move on — Carter wants
+  the number. If <4 targets verify as evicted at probe time, "insufficient eviction to test" is a
+  valid recorded result, not a failure to engineer around.
+- **All 8 worktrees are deleted** (7 merged + `todo-plan` once merged), transcript sweep before
+  each removal. Merging is Carter's command, never a background job's. *Why:* every branch is
+  merged; kept worktrees are pure risk (stale copies, shared-stash confusion), and the 2026-08-10
+  keying probe means deleting them cannot orphan native memory.
+- **The shared memory-write reference is written first; everything else wraps it.** Dream's
+  writer, morning-shift's apply step (scripted — no more freehand), and the four skill-drift fixes
+  (`brain-dump` · `memory-review` · `memory-janitor` · `research-deep-dive`) all become thin
+  wrappers over it. Shifts-repo item 4.4 stays gated until dream and morning-shift both conform.
+  *Why:* the `type:` vs `metadata.type:` fork between capture-feedback and close-session is
+  exactly the drift a single reference prevents; fixing the four skills first would fork the
+  conventions a fifth time.
+- **Executors:** mechanical sessions run as background jobs Carter reviews; `audit.py` work is a
+  night card; Phase 3 runs foreground/day-shift-planned. *Why:* matches risk — Phase 3 touches
+  every project and `~/.claude/CLAUDE.md`; audit.py is self-verifying; the rest is reviewable
+  diff work.
+- **The mode-rule shadowing convention is RATIFIED** (proposed 2026-08-10). A mode file may add an
+  obligation but never a sentence readable as a complete statement of a global rule. Governs all
+  Phase-3 stamping. *Why:* Carter's own sentinel testing showed nearer instructions silently beat
+  distant ones, so a restating mode file *becomes* the rule and quietly narrows it.
+- **Skill placement (phase3.md's two open questions):** `resolve-vulns` and the four file-type
+  skills (`docx`/`pdf`/`pptx`/`xlsx`) stay global; Plan A moves 11 skills, not 15. *Why:*
+  file-type routing must fire from any cwd — a mode home would make the skills invisible exactly
+  where documents actually get opened; `resolve-vulns` is parked, and a parked skill in a mode
+  home is a skill nobody remembers exists.

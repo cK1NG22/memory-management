@@ -1,0 +1,60 @@
+# Skill classification — §4 gate-closure table
+
+*Built 2026-08-21 (S1). Carter marks the last column; S3 applies the flips. Scope: every
+non-gstack local skill in `~/.claude/skills/` (47 skills; 50 gstack + plugins excluded).*
+
+**Count windows.** Tracker = `~/.claude/skill-usage.json` (hook-logged; earliest history date
+2026-03-25). Transcript = `Skill` tool_use blocks parsed from all 1,162 `.jsonl` transcripts on
+disk (file mtimes 2026-07-21 to 2026-08-21); counted by JSON-parsing tool_use blocks, not plain grep.
+Both sources count user `/name` invocations as well as model fires, so a nonzero count proves
+use, not model-triggering; a zero across both is the strong signal (the description never fires).
+
+| Skill | Current state | Description | Tracker | Transcript | Recommendation | Carter's call |
+| --- | --- | --- | ---: | ---: | --- | --- |
+| api-design | model-invoked | Use when designing, refactoring, or reviewing REST or GraphQL APIs — ... | 0 | 0 | FLIP to user-invoked? (never fired; moves to make/ home in S7 either way) |  |
+| architecture-review | model-invoked | Review architecture — scalability, resilience, security, maintainabil... | 0 | 0 | FLIP to user-invoked? (never fired; moves to make/ home in S7 either way) |  |
+| autoresearch | user-invoked | Self-improving skill optimizer using autoresearch methodology. Runs y... | 24 | 0 | keep user-invoked |  |
+| blocksite | model-invoked | Block or unblock a website on this Mac for focus/productivity. Use wh... | 2 | 2 | keep model-invoked |  |
+| brain-dump | model-invoked | Process raw thoughts into organized memory files. Use when: brain dum... | 2 | 1 | keep model-invoked |  |
+| capture-feedback | model-invoked | Save a correction or confirmed rule as durable feedback on "capture f... | 8 | 2 | keep model-invoked (agent must catch the moment) |  |
+| claude-audit | user-invoked | Audit and fix Claude Code setup. Use when: - "audit my claude setup" ... | 0 | 0 | keep user-invoked |  |
+| clean-transcript | model-invoked | Clean a meeting/call transcript — remove filler words, false starts, ... | 1 | 0 | keep model-invoked |  |
+| close-session | user-invoked | End-of-session routine that captures progress, decisions, and updates... | 106 | 17 | keep user-invoked |  |
+| connect-chrome | model-invoked | Launch GStack Browser — AI-controlled Chromium with the sidebar exten... | 0 | 0 | FLIP to user-invoked? (never fired) |  |
+| database-design | model-invoked | Database design and data modeling skill. Guides schema design, normal... | 0 | 0 | FLIP to user-invoked? (never fired; moves to make/ home in S7 either way) |  |
+| day-shift | model-invoked | Sprint-plan the projects and cut tonight's task cards — maintain per-... | 1 | 0 | keep model-invoked (cron/headless — ruled 2026-08-08) |  |
+| decide | model-invoked | Pick workflow vs loop vs agent team for a large multi-step task and r... | 1 | 1 | keep model-invoked |  |
+| doc-coauthoring | model-invoked | Guide users through a structured workflow for co-authoring documentat... | 1 | 0 | keep model-invoked |  |
+| docx | model-invoked | Create, read, edit, or convert Word documents (.docx) — formatting, t... | 6 | 1 | keep model-invoked (file-type routing) |  |
+| dream | model-invoked | Consolidate memory from the day's transcripts — the fourth shift. Min... | 0 | 0 | keep model-invoked (cron/headless — ruled 2026-08-08) |  |
+| dung | model-invoked | Parallel worktree orchestrator. Reads a project roadmap, identifies t... | 1 | 1 | keep model-invoked |  |
+| email-tracker | model-invoked | Read AI/Claude Code newsletter emails AND new posts on claude.com/blo... | 9 | 5 | keep model-invoked (cron/headless — ruled 2026-08-08) |  |
+| fable-plan | user-invoked | Use Fable to deeply plan a complex task, save the plan to memory, the... | 1 | 1 | keep user-invoked |  |
+| file-versioning | model-invoked | Use when revising, iterating on, or saving a new version of any exist... | 3 | 1 | keep model-invoked (agent must catch the moment) |  |
+| find-docs | model-invoked | Retrieves up-to-date documentation, API references, and code examples... | 2 | 2 | keep model-invoked |  |
+| github-digest | model-invoked | Every-other-day GitHub trending digest — posts to Slack #github-repos... | 1 | 1 | keep model-invoked (cron/headless — ruled 2026-08-08) |  |
+| gstack-upgrade | model-invoked | Upgrade gstack to the latest version. | 3 | 0 | keep model-invoked |  |
+| kpi-setter | user-invoked | Map any multi-step process into phases, define binary KPIs per phase ... | 5 | 0 | keep user-invoked |  |
+| learn | model-invoked | Manage project learnings. | 0 | 0 | FLIP to user-invoked (already on the 2026-08-08 FLIP list — the flip was never applied) |  |
+| mcp-builder | model-invoked | Guide for creating high-quality MCP (Model Context Protocol) servers ... | 0 | 0 | FLIP to user-invoked? (never fired; moves to make/ home in S7 either way) |  |
+| memory-review | user-invoked | Review and trim memory files. Walks through each file with a structur... | 3 | 0 | keep user-invoked |  |
+| morning-shift | model-invoked | Review overnight work — reconcile the night's runs, grade variants ag... | 3 | 1 | keep model-invoked (cron/headless — ruled 2026-08-08) |  |
+| new-project | user-invoked | Scaffold Claude Code *code conventions* for a new project or task — C... | 3 | 2 | keep user-invoked |  |
+| new-session | user-invoked | Hand off the current Claude Code conversation to a fresh session trac... | 59 | 0 | keep user-invoked |  |
+| night-shift | model-invoked | Launch the overnight execution shift — a Claude foreman works through... | 3 | 1 | keep model-invoked (cron/headless — ruled 2026-08-08) |  |
+| open-gstack-browser | model-invoked | Launch GStack Browser — AI-controlled Chromium with the sidebar exten... | 0 | 0 | FLIP to user-invoked? (never fired) |  |
+| pdf | model-invoked | Read, extract, merge, split, rotate, watermark, encrypt, fill forms, ... | 5 | 1 | keep model-invoked (file-type routing) |  |
+| pptx | model-invoked | Create, read, edit, or extract from PowerPoint files (.pptx) — slide ... | 12 | 2 | keep model-invoked (file-type routing) |  |
+| resolve-vulns | user-invoked | Resolve supply-chain vulnerabilities the daily scan surfaced. Lets yo... | 0 | 0 | keep user-invoked |  |
+| restructure-project | user-invoked | Translate a project folder into the standard COS shape — projects are... | 2 | 1 | keep user-invoked |  |
+| save-summary | model-invoked | Use when Carter wants the conversation summarized to disk in a preset... | 0 | 0 | FLIP to user-invoked? (never fired) |  |
+| scout-stack | model-invoked | Scout GitHub for the best repos to use on a project, organized by wha... | 2 | 0 | keep model-invoked |  |
+| setup-deploy | model-invoked | Configure deployment settings for /land-and-deploy. | 0 | 0 | FLIP to user-invoked? (never fired) |  |
+| skill-creator | model-invoked | Create new skills, modify and improve existing skills, and measure sk... | 5 | 1 | keep model-invoked |  |
+| sources-cited | name-only | Track, organize, and export research sources into a professional .doc... | 0 | 0 | keep name-only |  |
+| todos | user-invoked | The convention (`~/.claude/modes/ALWAYS.md`): `TODO.md` at each proje... | 0 | 0 | keep user-invoked |  |
+| transcribe-media | model-invoked | Transcribe a video or audio source into text. Use when the user wants... | 4 | 0 | keep model-invoked |  |
+| ui-ux-pro-max | model-invoked | Design or review UI/UX for web/mobile — styles, color palettes, typog... | 1 | 0 | keep model-invoked |  |
+| vercel-deploy-claimable | model-invoked | Deploy applications and websites to Vercel. Use this skill when the u... | 1 | 0 | keep model-invoked |  |
+| xlsx | model-invoked | Open, read, edit, create, or convert spreadsheet files (.xlsx, .xlsm,... | 5 | 0 | keep model-invoked (file-type routing) |  |
+| youtube-slide-transcript | user-invoked | Turn a YouTube (or local) talk video into a slide-aware transcript - ... | 0 | 0 | keep user-invoked |  |
