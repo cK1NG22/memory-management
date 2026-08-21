@@ -1,130 +1,119 @@
 # Plan — working through TODO.md
 
-*Drafted 2026-08-20. Sequences the 7 open items in the root `TODO.md` into five sessions:
-one decision batch for Carter, then four execution sessions ordered so each unlocks the next.
-Rewrite as items close; the durable record of each ruling goes to `../.claude/memory/decisions.md`.*
+*Rewritten 2026-08-21 after the grilling session that settled every open ruling. The decision
+batch is done; this is now a pure execution sequence. S1 records the rulings in
+`../.claude/memory/decisions.md` — until then, this file is the only record of them.*
 
-## Why this order
+## Rulings (Carter, 2026-08-21)
 
-Three of the seven items are Carter-only rulings, and one ruling (the §4 stop-gate) is the
-single thing keeping a worktree alive and a cleanup blocked. So the sequence is: **decide
-everything first in one sitting, then execute in dependency order** — quick mechanical wins,
-then skill fixes, then the audit tooling, then Phase 3 (the biggest and least blocked-upon).
+1. **§4 stop-gate:** trimming stops, but the gate closes only after a final classification pass —
+   every non-gstack local skill re-confirmed as model-invoked or user-invoked, evidence-based
+   (invocation counts), reviewed by Carter in a markdown table.
+2. **A/B evidence:** re-run the test — after the classification flips land, same fixture
+   (`~/Sandbox/skill-budget-ab-fixture`) and success bar (baseline ≤20%, subtraction ≥80%,
+   delta ≥60pp), with targets selected by probing the untouched baseline at run time and
+   keeping only verified-evicted skills; ≥4 valid targets required.
+3. **Worktrees:** delete all 8 (the 7 merged ones + `todo-plan` once its branch is merged).
+   Transcript sweep before each removal. Merging `worktree-todo-plan` is Carter's command,
+   not a background job's.
+4. **Write conventions:** the shared memory-write reference is written first; dream's writer,
+   morning-shift's apply step (scripted, no more freehand), and the four drift fixes all become
+   thin wrappers over it. Shifts-repo item 4.4 stays gated until the reference exists.
+5. **Executors:** mechanical sessions run as background jobs Carter reviews; `audit.py` work is a
+   night card; Phase 3 runs foreground/day-shift-planned.
+6. **Mode-rule shadowing convention: ratified.** A mode file may add an obligation but never a
+   sentence readable as a complete statement of a global rule. Governs all Phase-3 stamping.
+7. **Skill placement:** `resolve-vulns` and `docx`/`pdf`/`pptx`/`xlsx` stay global. Plan A moves
+   11 skills, not 15.
 
-Dependency chain that forces the order:
+## Session sequence
 
-- §4 ruling (item 1) → fold `trim-diff.md` into the repo → `skill-budget-execution` worktree
-  becomes deletable → worktree housekeeping (item 6) can finish completely.
-- Write-conventions decision → unblocks the `dream`/`morning-shift` half of the drift fixes (item 4).
-- Four new `audit.py` checks (item 7) → unblocks `/share-topic` (queued in ROADMAP Phase 1).
-- Phase 3 Plan B (item 5) → gates removing `# Planning a build` from global CLAUDE.md → Plan A after.
+### S1 — rulings + quick wins (background job)
+- Record all rulings above in `decisions.md` (one dated entry); flip the `project-mode-rule-shadowing`
+  memory from proposed → ratified.
+- `new-session` launch-dir convention: add to `~/.claude/skills/new-session/SKILL.md` — launch at
+  the project root or the mode folder fitting the next action, never deeper (wording drafted in
+  `ROADMAP.md` "Still open"). Delete the two `SKILL.md.bak.20260622-*` files.
+- Build the classification table → hand to Carter. Scope: the ~60 non-gstack local skills
+  (48 KEEP + 12 flipped). Columns: skill · current state · one-line description · invocation
+  count (from the skill-usage tracker + transcript `tool_use`-block counting — never plain grep,
+  which inflates ~100x; note each count's window) · flip/keep recommendation. Commit the table
+  to the repo as the §4 gate-closure artifact.
 
----
+### S2 — Carter, async
+- Mark the classification table.
+- Run `git -C ~/Projects/memory-management merge worktree-todo-plan`.
 
-## Session 1 — the decision batch (Carter, ~15 min, no code)
+### S3 — close the gate, clean the worktrees (background job)
+- Apply the marked flips (`disable-model-invocation` frontmatter / settings).
+- Re-verify the model-invoked listing is still <9K; if flips pushed it back over, stop and surface —
+  do not silently accept.
+- Close the §4 gate in `decisions.md`; fold `trim-diff.md` + `task-5-verification.md` into
+  `research/sources/`.
+- Worktree cleanup: per worktree — transcript sweep (`make/memory-repair/transcript_sweep.py`,
+  per `docs/transcript-housekeeping-runbook.md`), `git worktree remove`, delete the merged
+  branch. Also sweep the two already-orphaned transcript dirs (`…-mode-memory-research`,
+  `…-roadmap-and-orphans`).
 
-One sitting, four rulings. Each gets an entry in `decisions.md` when made.
+### S4 — A/B re-run (night card)
+Per ruling 2. Runs only after S3's flips land (stable catalog). If <4 targets verify as evicted
+at probe time, record "insufficient eviction to test" — that is a valid result, not a failure
+to work around.
 
-1. **§4 stop-gate** (TODO item 1). Gate doc:
-   `.claude/worktrees/skill-budget-execution/.superpowers/sdd/trim-skills/trim-diff.md`.
-   **Recommend: stop.** The <9K listing target is met (8,086 chars), bare-name count fell 16→1,
-   the over-budget WARN is gone, and the executing session's own analysis says trimming past the
-   top 10 buys nothing measurable.
-2. **A/B evidence replacement** (item 2). **Recommend: record as unmeasured.** The one target
-   genuinely evicted at baseline went 0%→100% (mechanism confirmed); the other three were never
-   evicted, so the aggregate claim was untestable, not disproven. A re-run with per-probe
-   eviction verification costs a fixture session and changes no downstream decision — the trim
-   already hit its target. Annotate `research/sources/skill-description-drop.md` accordingly.
-3. **Worktree deletion list** (item 6). **Recommend: delete all 7** (TODO says six; disk shows
-   seven — `todo-system-build` and `todo-system-plan` were unlisted, both clean and merged).
-   All 7 branches are merged into main, all trees clean. `skill-budget-execution` becomes
-   deletable the moment ruling 1 lands and `trim-diff.md` is folded in (Session 2).
-4. **`dream`/`morning-shift` write conventions** (gates half of item 4). Decide the memory-write
-   conventions those two skills must bake in, or explicitly defer — deferral just splits item 4
-   into a done-now half and a later half.
+### S5 — memory-write reference + drift fixes (background job)
+- Write the shared memory-write reference (ROADMAP Phase 1 item): routing test, git-root keying,
+  frontmatter shape (`metadata.type:`, provenance fields), mandatory `MEMORY.md` index line,
+  sectioned-index template, no-unverified-state rule.
+- Then the four drift fixes as thin wrappers over it, one commit each:
+  `brain-dump` (git-root store routing) · `memory-review` (actual-cwd store + sectioned index) ·
+  `memory-janitor` agent (audit all stores) · `research-deep-dive` agent (route the write).
+- `dream`: conform the writer's output shape to the reference. `morning-shift`: script the
+  approve-apply step against the same writer. 4.4 stays gated until both conform.
+- Light follow-up: repoint `close-session`/`new-session` guide text to the reference.
 
-## Session 2 — mechanical quick wins (~1 focused session)
+### S6 — audit.py four checks (night card)
+- Extend `make/memory-repair/audit.py` with: stranded repo-subdir stores · lstat symlink
+  resolution · containment invariant · fork tripwire. Run across all stores. Unblocks `/share-topic`.
+- Close the worktree-memory-promotion review: verify against one kept worktree's history that
+  the 2026-08-10 keying probe means nothing needs promoting; record closure (or the surprise)
+  in `decisions.md`.
 
-- **Item 3 — launch-dir convention into `new-session`.** Add to
-  `~/.claude/skills/new-session/SKILL.md`: launch at the project root or the mode folder that
-  fits the next action (`<project>/` or `<project>/<mode>/`), never deeper. Wording already
-  drafted in `ROADMAP.md` ("Still open", ~line 217). Also delete the two stale
-  `SKILL.md.bak.20260622-*` files sitting in that skill dir.
-- **Fold the gate record** (from ruling 1): copy `trim-diff.md` (and
-  `task-5-verification.md`) into `research/sources/` on main, commit, then the worktree holds
-  nothing unique.
-- **Item 6 execution — worktree housekeeping.** Order per worktree: transcript sweep first
-  (`make/memory-repair/transcript_sweep.py`, per `docs/transcript-housekeeping-runbook.md`),
-  then `git worktree remove`, then delete the merged `worktree-*` branch. Today only
-  `stale-blockers` has a live transcript dir; also sweep the two already-orphaned transcript
-  dirs (`…-mode-memory-research`, `…-roadmap-and-orphans`) while in there.
-- **Item 2 execution** (from ruling 2): annotate `skill-description-drop.md`, write the
-  `decisions.md` entry.
-
-## Session 3 — skill-drift fixes (item 4)
-
-The four unblocked fixes, one commit each, per the 2026-08-07 sweep record
-(`ROADMAP.md` ~lines 161–184):
-
-| Target | Fix |
-| --- | --- |
-| `~/.claude/skills/brain-dump/` | route dumps to the session's git-root store, not hardcoded `~/Projects` |
-| `~/.claude/skills/memory-review/` | review the store for the actual cwd; sectioned-index template |
-| `~/.claude/agents/memory-janitor.md` | run `audit.py` across all stores, not one hardcoded store |
-| `~/.claude/agents/research-deep-dive.md` | route the memory write to the store the research belongs to |
-
-`dream` + `morning-shift` follow only if ruling 4 settled the write conventions; otherwise they
-stay on TODO.md as their own line with the decision named as the blocker.
-
-## Session 4 — the four new `audit.py` checks (item 7)
-
-Extend `make/memory-repair/audit.py` (which already has four *other* checks — orphaned stores,
-dangling index links, broken @imports, unindexed files) with the four ROADMAP Phase 2.5 checks:
-stranded repo-subdir stores, lstat symlink resolution, containment invariant, fork tripwire.
-Run it across all stores when done. This unblocks `/share-topic`.
-
-Also in this session: **close the worktree-memory-promotion review.** The 2026-08-10 probe
-showed worktree sessions write native memory to the main repo root store, so there is likely
-nothing to promote — verify that against one kept worktree's history and record the closure
-(or the surprise) in `decisions.md`.
-
-## Session 5 — Phase 3 (item 5, the big one)
-
-Execute `plan/phase3.md` as approved: **Plan B first** — `git init` + mode wiring + probe for
-the 9 non-repo projects (`dad`, `hoth`, `loops`, `ai-engineering`, `neon-learning`,
-`health-insurance`, `outreach`, `mana-ventures`, `custom-agents`). Only after all 9 probe clean:
-remove `# Planning a build` from `~/.claude/CLAUDE.md`. Then **Plan A** (move the 15 mode-home
-skills), which carries its own two open ❓ calls for Carter (`resolve-vulns` destination;
-docx/pdf/pptx/xlsx → `make/` or stay global) — batch those into Session 1 if convenient, they
-don't block anything before Plan A. Pre-check before starting: the proposed mode-rule shadowing
-convention (native memory, `project-mode-rule-shadowing`) is still unratified — ratify or
-explicitly waive it before stamping mode files at scale.
-
----
+### S7 — Phase 3 (foreground / day-shift-planned)
+- Plan B: `git init` + mode wiring + probe for the 9 non-repo projects, stamping mode files
+  under the ratified shadowing convention. Only after all 9 probe clean: remove
+  `# Planning a build` from `~/.claude/CLAUDE.md`.
+- Plan A: move the 11 mode-home skills (15 minus the 4 file-type skills staying global);
+  `resolve-vulns` stays global. Verify one-place loading via `audit.py`.
 
 ## What gets deleted, and how deletion is verified
 
-Per plan-mode rule: a migration that doesn't delete is an addition.
-
 | Deleted | Verified by |
 | --- | --- |
-| 7 worktrees + their merged branches | `git worktree list` shows only main; `git branch` shows no `worktree-*` |
-| transcript dirs of removed worktrees | swept/archived per runbook before removal; `ls ~/.claude/projects/` shows no orphaned `…-worktrees-*` dirs |
+| 8 worktrees + their merged branches | `git worktree list` shows only main; no `worktree-*` branches |
+| transcript dirs of removed worktrees + 2 already-orphaned dirs | swept/archived per runbook; no orphaned `…-worktrees-*` dirs in `~/.claude/projects/` |
 | 2 stale `new-session` `.bak` files | absent from the skill dir |
 | `# Planning a build` in `~/.claude/CLAUDE.md` | section gone; recall probe stays neutral (phase3.md's gate) |
-| 15 global skill entries (Plan A) | `audit.py` one-place-loading check; skill count drops by 15 |
+| 11 global skill entries (Plan A) | `audit.py` one-place-loading check; skill count drops by 11 |
+| morning-shift's freehand apply instruction | replaced by the scripted path in SKILL.md step 2a |
 
 ## Falsifiers
 
-- If after ruling 1 the worktree still holds something unique besides `trim-diff.md` +
-  verification, the fold step was wrong — re-inventory before deleting.
-- If any of the 9 restamped projects fails its probe, Plan B stops there; the global CLAUDE.md
-  section stays until all 9 pass.
-- If the promotion review finds real un-promoted worktree memory, Session 4's "likely moot"
-  assumption is wrong — it becomes its own work item instead of a closure note.
+- S3: flips push the listing back over 9K → stop and surface; the classification pass overrode
+  the trim, and Carter re-rules.
+- S4: <4 targets evicted at probe time → "insufficient eviction to test" is the recorded result.
+- S5: dream's settled ADR format conflicts with the shared reference in a way wrappers can't
+  bridge → surface the conflict; do not fork silently.
+- S6: promotion review finds real un-promoted worktree memory → it becomes its own work item.
+- S7: any of the 9 projects fails its probe → Plan B stops there; the global section stays.
 
 ## TODO.md bookkeeping
 
-Flip each item to `[x] … done <date>` the moment its session completes it — Session 1 flips
-nothing by itself (rulings enable work; the flips happen when the work lands), except item 1
-and 2 which are pure decisions and flip on the `decisions.md` entry.
+| TODO item | Flips `[x]` when |
+| --- | --- |
+| 1 — §4 stop-gate | S3 closes the gate |
+| 2 — A/B evidence | S4's result is recorded (either outcome) |
+| 3 — launch-dir convention | S1 |
+| 4 — skill-drift fixes | S5 |
+| 5 — Phase 3 | S7 |
+| 6 — worktree housekeeping | S3 |
+| 7 — promotion review + audit checks | S6 |
