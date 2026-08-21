@@ -713,3 +713,49 @@ rulings; `plan/backlog.md` holds the session sequence (S1–S7) that executes th
   file-type routing must fire from any cwd — a mode home would make the skills invisible exactly
   where documents actually get opened; `resolve-vulns` is parked, and a parked skill in a mode
   home is a skill nobody remembers exists.
+
+---
+
+## 2026-08-21 — S3: §4 stop-gate CLOSED; all 8 worktrees deleted
+
+Executed per `plan/backlog.md` S3, from Carter's marked `plan/skill-classification.md` (S2).
+
+**The gate.** The classification pass is complete: 47 skills re-confirmed, four state changes
+applied (frontmatter `disable-model-invocation: true` added/removed):
+
+- `architecture-review` model → user · `brain-dump` model → user · `open-gstack-browser`
+  model → user · `fable-plan` user → model (its 296-char description re-enters the listing).
+- `learn` stays model-invoked — Carter's 2026-08-21 mark supersedes the never-applied 2026-08-08
+  flip ruling.
+- Re-verification, same method as `research/sources/task-5-verification.md` Check 2: model-invoked
+  listing = **8,580 chars across 31 skills, under the 9,000 target**. The S3 falsifier ("flips
+  push the listing back over 9K") did not fire. Gate closed.
+
+**Surprise — `connect-chrome` and `open-gstack-browser` are one file.** Both
+`~/.claude/skills/<name>/SKILL.md` entries resolve by symlink to the same canonical gstack file
+(`~/.claude/skills/gstack/open-gstack-browser/SKILL.md`). Carter's marks disagreed
+(connect-chrome "model", open-gstack-browser "user"), but the names cannot diverge — the flip
+covers both, so connect-chrome is now also user-invoked. Revert = delete one frontmatter line
+(restores both to model-invoked; listing would be 8,663 chars, still under target). Both are
+installer-owned: a `gstack-upgrade` may silently revert this flip — re-check after upgrades.
+
+**Worktree cleanup (ruling 3).** All 8 worktrees removed, all 8 fully-merged `worktree-*`
+branches deleted. Before removal: the one live worktree transcript (`stale-blockers`, 60.8K,
+last write 2026-08-10) hand-moved into the project transcript dir per runbook Procedure C; the
+gitignored `.superpowers/` task files (19 files, 148K — briefs, reports, banked inventories)
+archived to `~/Claude/_archive/skill-budget-superpowers_2026-08-21`. `trim-diff.md` and
+`task-5-verification.md` folded into `research/sources/`. The sweep archived 12 dead transcript
+dirs (11.0 MB, incl. the two orphans `…-mode-memory-research` and `…-roadmap-and-orphans`) to
+`~/Claude/_archive/projects-transcripts_2026-08-21`. Verification: `audit.py` exit 0; sweep
+reports 0 dead dirs; `git worktree list` shows main + this session's `s3-gate` only.
+
+**Consolidate tool limit confirmed in the wild:** the dry run proposed folding
+`…-dad-copilot-agent` into `…-dad`, but `~/Projects/dad/copilot-agent` is its own git repo — the
+runbook's known nested-project limit, caught by the mandated dry-run review. `--execute` was
+never run; the worktree transcript move was done by hand instead, and the two legitimate
+non-worktree folds it proposed were out of S3 scope and left for a future consolidate run.
+
+**S4 blocker found:** `~/Sandbox/skill-budget-ab-fixture` no longer exists — not at its recorded
+path, not under `~/Sandbox/builds`, not in archives; only its dead transcript dirs remained (now
+archived). Ruling 2's "same fixture" premise is broken: S4 must rebuild the fixture first
+(recipe in `research/sources/skill-description-drop.md`) or Carter re-rules.
