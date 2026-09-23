@@ -825,3 +825,24 @@ archived). Ruling 2's "same fixture" premise is broken: S4 must rebuild the fixt
   "Removing unused browser"); agent-browser has not registered itself yet, which is why
   `agent-browser install` is the clean path. The slide-deck skill's Python venv also uses it
   (rev 1223). The 531 MB puppeteer cache is a different engine and was never gstack's.
+
+## 2026-09-23 — Browser roles decided; gstack's Chromium build removed
+
+- **Browser roles, Carter's ruling:** agent-browser for general tasks, Chrome DevTools for
+  debugging, Playwright for end-to-end browser tests, Claude in Chrome as the backup for sites that
+  block headless browsers. *Why:* closes the "front-runner" gap from earlier today — each tool gets
+  one job instead of one tool being asked to do all four, and the Claude in Chrome backup answers
+  the Cloudflare/headed-mode question directly. `ALWAYS.md` carries the roles. Verified state on
+  this Mac: agent-browser 0.14.0 and Claude in Chrome are present, a global Playwright 1.61.0 is
+  installed under fnm; **no Chrome DevTools MCP is configured**, so that role is a TODO, not a
+  capability. Still open, each now its own TODO item: the DevTools MCP, an agent-browser end-to-end
+  check (and whether it logs typed values), unattended auth plus re-pointing the four consumers.
+- **Removed Chromium revision 1234** (356 MB build + 196 MB headless shell) to `~/.Trash/`. *Why:*
+  Carter: "Remove the gstack revisions." Birth dates settle which build was gstack's: 1234 was
+  created 2026-07-28, inside gstack's browse-usage window, and no registered install references it.
+  Every other build was born on the same day as its live owner — 1208 with the Feb-25 `playwright`
+  npx cache (agent-browser's playwright-core 1.58.2 pins it too), 1223 with the slide-deck venv
+  (Jun-02), 1224 with the May-23 `@playwright/cli` npx cache, 1228 with the Jun-18 global Playwright
+  1.61.0 — so they stay. *Correction to the earlier entry:* "gstack's upgrades pulled 1223→1234 in
+  turn" was an inference; the dates show gstack pulled only 1234. The permission gate refused
+  `rm -rf` again; `mv` to Trash is the reversible route already used for Arc. Cache now ~2.1 GB.
