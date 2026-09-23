@@ -783,3 +783,45 @@ archived). Ruling 2's "same fixture" premise is broken: S4 must rebuild the fixt
   gstack browse" (janitor work, tracked in `TODO.md`); the git-tracked `.gstack/` in
   `~/Sandbox/agentic-education` now shows 4 pending deletions. Full record:
   native memory `project-gstack-removed.md`.
+
+## 2026-09-23 — Browser rulings after the gstack removal; Arc removed; memory sweep done
+
+- **agent-browser is the front-runner, not the decision.** *Why:* Carter: "agent-browser is the
+  front runner for now, add a TO-DO to research this and figure out what is best." The research
+  item in `TODO.md` carries the questions that decide it (unattended auth, secret logging, headed
+  mode for Cloudflare sites, the consumers to re-point). `ALWAYS.md` now names agent-browser as
+  front-runner with "end-to-end unverified" stated, so no session mistakes the ruling for a
+  verified setup.
+- **Arc is uninstalled and every reference to it is gone.** *Why:* Carter: "delete arc, I never
+  use it and it only gets in the way, remove everything in memory / other files referring to it."
+  Moved to `~/.Trash/arc-removed-2026-09-23` (1.3 GB: app, Application Support, caches, prefs,
+  HTTPStorages) — reversible until the Trash is emptied. Only four references existed: the
+  `ALWAYS.md` rule and three memory files; `[[feedback-browser-auth-no-arc]]` was a link to a
+  file that never existed. Chrome is the default browser, so nothing else changed.
+- **The memory sweep: 4 files deleted, 15 stripped to site facts, 6 left as dated history.**
+  *Why:* Carter: "if it is safe to delete, I am happy to get rid of it." Deleted were the four
+  that held only gstack mechanics (browse handoff/worktree, browse iframes, browse audit-log
+  values, the `/browse` auth-skill idea — its intent folded into the research TODO). Site facts
+  (VitalSource sign-in and page layout, studyfetch and Open Syllabus needing headed mode, Reddit
+  blocking scripts, sandbox.ing's two auth cookies, X needing a live login) were kept with the
+  tool named as "gstack then, replacement pending". The six historical mentions (why mana didn't
+  copy gstack's updater, a validator report, a folder inventory, two analogies, a symlink list)
+  instruct nothing and stay.
+- **One loss, unrecoverable: the team-cli-agent v0.1 design doc.** *Why it happened:*
+  `~/.gstack/projects/` held gstack-authored artifacts, not just state, and the removal inventoried
+  its 20 directories but not their files. The approved 2026-04-24 design doc (office-hours,
+  quality 9/10) lived only there; no copy on disk, no Time Machine. The project is dormant and
+  its memory file keeps the Summary, KPIs and Open decisions. Rule for next time: **list a state
+  directory's files, not its directories, before deleting it** — and grep memory for paths into it.
+- **The agentic-education `.gstack/` logs hold nothing worth keeping and no secrets.** Checked
+  from the committed copy: 2026-07-21 page loads on studyfetch, bsky.social/about and honen.com,
+  one 403 in the console, zero `fill` entries, zero cookie/authorization/token strings, zero JWTs.
+  The commit ("shifts: baseline snapshot") swept them in by accident. Safe to commit the deletion.
+- **Playwright is the engine under agent-browser, not a rival to it.** agent-browser drives
+  Chromium through playwright-core 1.58.2, which pins Chromium revision 1208 and downloads into
+  the shared `~/Library/Caches/ms-playwright`. The cache is 2.6 GB because every Playwright
+  version pins its own revision and gstack's upgrades pulled 1223→1234 in turn. Playwright removes
+  builds no registered install references when any `install` runs (`_validateInstallationCache`,
+  "Removing unused browser"); agent-browser has not registered itself yet, which is why
+  `agent-browser install` is the clean path. The slide-deck skill's Python venv also uses it
+  (rev 1223). The 531 MB puppeteer cache is a different engine and was never gstack's.
