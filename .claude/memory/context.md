@@ -1,7 +1,6 @@
 # Context — memory-management
 
-**Last updated:** 2026-08-10 (session 7 close, bg — stale blockers cleared; store keying
-probe-verified and an in-session inference corrected)
+**Last updated:** 2026-09-22 (bg session close — the setup was packaged as a public repo)
 
 ## 🎯 Goal
 
@@ -10,103 +9,76 @@ folder.** Optimizing for context curation, explicitly not for traditional coding
 
 ## 🧭 Where we are now
 
-**The repo is consolidated. `main` holds everything; no branch is unmerged.** Four parallel worktree
-branches plus one set of uncommitted `make/`-session writes had accumulated across sessions 4–6.
-All are on `main`, with `decisions.md` reconciled to **22 entries** — the union across three
-writers, four of which existed in only one copy.
+**The setup now exists as a product: `~/Projects/mode-memory` → `ck22coding/mode-memory`,
+private until Carter reviews and flips it.** Built 2026-09-21/22 in a background session, modeled
+on `affaan-m/ecc`'s framing but 33 files: generalized `modes/*.md`, `install.sh`,
+`new-project.sh`, a generic `tools/audit.py`, rewritten `close-session` + `new-session`, a plugin
+manifest, five docs distilled from this repo's `docs/`, an SVG hero (light + dark), and a
+hermetic test suite (27/27). Two commits, both pushed. Dry-runs against this machine are no-ops.
+Native note: `project-mode-memory-repo.md`. Nothing in this repo changed except this file,
+`decisions.md`, and `TODO.md`, on branch `worktree-close-session-mode-memory` (unmerged).
 
-**Store keying is now probe-verified, not inferred — and it is the session's most reusable result.**
-*Transcripts key to the launch cwd; native memory keys to the **main repo root**, even from inside a
-worktree.* Two independent probes: the `make/` session's transcript sits in
-`…-memory-management-make` while its own memory writes landed in the repo-root store; and a
-`claude -p` launched inside `.claude/worktrees/stale-blockers` reported the **main repo's** store as
-its memory directory, leaving a worktree store dir with a transcript and no `memory/`. Resolve the
-key with `git rev-parse --path-format=absolute --git-common-dir` minus `/.git` — **not**
-`--show-toplevel`, which returns the worktree. Consequences: mode folders and worktrees cannot
-fragment native memory, background-job writes are visible to the main session, and **deleting a
-worktree does not orphan native memory** (the roadmap's guard to the contrary is withdrawn).
+**Consequence to hold onto: the mode files now have two copies by design.** `~/.claude/modes/`
+is personal and live; `mode-memory/modes/` is generic and shipped. The installer never overwrites
+a differing file, so a principle added here ships only if also edited there. The personal
+`make/memory-repair/audit.py` and the product's `tools/audit.py` likewise differ now (the product
+one takes paths as arguments and has no `CONTAINERS`).
 
-**The skill-listing budget bug is fixed on disk, and the trim is gate-blocked, not unfinished.**
-Two sessions had written conflicting accounts and both were partly wrong. Verified 2026-08-10:
-**11** skills carry `disable-model-invocation: true` (session 5's "12" was one high); the
-`capture-feedback` Gen-4 rider **shipped** (session 6's "unapplied" was wrong); 104 skills in
-`~/.claude/skills/` (+3 under `~/.agents/skills/`); `fable-plan` present, `opusplan` gone. 83
-model-invoked non-gstack skills carry **13,248 description chars, 24 still over 200** — held by the
-plan's own §4 stop-gate awaiting Carter's ruling, **not** forgotten work. Session 5's execution
-numbers stand: catalog 18,440 → 8,086 chars, probe `114,16` → `128,1` ×3, over-budget WARN gone.
+**Before this session (S3, 2026-08-21):** the §4 stop-gate is **closed** — model-invoked listing
+8,580 chars across 31 skills, under the 9,000 target; four invocation flips applied
+(`connect-chrome` and `open-gstack-browser` turned out to be one symlinked file, so both flipped).
+All 8 worktrees and their merged branches deleted; transcripts folded per runbook. **S4 is
+blocked:** `~/Sandbox/skill-budget-ab-fixture` no longer exists; rebuild from the recipe in
+`research/sources/skill-description-drop.md` or Carter re-rules.
 
-**The A/B verdict: FALSIFIED on the metric, mechanism intact.** Baseline 75%, subtraction 100%,
-delta 25pp vs a 60pp bar — but only 1 of 4 targets was evicted at baseline, so the bar was
-arithmetically unreachable. A **precondition failure, not a mechanism failure**; the one real target
-swung 0/5 → 5/5. The *aggregate* claim is unmeasured, not disproven.
-Results: `research/sources/skill-description-drop.md`, on `main`.
-
-**The correction sweep and the skill de-staling are done** (both open since 2026-08-06, ~6
-sessions). Root `CLAUDE.md`, `docs/memory-repair-runbook.md`, and `audit.py` all state repo-root
-keying; `audit.py` re-runs clean (38 stores, 0 orphans). `close-session` gained **Phase 8** (exit
-worktree with `keep`), lost the mempalace phase and the hardcoded `-Users-carterking-Projects`
-Phase-1 scan, and routes durable norms to Gen-4 scopes. `new-session` lost its retired `history.md`
-reference and gained the worktree case per Carter's design (handoff written **and committed on the
-branch**).
+**Still true and load-bearing:** store keying is probe-verified — transcripts key to the launch
+cwd, native memory to the **main repo root** even inside a worktree (resolve with
+`git rev-parse --path-format=absolute --git-common-dir` minus `/.git`). Mode folders and
+worktrees cannot fragment native memory. Full record: `reference-store-keying-mechanics`.
 
 ## ⏭️ Next steps / open
 
-Moved to the root `TODO.md` (2026-08-19) — the per-project TO-DO file is the live list now
-(convention: `plan/todos.md`). This section is a pointer, not a list.
+The root `TODO.md` is the live list. Four items were added 2026-09-22 (review + flip public,
+skill install path, mode-file sync rule).
+
+⚠️ **Stale:** the four items added 2026-08-19 (A/B evidence decision, skill-drift fixes, Phase 3
+Plan B, carried `audit.py` checks) have had no movement in a month, and the S4 fixture blocker
+from 2026-08-21 is unresolved.
 
 ## 🧠 Recent decisions
 
-See `decisions.md` (entries 2026-08-07 → 2026-08-10). Load-bearing:
+See `decisions.md` (latest entry 2026-09-22). Load-bearing from this session:
 
-- **Probe before writing a claim into multiple files.** A lucky inference and a verified fact look
-  identical on disk — this project's founding failure mode.
-- **Append-only files merge as a set union, not latest-wins** — `decisions.md` and `context.md`
-  needed opposite conflict resolutions in the same merge, decided by each file's contract.
-- **A falsified verdict can still be a PROCEED** when the failure is a *precondition* failure — but
-  the reasoning gets written down, never quietly waved through.
-- **Invocation split (Carter): zero-bare rejected.** Model-invoked skills earn descriptions;
-  user-invoked skills go absent; name-only is for skill-to-skill reach.
-- **Duplicated skills resolve to the managed plugin copy** (Carter's ruling, `tdd` case).
+- **A separate repo for the product; this one stays the private lab.**
+- **Private first; Carter flips public.** Publishing is outward-facing and unreviewed.
+- **Mirror ECC's three layers (install once, stamp per project, run per session), not its size.**
+- **Two copies of the mode files, on purpose, with a written rule for when they sync.**
+- **`new-project.sh` warns about non-repo targets rather than running `git init`** — re-keying
+  is silent and the user must choose before the first session.
 
 ## 💡 What we learned
 
-- **Absence of a thing is not evidence of the rule that would explain it.** "Worktrees are safe" was
-  inferred from missing `memory/` folders in worktree store dirs; those sessions had simply never
-  written native memory. Right answer, wrong evidence — until probed.
-- **Project memory and native memory move in opposite directions from a worktree.** Project memory
-  follows the *branch* and must be committed there; native memory ignores the worktree entirely. A
-  skill that conflates them gets one of the two wrong.
-- **A file's merge strategy comes from its contract, not from git.** Append-only → union;
-  regenerated snapshot → discard both sides and rewrite.
-- **Two confident write-ups of the same work can both be wrong.** Reconcile against the artifact,
-  never against the more recent prose.
-- **"Unfinished" and "gate-blocked" look identical in a status file and mean opposite things.**
-  Write the *reason* work stopped, or the next session re-opens settled questions.
-- **A skill's staleness is invisible from inside it.** Running `close-session` is what exposed its
-  hardcoded one-store Phase-1 scan, as it did the mempalace and task-types bugs two sessions back.
-- **The evicted set moves with the model, not just with usage** — a "which skills are bare" answer
-  is only valid for the model that produced it.
-- **Converting a resolved warning beats deleting it** — a dated "Resolved" note distinguishes
-  "handled" from "never existed," and the permission classifier agrees.
+- **Porting a personal tool to a generic one is a test of the tool.** `audit.py`'s hardcoded
+  container list only became visible as a defect when a stranger's machine was the target;
+  taking paths as arguments is simply the better design and the personal copy should follow.
+- **Two copies by design need a sync rule written down the day they are created**, or the drift
+  is discovered the way every earlier migration here was: months later, silently.
+- **Render generated images before shipping them.** The first hero had a label clipped off the
+  right edge; headless Chrome caught it in one screenshot.
+- **The ECC comparison held both ways.** Its product framing (hero, philosophy line, count table,
+  installer, profiles) transferred cleanly; its scale did not need to, and `reference-ecc-kit-
+  evaluation` already recorded why its plugin path is untrimmable here.
+- Earlier lessons still stand: absence is not evidence; probe before writing a claim into
+  multiple files; append-only merges as a union; "unfinished" and "gate-blocked" need the reason
+  written down; a skill's staleness is invisible from inside it.
 
 ## 📂 Files touched · 🌿 git
 
-`main` contains every branch. Session 7 merged, in order: `7f25bdd` (session 5's orphaned `make/`
-writes, committed first so conflict resolution couldn't eat them), then
-`worktree-skill-budget-execution` → `worktree-todo-capture-reference` →
-`worktree-close-session-plugin-dedup` → `worktree-stale-blockers` (`6c7b0eb`).
-`worktree-phase3-plan` was already at main.
+**This repo, branch `worktree-close-session-mode-memory` (unmerged; no remote):** `TODO.md`
+(+4 lines) · `.claude/memory/decisions.md` (+1 entry) · this file. `main` is at `5604793` (S3),
+clean, one worktree (this one).
 
-Session 7 repo edits (branch `worktree-stale-blockers`): `CLAUDE.md` (keying table, mode-
-fragmentation rationale, probe results) · `docs/memory-repair-runbook.md` ·
-`make/memory-repair/audit.py` (orphan message) · `plan/ROADMAP.md` (trim status corrected to
-gate-open; correction sweep checked off; close/new-session item marked partial; **the false worktree
-guard withdrawn**; `git init` item's premise confirmed) · `decisions.md` (+2 entries, 22 total) ·
-this file.
-
-Outside the repo, no git record: `~/.claude/skills/close-session/SKILL.md` (Phase 8; Gen-4 routing;
-mempalace removed; repo-root keying; Phase-1 scan de-hardcoded) ·
-`~/.claude/skills/new-session/SKILL.md` (`history.md` removed; worktree case per Carter's design) ·
-native `reference-store-keying-mechanics.md` (probe results + resolution command).
-From session 5, still outside git: `~/Claude/_archive/skill-trim_2026-08-08.tar.gz`, the
-trimmed/flipped SKILL.md files, `~/.claude/settings.json`, `~/.claude.json`.
+**Outside this repo:** `~/Projects/mode-memory/` — new git repo, commits `089818e` (0.1.0) and
+`b0675c4` (hero), both on `origin/main` at `github.com/ck22coding/mode-memory` (PRIVATE). Native
+store: `project-mode-memory-repo.md` + `MEMORY.md` index line. `~/Claude/session-logs/2026-09-22.md`.
+No skills were added to `~/.claude/skills/` (tests used a throwaway `HOME`).
