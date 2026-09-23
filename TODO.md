@@ -7,3 +7,6 @@
 - [ ] Phase 3 Plan B: restamp the 9 non-repo projects (git init + mode wiring, probe each), then remove "# Planning a build" from global CLAUDE.md; Plan A (move 15 mode-home skills) after — added 2026-08-19
 - [x] Carter: worktree housekeeping — six merged worktrees on disk; keep `skill-budget-execution`, fold transcripts before deleting any — added 2026-08-19, done 2026-08-21
 - [ ] Carried: worktree memory promotion review; four `audit.py` checks (gates `/share-topic`) — added 2026-08-19
+- [ ] Sweep the 24 memory files in 9 other native stores that still say "use gstack browse" for site access (list in native memory `project-gstack-removed.md`; Foundry's `reference-gstack-browse-logs-typed-values.md` is fully dead) — added 2026-09-23
+- [ ] Carter: rewrite the browser-auth rule in `~/.claude/modes/ALWAYS.md` lines 70–71 — it names gstack `/browse`, which no longer exists; pick the replacement (claude-in-chrome or agent-browser) and mirror into `mode-memory` — added 2026-09-23
+- [ ] Carter: `~/Sandbox/agentic-education` has 4 pending deletions of tracked `.gstack/` logs — commit or restore — added 2026-09-23

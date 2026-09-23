@@ -1,7 +1,7 @@
 # Context — memory-management
 
-**Last updated:** 2026-08-10 (session 7 close, bg — stale blockers cleared; store keying
-probe-verified and an in-session inference corrected)
+**Last updated:** 2026-09-23 (gstack-removal note only; the rest of this file is as of 2026-08-10,
+session 7 close — stale blockers cleared; store keying probe-verified)
 
 ## 🎯 Goal
 
@@ -9,6 +9,12 @@ A memory and context system where **nothing fails silently** and **nothing is st
 folder.** Optimizing for context curation, explicitly not for traditional coding conventions.
 
 ## 🧭 Where we are now
+
+**2026-09-23 — gstack is gone.** Carter had the usage measured (1 of 54 skills used, `browse`
+only) and had the whole kit ripped out: clone, `~/.gstack`, 55 skill dirs, settings permissions,
+25 per-project state folders. Global skills **106 → 50**. Every `gstack` reference below and in
+`plan/` is now historical. Record: `decisions.md` 2026-09-23; native memory
+`project-gstack-removed.md`; three follow-ups in `TODO.md`.
 
 **The repo is consolidated. `main` holds everything; no branch is unmerged.** Four parallel worktree
 branches plus one set of uncommitted `make/`-session writes had accumulated across sessions 4–6.

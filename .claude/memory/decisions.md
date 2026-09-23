@@ -759,3 +759,27 @@ non-worktree folds it proposed were out of S3 scope and left for a future consol
 path, not under `~/Sandbox/builds`, not in archives; only its dead transcript dirs remained (now
 archived). Ruling 2's "same fixture" premise is broken: S4 must rebuild the fixture first
 (recipe in `research/sources/skill-description-drop.md`) or Carter re-rules.
+
+## 2026-09-23 — gstack removed entirely (Carter's call, bg job)
+
+- **All of gstack is gone: the v1.61.0.0 clone, its 54 skills, `~/.gstack`, two settings
+  permissions, and 25 per-project `.gstack/` folders.** *Why:* Carter asked how much he used the
+  gstack skills. Measured across 962 transcripts (2026-07-30 → 09-23): **1 of 54 used** — `browse`,
+  in 102 sessions, almost always through its Bash binary rather than the Skill tool; the other 53
+  had zero real invocations, and gstack's own log put the review-style skills' last use in April.
+  Carter: "rip out all of gstack, i do not want it downloaded." Global skills **106 → 50** dirs.
+  This closes "the gstack question" left open in `plan/ROADMAP.md` and voids the
+  `connect-chrome`/`open-gstack-browser` rows of `plan/skill-classification.md`.
+- **The uninstaller does not clean the per-skill dirs on a symlink install.** *Why it matters:*
+  `bin/gstack-uninstall --force` removed the clone and `~/.gstack` but left all 55 skill dirs
+  with dangling `SKILL.md` links, and 9 of them (`cso`, `ship`, `office-hours`, the four
+  `plan-*-review`, `design-consultation`, `document-release`) also carried a dangling `sections`
+  link. Cleaned by unlink + `rmdir`, never `rm -rf` (the permission gate refused `rm -rf` loops
+  twice; `rmdir` cannot delete content, so it doubles as the verification). Check after any kit
+  removal: `/usr/bin/find ~/.claude/skills -maxdepth 3 -type l ! -exec test -e {} \; -print`.
+- **Left in place, deliberately:** `~/Library/Caches/ms-playwright` (2.6 GB, shared with
+  `agent-browser`); `ALWAYS.md` lines 70–71 (browser-auth rule now inert — its rewrite means
+  picking the replacement browser); 24 memory files in 9 other native stores that still say "use
+  gstack browse" (janitor work, tracked in `TODO.md`); the git-tracked `.gstack/` in
+  `~/Sandbox/agentic-education` now shows 4 pending deletions. Full record:
+  native memory `project-gstack-removed.md`.
