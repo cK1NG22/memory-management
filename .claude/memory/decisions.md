@@ -760,6 +760,51 @@ path, not under `~/Sandbox/builds`, not in archives; only its dead transcript di
 archived). Ruling 2's "same fixture" premise is broken: S4 must rebuild the fixture first
 (recipe in `research/sources/skill-description-drop.md`) or Carter re-rules.
 
+---
+
+## 2026-09-22 — Public packaging: the `mode-memory` repo (bg session)
+
+Carter asked for a GitHub repo sharing the mode-based memory setup, modeled on `affaan-m/ecc` as
+the example of turning a setup into a product. Built at `~/Projects/mode-memory`, pushed to
+`ck22coding/mode-memory`. Native note: `project-mode-memory-repo.md`.
+
+- **A separate repo, not a folder inside memory-management.** *Why:* this repo is the private
+  lab and carries client names, machine paths, and its own history; the product must never leak
+  those, and a shareable repo has to be its own git root anyway.
+- **Created PRIVATE; Carter flips it public.** *Why:* publishing is outward-facing and the
+  generalized text had not been reviewed by him; private is reversible in one command.
+- **Mirror ECC's product layers, not its size.** Install once (`install.sh` → `~/.claude/modes/`
+  + global import), stamp per project (`new-project.sh`), run per session (two skills), plus
+  audit, docs, hero README. 33 files against ECC's ~3,700; shell + Python stdlib, no Node.
+  *Why:* the setup already had those three layers; the product only had to make each one a
+  single command. Carter's "don't over-engineer" rule and ECC's known untrimmable plugin cost
+  (`reference-ecc-kit-evaluation`) both argue against copying ECC's bulk.
+- **Two copies of the mode files, by design.** `~/.claude/modes/` stays Carter's personal single
+  source; `mode-memory/modes/` is the generic product copy. `install.sh` never overwrites a file
+  that differs (verified by `--dry-run` on this machine: all four "keep"). *Why:* the alternative,
+  making the live files generic, would strip the personal rules from every session. Cost: a new
+  principle needs a deliberate second edit to ship (now a TODO item).
+- **`audit.py` generalized: project paths as arguments, no `CONTAINERS` constant; ignore list in
+  `~/.claude/modes/audit-ignore.txt`.** *Why:* the personal container list is machine-specific;
+  a public tool cannot know where projects live. Ran clean on this machine (46 stores, 354
+  topics), so the port lost nothing. Note the personal `make/memory-repair/audit.py` still
+  carries `CONTAINERS`; the two now differ.
+- **`new-project.sh` warns when the target is not a git repo; it does not `git init`.** *Why:*
+  native memory keys to the git root, so a non-repo splits the modes into three stores, but
+  `git init` on a folder with history re-keys it silently (`reference-store-keying-mechanics`).
+  The user must choose, before the first session.
+- **Skills rewritten generic, ~⅓ the length; shipped both as a plugin manifest and as a copy
+  path, README says "pick one".** *Why:* the personal skills carry Agent View, COS, and
+  legacy-hub logic that means nothing outside this machine. Which install path to keep is open.
+- **Hero image is SVG, light + dark via `<picture>`, generated from one script with two
+  palettes.** *Why:* crisp at any width, 6 KB of text under version control, GitHub swaps the
+  variant by theme. Rendered in headless Chrome to check; one clipped label caught and fixed
+  before push.
+- **The product repo does not stamp itself with the mode shape.** *Why:* it is a tooling repo
+  with no research/plan split of its own; a `CLAUDE.md` for agents editing it suffices.
+
+---
+
 ## 2026-09-23 — gstack removed entirely (Carter's call, bg job)
 
 - **All of gstack is gone: the v1.61.0.0 clone, its 54 skills, `~/.gstack`, two settings

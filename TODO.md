@@ -7,6 +7,10 @@
 - [ ] Phase 3 Plan B: restamp the 9 non-repo projects (git init + mode wiring, probe each), then remove "# Planning a build" from global CLAUDE.md; Plan A (move 15 mode-home skills) after — added 2026-08-19
 - [x] Carter: worktree housekeeping — six merged worktrees on disk; keep `skill-budget-execution`, fold transcripts before deleting any — added 2026-08-19, done 2026-08-21
 - [ ] Carried: worktree memory promotion review; four `audit.py` checks (gates `/share-topic`) — added 2026-08-19
+- [x] Package the mode-based memory setup as a shareable repo, modeled on affaan-m/ecc's product framing (`~/Projects/mode-memory` → `ck22coding/mode-memory`, private, 2 commits, 27/27 tests) — added 2026-09-22, done 2026-09-22
+- [ ] Carter: review mode-memory's generalized `modes/*.md` (esp. the "Working with me" placeholder in ALWAYS.md) and the two rewritten skills, then flip `ck22coding/mode-memory` public — added 2026-09-22
+- [ ] Decide how mode-memory ships its skills: plugin manifest only, `install.sh --skills` copy only, or keep both with the README's "pick one" — added 2026-09-22
+- [ ] Sync rule for the two mode-file copies: a principle added to `~/.claude/modes/` only ships if also edited in `mode-memory/modes/` — decide whether that stays manual or gets a diff check in `audit.py` — added 2026-09-22
 - [x] Sweep the 24 memory files in 9 other native stores that still say "use gstack browse" for site access — 4 deleted, 15 stripped to site facts, 6 left as dated historical mentions — added 2026-09-23, done 2026-09-23
 - [x] Carter: rewrite the browser-auth rule in `~/.claude/modes/ALWAYS.md` — now names agent-browser as front-runner, no gstack, no Arc — added 2026-09-23, done 2026-09-23
 - [ ] Resync `~/Projects/products/mode-memory/modes/ALWAYS.md` with `~/.claude/modes/ALWAYS.md` — the public copy has drifted (it carries no browser rule at all) — added 2026-09-23
