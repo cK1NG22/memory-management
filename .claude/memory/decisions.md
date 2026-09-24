@@ -846,3 +846,28 @@ archived). Ruling 2's "same fixture" premise is broken: S4 must rebuild the fixt
   1.61.0 — so they stay. *Correction to the earlier entry:* "gstack's upgrades pulled 1223→1234 in
   turn" was an inference; the dates show gstack pulled only 1234. The permission gate refused
   `rm -rf` again; `mv` to Trash is the reversible route already used for Arc. Cache now ~2.1 GB.
+
+## 2026-09-23 — Plugin and skill cleanup from a measured usage count
+
+- **Usage is counted from three sources, never one.** The Skill-tool hook log (Apr→) misses typed
+  `/name` commands; transcripts (Aug 17→) catch both but are purged; `pluginUsage` in
+  `~/.claude.json` counts hook fires, so ponytail showed 8,036 "uses" against 13 real ones.
+  *Why:* each source alone gave a wrong answer for at least one plugin.
+- **Uninstalled superpowers, company-preview, market-jumpstart, mana; disabled data and
+  product-management locally.** *Why:* Carter, after the numbers: superpowers 113 logged uses but
+  2 since mid-August; the rest zero. Synced claude.ai plugins cannot be uninstalled locally —
+  removal is a claude.ai setting (TODO).
+- **Local skills reviewed one by one through comments on a published review page.** Carter's
+  rulings: 9 trashed, 2 archived to `~/Projects/Archive/old-skills/` so they cannot be called
+  (claude-audit has a GitHub copy; dung does not), capture-feedback kept, scout-stack deleted only
+  after its domain→suite table moved into PLAN-MODE.md (CLAUDE.md and PLAN-MODE.md pointed at
+  it), sources-cited pushed to `strat-411-skills` first (PR #1, merged at Carter's request).
+  *Why:* "these just need to be on github and do not need to be in my actual skills."
+- **decide and file-versioning became always-loaded rules** (`~/.claude/rules/`), after a brief
+  stop as native reference files. decide.md got a scope line: its "never launch, wait for go"
+  was written for an invoked skill and would read as a global order once always loaded.
+- **Hooks:** project-root-warning removed (its advice predates git-root keying); research-enforcer
+  removed then restored the same day on Carter's reversal; rtk kept (38.2M tokens saved, 49.8%).
+- **Skill tracking now splits model vs user.** `track-skill-usage.sh` also runs on
+  `UserPromptExpansion` and writes `by.model` / `by.user`. The event's input fields are
+  undocumented (docs and context7 both silent), so the script keeps one raw sample to confirm them.
