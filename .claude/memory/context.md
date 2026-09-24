@@ -33,7 +33,7 @@ minus `/.git`). S3's §4 stop-gate is closed; **S4 is blocked** on the missing
 The root `TODO.md` is the live list (14 open). Carter-owned:
 - Merge `worktree-close-session-mode-memory` (09-22 close; take this `context.md`, keep both
   `decisions.md` appends in date order, keep both TODO additions) and this branch.
-- Remove data/product-management in claude.ai settings; rule on ponytail, mattpocock, supabase.
+- Rule on ponytail, mattpocock, supabase. (data/product-management removed in claude.ai 2026-09-23.)
 - Review and flip `mode-memory` public.
 
 ⚠️ **Stale:** the four items added 2026-08-19 (A/B evidence, skill-drift fixes, Phase 3 Plan B,

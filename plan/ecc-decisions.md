@@ -12,8 +12,9 @@ plugin and skill cleanup (`.claude/memory/decisions.md`, 2026-09-23).
   archived to `~/Projects/Archive/old-skills/`.
 - **Moved:** decide and file-versioning are now always-loaded rules in `~/.claude/rules/`, not
   skills.
-- **Disabled, not removed:** data and product-management (claude.ai synced; removal pending in
-  claude.ai settings).
+- **Removed in claude.ai:** data and product-management. Verified 2026-09-23: the sync manifest
+  lists no plugins and marks both folders stale.
+- **Listing re-measured:** 69 skills, 28,523 chars against the 30,000 budget (item 3).
 - **Still installed, under Carter's review:** mattpocock-skills, ponytail, supabase.
 - **Browser roles ruled:** agent-browser for general tasks, Chrome DevTools for debugging (no MCP
   configured yet), Playwright for end-to-end tests, Claude in Chrome as backup.
@@ -113,16 +114,28 @@ Sequence: finish item 1's comparison, pick the ECC skills that win, install exac
 | | Chars |
 |---|---|
 | Listing budget on this machine (measured, default model) | ~30,000 |
-| Your catalog on 2026-09-21 (before the cleanup; not re-measured) | ~36,000 |
+| Your catalog on 2026-08-07 (130 skills) | 35,948 |
+| Your catalog on 2026-09-23, after the cleanup (69 skills) | 28,523 |
 | ECC 292 skill descriptions, per-entry cap applied | ~83,400 |
 | ECC 94 command descriptions | ~10,000 |
 
 Overflow renders as bare names, silently, and bare names cannot natural-language trigger. The
 plugin path has no lever: `plugin.json` exposes only `hooks_enabled` and `hook_profile`. Item 2's
 `--skills` list is the only trimming mechanism. `plan/trim-skills.md` and `plan/skill-budget-ab.md`
-already hold the A/B method for checking which skills fall out. The 2026-09-23 cleanup removed
-superpowers (13 entries), gstack (54) and 10 local skills, so the catalog is now smaller than
-~36,000. Re-measure before sizing an ECC subset.
+already hold the A/B method for checking which skills fall out.
+
+How the 2026-09-23 figure was measured: a headless `claude -p` run from a neutral folder with
+`--settings '{"skillListingBudgetFraction":0.0005}'`, which forces the loader to print its own
+over-budget line (`69 skills, 28523 chars > 1500 budget`). A second run at the default budget
+printed no warning, so the catalog fits. The 69 are the 48 local skills plus 32 plugin skills
+(mattpocock 25, ponytail 6, supabase 1), less the ones hidden from the listing. The 40 bundled
+Anthropic skills are exempt. The 48 local skills include 8 in `~/.claude/skills/_archived/`, which
+the loader still reads as live.
+
+Arithmetic for sizing an ECC subset: about 1,500 chars of headroom at the default budget. ECC's
+skills average about 285 chars each (83,400 / 292), so roughly 5 fit before something else loses
+its description. At a 200K-context model's budget (about 8,000 chars) the catalog is already
+about 3.5 times over.
 
 ### 4. Keep your `api-design` and `benchmark` next to ECC's
 
@@ -448,9 +461,9 @@ Disable with `ECC_DISABLED_HOOKS=pre:write:doc-file-warning`.
 
 - **mcp-health-check** keeps `~/.claude/mcp-health-cache.json`. After MCP call failures it marks
   the server unhealthy, blocks further calls to it, and tries a reconnect. Concrete case on your
-  machine: `plugin:data:definite` fails to connect every session, and still did on 2026-09-23 with
-  the data plugin disabled locally; this hook would stop Claude from retrying it mid-task. Removing
-  data in claude.ai settings may end the failure at the source. For non-MCP tools the script exits immediately, but the node spawn still
+  machine: `plugin:data:definite` failed to connect every session. Carter removed the data plugin
+  in claude.ai on 2026-09-23, and a headless probe that day logged no `definite` error, so that
+  case is gone. The hook's value now rests on whatever MCP servers fail in future. For non-MCP tools the script exits immediately, but the node spawn still
   happens per call.
 - **observe-runner** writes each tool call and outcome to the homunculus observations file. It has
   no value on its own; it is the sensor for item 30. If 30 is denied, this hook is pure cost.
