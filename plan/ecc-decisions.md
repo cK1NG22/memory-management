@@ -1,7 +1,24 @@
 # ECC adoption: 36 accept/deny decisions
 
 Source: https://github.com/affaan-m/ecc (v2.2.2, 2026-09-15). Traced 2026-09-21 against a clone and
-the live `~/.claude`. Carter's answers recorded 2026-09-22. Responses under each pair.
+the live `~/.claude`. Carter's answers recorded 2026-09-22. Responses under each pair. Updated 2026-09-23 for the
+plugin and skill cleanup (`.claude/memory/decisions.md`, 2026-09-23).
+
+**Changed since the answers (2026-09-23):**
+
+- **Removed:** the superpowers plugin; all of gstack (browse, benchmark, context-save/restore);
+  Arc; local skills save-summary, fable-plan, scout-stack (its suite table is now in
+  `~/.claude/modes/PLAN-MODE.md`), and the `project-root-warning` SessionStart hook. dung was
+  archived to `~/Projects/Archive/old-skills/`.
+- **Moved:** decide and file-versioning are now always-loaded rules in `~/.claude/rules/`, not
+  skills.
+- **Disabled, not removed:** data and product-management (claude.ai synced; removal pending in
+  claude.ai settings).
+- **Still installed, under Carter's review:** mattpocock-skills, ponytail, supabase.
+- **Browser roles ruled:** agent-browser for general tasks, Chrome DevTools for debugging (no MCP
+  configured yet), Playwright for end-to-end tests, Claude in Chrome as backup.
+
+Items 1, 3, 4, 13, 23, 24, 28, 33 and 35 are updated below. Carter's answers are unchanged.
 
 Related: `plan/skill-budget-ab.md`, `plan/trim-skills.md` (the listing-budget work this decision
 lands on top of), memory `reference-ecc-kit-evaluation`.
@@ -23,7 +40,7 @@ equivalent; "different tool" means same job, different mechanism.
 
 | Yours | ECC equivalent | Note |
 |---|---|---|
-| **superpowers** brainstorming | `intent-driven-development`, `council` | Partial. ECC has no "explore intent before building" skill; council is a 4-voice decision aid |
+| **superpowers** (uninstalled 2026-09-23) brainstorming | `intent-driven-development`, `council` | Partial. ECC has no "explore intent before building" skill; council is a 4-voice decision aid |
 | superpowers writing-plans, executing-plans | `plan-orchestrate`, `/ecc:plan`, `/ecc:plan-prd`, planner agent (opus) | Close match |
 | superpowers subagent-driven-development, dispatching-parallel-agents | `team-agent-orchestration`, `orch-*` commands, rules/common/agents.md | ECC is heavier: work items, Kanban, merge gates |
 | superpowers TDD | `tdd-workflow` + tdd-guide agent | Close match, ECC adds the 80% number |
@@ -32,11 +49,11 @@ equivalent; "different tool" means same job, different mechanism.
 | superpowers requesting/receiving-code-review | code-reviewer agent, rules/common/code-review.md, `santa-method` | Close |
 | superpowers finishing-a-development-branch, using-git-worktrees | `git-workflow`, `/ecc:pr`, `scripts/worktree-lifecycle.js`, `dmux-workflows` | Close |
 | superpowers writing-skills | `skill-scout`, `skill-stocktake`, `skill-comply`, `/ecc:skill-create` | ECC adds "search before creating" and a compliance visualizer |
-| **mattpocock** tdd, code-review, research | `tdd-workflow`, code-reviewer, `research-ops`, `deep-research` | Close |
+| **mattpocock** (under review) tdd, code-review, research | `tdd-workflow`, code-reviewer, `research-ops`, `deep-research` | Close |
 | mattpocock diagnosing-bugs, prototype, wizard, grilling, writing-for-agents | none | Gaps. writing-for-agents is your adopted authoring standard |
 | mattpocock domain-modeling, codebase-design | `contract-first`, `hexagonal-architecture`, architect agent | Different framing |
-| **ponytail** (6 skills) | `code-simplifier` agent, `refactor-cleaner`, KISS/YAGNI in coding-style.md | See item 13 for the conflict |
-| **gstack** browse, qa, qa-only | `browser-qa`, `e2e-testing`, e2e-runner agent | Different tool: gstack uses its own browse daemon; ECC uses Playwright or Vercel Agent Browser |
+| **ponytail** (6 skills, under review; mode off since 2026-08-31) | `code-simplifier` agent, `refactor-cleaner`, KISS/YAGNI in coding-style.md | See item 13 for the conflict |
+| **gstack** (removed 2026-09-23) browse, qa, qa-only | `browser-qa`, `e2e-testing`, e2e-runner agent | Browse is now agent-browser; ECC uses Playwright or Vercel Agent Browser, which matches the Playwright end-to-end role |
 | gstack benchmark | `benchmark` | See item 4 |
 | gstack canary | `canary-watch` | Close |
 | gstack ship, land-and-deploy | `/ecc:pr`, `git-workflow`, `deployment-patterns` | ECC has no version-bump/CHANGELOG step |
@@ -51,18 +68,18 @@ equivalent; "different tool" means same job, different mechanism.
 | gstack setup-gbrain, sync-gbrain | `unified-memory` | Different system, see item 32 |
 | **yours** dream, morning/day/night-shift | continuous-learning-v2, loop-operator agent, `autonomous-loops` | Different shape, see items 24 and 30 |
 | yours capture-feedback, learn | instincts + `/ecc:learn` | See item 30 |
-| yours save-summary, new-session, close-session | `/ecc:save-session`, `/ecc:checkpoint` | See item 33 |
-| yours decide | `council` | Close |
-| yours scout-stack | `search-first`, `skill-scout` | Close |
-| yours dung | `scripts/orchestrate-worktrees.js`, `parallel-execution-optimizer` | Close |
-| yours fable-plan | planner agent (opus) | Close in intent |
+| yours new-session, close-session (save-summary trashed 2026-09-23) | `/ecc:save-session`, `/ecc:checkpoint` | See item 33 |
+| yours decide (now a rule in `~/.claude/rules/`) | `council` | Close; a rule is always loaded, so it costs no listing entry |
+| ~~scout-stack~~ (trashed; table in PLAN-MODE.md) | `search-first`, `skill-scout` | No longer a skill to compare |
+| ~~dung~~ (archived) | `scripts/orchestrate-worktrees.js`, `parallel-execution-optimizer` | No longer installed |
+| ~~fable-plan~~ (trashed) | planner agent (opus) | No longer installed |
 | yours database-design, api-design, mcp-builder, skill-creator | `postgres-patterns` + `database-migrations`, `api-design`, `mcp-server-patterns`, `/ecc:skill-create` | See item 4 for api-design |
-| yours file-versioning, blocksite, email-tracker, github-digest, fill-notes, supplement, write-doc, transcribe-media, clean-transcript | none | Personal workflows, no overlap |
+| yours blocksite, email-tracker, github-digest, fill-notes, supplement, write-doc, transcribe-media, clean-transcript | none | Personal workflows, no overlap. file-versioning is now a rule |
 | anthropic-skills (bundled) | n/a | Exempt from the listing budget, no overlap concern |
 
-The budget arithmetic when abandoning plugins: superpowers (13), mattpocock (11), and ponytail (6)
-together are 30 listing entries. ECC is 292 plus 94. Dropping every plugin you have does not offset
-the plugin path. It only offsets a file-copy subset (item 2).
+The budget arithmetic when abandoning plugins: superpowers (13) is already gone. mattpocock (11)
+and ponytail (6) are the 17 plugin entries left. ECC is 292 plus 94. Dropping every plugin you have
+does not offset the plugin path. It only offsets a file-copy subset (item 2).
 
 ### 2. Vendor a trimmed subset via `install.sh --target claude`
 
@@ -96,18 +113,23 @@ Sequence: finish item 1's comparison, pick the ECC skills that win, install exac
 | | Chars |
 |---|---|
 | Listing budget on this machine (measured, default model) | ~30,000 |
-| Your catalog today | ~36,000 |
+| Your catalog on 2026-09-21 (before the cleanup; not re-measured) | ~36,000 |
 | ECC 292 skill descriptions, per-entry cap applied | ~83,400 |
 | ECC 94 command descriptions | ~10,000 |
 
 Overflow renders as bare names, silently, and bare names cannot natural-language trigger. The
 plugin path has no lever: `plugin.json` exposes only `hooks_enabled` and `hook_profile`. Item 2's
 `--skills` list is the only trimming mechanism. `plan/trim-skills.md` and `plan/skill-budget-ab.md`
-already hold the A/B method for checking which skills fall out.
+already hold the A/B method for checking which skills fall out. The 2026-09-23 cleanup removed
+superpowers (13 entries), gstack (54) and 10 local skills, so the catalog is now smaller than
+~36,000. Re-measure before sizing an ECC subset.
 
 ### 4. Keep your `api-design` and `benchmark` next to ECC's
 
 **Carter:** Need to compare which version I prefer, need to see them side by side.
+
+**Update 2026-09-23:** gstack is gone, so the benchmark comparison is ECC's or none. Only
+api-design is still a live side-by-side.
 
 **Response.** Side by side. Full files: `skills/api-design/SKILL.md` and `skills/benchmark/SKILL.md`
 on GitHub; yours at `~/.claude/skills/api-design/SKILL.md` and
@@ -279,7 +301,8 @@ platform, installed dependency, one line, then minimum code. Against ECC's codin
 | agents.md: planner for complex features | "does this need to exist at all" | Tension on when to plan |
 
 Test to run: take one file, have ponytail-review and ECC's code-simplifier agent each review it,
-and read where they disagree. That is the concrete compatibility check.
+and read where they disagree. That is the concrete compatibility check. Ponytail is itself under
+review (2026-09-23); its mode has been off since 2026-08-31, so this test only matters if it stays.
 
 ### 14. Let plugin setup write `includeCoAuthoredBy: false`
 
@@ -425,8 +448,9 @@ Disable with `ECC_DISABLED_HOOKS=pre:write:doc-file-warning`.
 
 - **mcp-health-check** keeps `~/.claude/mcp-health-cache.json`. After MCP call failures it marks
   the server unhealthy, blocks further calls to it, and tries a reconnect. Concrete case on your
-  machine: `plugin:data:definite` fails to connect every session; this hook would stop Claude from
-  retrying it mid-task. For non-MCP tools the script exits immediately, but the node spawn still
+  machine: `plugin:data:definite` fails to connect every session, and still did on 2026-09-23 with
+  the data plugin disabled locally; this hook would stop Claude from retrying it mid-task. Removing
+  data in claude.ai settings may end the failure at the source. For non-MCP tools the script exits immediately, but the node spawn still
   happens per call.
 - **observe-runner** writes each tool call and outcome to the homunculus observations file. It has
   no value on its own; it is the sensor for item 30. If 30 is denied, this hook is pure cost.
@@ -437,7 +461,7 @@ Disable with `ECC_DISABLED_HOOKS=pre:write:doc-file-warning`.
 
 **Response.** Three things that look similar and are not:
 
-| | ECC session-end | Dream shift | close-session / save-summary |
+| | ECC session-end | Dream shift | close-session |
 |---|---|---|---|
 | Trigger | Every Stop, automatic | launchd 07:30 daily | Manual |
 | Reads | This session's transcript | All the day's transcripts | The conversation |
@@ -448,7 +472,8 @@ Disable with `ECC_DISABLED_HOOKS=pre:write:doc-file-warning`.
 
 ECC's file looks like: `## Session Summary`, `### Tasks`, `### Files Modified`, `### Tools Used`,
 `### Stats`, `### Notes for Next Session`, `### Context to Load`. The overlap is with
-context-save/restore and new-session handoffs (item 33), not with dream. The nested `claude -p`
+new-session handoffs (item 33), not with dream. (gstack's context-save/restore and save-summary
+were removed on 2026-09-23.) The nested `claude -p`
 inside background jobs, dream-cron, or the night-shift foreman is the shape that hit the
 600-second ceiling in August; mitigations are `ECC_HOOKS_ENABLED=false` in those job environments
 or a very large `ECC_LLM_SUMMARY_INTERVAL`.
@@ -501,7 +526,8 @@ summary for this repo (matched by git common dir, bounded by `ECC_SESSION_START_
 ranked instincts, then learned skills, then available session aliases, then the detected package
 manager and project type.
 
-Your session today opens with MEMORY.md (the index) and the project-root warning. With both:
+Your session today opens with MEMORY.md (the index); the project-root-warning SessionStart hook
+was removed on 2026-09-23, so no hook of yours runs at session start now. With both:
 
 ```
 [MEMORY.md index, as now]
@@ -598,18 +624,19 @@ Leaning away is consistent with that and with one-current-file-per-thing.
 
 **Response.**
 
-| | ECC session-data | Your stack (context-save/restore, save-summary, new-session, close-session) |
+| | ECC session-data | Your stack (new-session, close-session) |
 |---|---|---|
 | Trigger | Automatic at every Stop | Manual, each a deliberate step |
-| Where | `~/.claude/session-data/` (global) | `.claude/memory/handoffs/` in the task (new-session), gstack's store (context-save), memory files (close-session) |
+| Where | `~/.claude/session-data/` (global) | `.claude/memory/handoffs/` in the task (new-session), memory files (close-session) |
 | Keyed by | Git common dir, most recent first | Task directory, named handoff |
-| Reload | Automatic at SessionStart | Explicit `/context-restore` or pasting the handoff prompt |
+| Reload | Automatic at SessionStart | Pasting the handoff prompt |
 | Content | Mechanical: tasks, files, tools, stats; haiku enrichment periodically | Curated: what you chose to capture |
 | Retention | Pruned by `ECC_SESSION_RETENTION_DAYS` | Kept until you delete |
 | Fits | Continuity across many short sessions | Deliberate handoffs between tracked sessions |
 
-One mechanism means: choosing ECC removes context-save/restore and new-session's handoff file
-(close-session's memory updates are a different job and stay). Choosing yours means
+One mechanism means: choosing ECC removes new-session's handoff file (close-session's memory
+updates are a different job and stay). context-save/restore went with gstack on 2026-09-23, so
+your side is already down to one handoff mechanism. Choosing yours means
 `ECC_DISABLED_HOOKS=stop:session-end,session:start` or a profile without them.
 
 ### 34. Sync ECC into Codex
@@ -634,9 +661,12 @@ so the native path fits its current shape. Neither runs as a side effect of the 
 - **Search and research:** exa-web-search (paid key), parallel-search, firecrawl (paid key),
   context7 (you use the `ctx7` CLI instead).
 - **Dev platforms:** github (token), vercel, railway, cloudflare docs/builds/bindings/observability,
-  supabase (you have the plugin), clickhouse.
-- **Browser:** playwright, browserbase (paid), browser-use (paid). You have claude-in-chrome and
-  gstack browse.
+  supabase (you have the plugin, under review; 0 uses), clickhouse.
+- **Browser:** playwright, browserbase (paid), browser-use (paid). Your 2026-09-23 roles:
+  agent-browser (general), Chrome DevTools (debugging; no MCP configured, open in `TODO.md`),
+  Playwright (end-to-end), Claude in Chrome (backup). ECC's playwright server fits the end-to-end
+  role; ECC's Codex sync (item 34) adds a `chrome-devtools` MCP, which is the missing debugging
+  piece on the Codex side only.
 - **Tracking:** jira, confluence.
 - **Media:** fal-ai (paid), magic (UI components).
 - **Meta and infra:** nexus (cost proxy), token-optimizer, devfleet (parallel worktree agents),
@@ -644,8 +674,8 @@ so the native path fits its current shape. Neither runs as a side effect of the 
   ito-compute (unpublished).
 
 ECC's own guidance in the shortform guide: keep 20 to 30 in config, under 10 enabled, under 80
-tools active. Your current enabled set is already large (google_workspace, agentmail, and the
-claude.ai connectors).
+tools active. Your current enabled set is already large (google_workspace, agentmail, granola, reactbits,
+and the claude.ai connectors).
 
 ### 36. Adopt the `contexts/` shell aliases
 
