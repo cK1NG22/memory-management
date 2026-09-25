@@ -19,24 +19,22 @@ one. `/deep-research` is also taken by another command — source not found on d
 Delete these in claude.ai → Settings → Capabilities, not on disk.
 
 
-| Keep | Delete | Skill                          | Status                           | ~tok |
-| ---- | ------ | ------------------------------ | -------------------------------- | ---- |
-| [X]  | [ ]    | anthropic-skills:deep-research |                                  | 200  |
-| [X]  | [ ]    | anthropic-skills:docx          | clashes with local docx          | 320  |
-| [X]  | [ ]    | anthropic-skills:mcp-builder   | clashes with local mcp-builder   | 100  |
-| [X]  | [ ]    | anthropic-skills:pdf           | clashes with local pdf           | 150  |
-| [X]  | [ ]    | anthropic-skills:pptx          | clashes with local pptx          | 330  |
-| [X]  | [ ]    | anthropic-skills:skill-creator | clashes with local skill-creator | 120  |
-| [X]  | [ ]    | anthropic-skills:xlsx          | clashes with local xlsx          | 320  |
-| [X]  | [ ]    | built-in-browser               | Desktop-app browser pane (Claude_Browser tools) | 280  |
+| Keep | Delete | Skill                          | Status                                           | ~tok |
+| ---- | ------ | ------------------------------ | ------------------------------------------------ | ---- |
+| [X]  | [ ]    | anthropic-skills:deep-research |                                                  | 200  |
+| [X]  | [ ]    | anthropic-skills:docx          | clashes with local docx                          | 320  |
+| [X]  | [ ]    | anthropic-skills:mcp-builder   | clashes with local mcp-builder                   | 100  |
+| [X]  | [ ]    | anthropic-skills:pdf           | clashes with local pdf                           | 150  |
+| [X]  | [ ]    | anthropic-skills:pptx          | clashes with local pptx                          | 330  |
+| [X]  | [ ]    | anthropic-skills:skill-creator | clashes with local skill-creator                 | 120  |
+| [X]  | [ ]    | anthropic-skills:xlsx          | clashes with local xlsx                          | 320  |
+| [X]  | [ ]    | built-in-browser               | Desktop-app browser pane (Claude_Browser tools)  | 280  |
 | [X]  | [ ]    | chrome-browser                 | How to drive Claude in Chrome (your real Chrome) | 260  |
-| [X]  | [ ]    | computer-use                   | Screenshot + click/type in desktop apps | 320  |
-| [X]  | [ ]    | docs                           | Claude Docs: shared, editable docs | 330  |
-| [X]  | [ ]    | import-memory                  | Import memory export from another AI | 60   |
-| [X]  | [ ]    | morning                        | | 120  |
-| [X]  | [ ]    | slack-gif-creator              |                                  | 90   |
-
-
+| [X]  | [ ]    | computer-use                   | Screenshot + click/type in desktop apps          | 320  |
+| [X]  | [ ]    | docs                           | Claude Docs: shared, editable docs               | 330  |
+| [X]  | [ ]    | import-memory                  | Import memory export from another AI             | 60   |
+| [X]  | [ ]    | morning                        |                                                  | 120  |
+| [X]  | [ ]    | slack-gif-creator              |                                                  | 90   |
 
 
 ## Plugin: supabase (1)
@@ -47,39 +45,35 @@ Delete these in claude.ai → Settings → Capabilities, not on disk.
 | [X]  | [ ]    | supabase | locked by plugin | ~145 |
 
 
-
-
 ## Local — `~/.claude/skills/` (22)
 
 Each one can be deleted on its own.
 
 
-| Keep                                                             | Delete | Skill                    | Status                    | ~tok |
-| ---------------------------------------------------------------- | ------ | ------------------------ | ------------------------- | ---- |
-| [X]                                                              | [ ]    | blocksite                |                           | ~85  |
-| [X]                                                              | [ ]    | capture-feedback         |                           | ~50  |
-| [X]                                                              | [ ]    | clean-transcript         |                           | ~45  |
-| [X]                                                              | [ ]    | close-session            | user-only                 | ~75  |
-| [X]                                                              | [ ]    | day-shift                |                           | ~70  |
-| [X]                                                              | [ ]    | dream                    |                           | ~70  |
-| [X; remove description]                                          | [ ]    | email-tracker            |                           | ~85  |
-| [X]                                                              | [ ]    | equationify              | user-only                 | ~35  |
-| [X; make this a project specific skill for the associated class] | [ ]    | fill-notes               | moved to business-law     | ~60  |
-| [ ]                                                              | [ ]    | find-docs                | ctx7 library docs; same as rules/context7.md | ~225 |
-| [X; remove description]                                          | [ ]    | github-digest            |                           | ~50  |
-| [X; need to remember what this does]                             | [ ]    | memory-review            | user-only                 | ~55  |
-| [X]                                                              | [ ]    | morning-shift            |                           | ~75  |
-| [X; remove description]                                          | [ ]    | new-project              | user-only                 | ~140 |
-| [X]                                                              | [ ]    | night-shift              |                           | ~90  |
-| [X]                                                              | [ ]    | restructure-project      | user-only                 | ~155 |
-| [X; make this a project specific skill for the associated class] | [ ]    | supplement               | moved to business-law     | ~80  |
-| [X]                                                              | [ ]    | todos                    | user-only, no description | 0    |
-| [X]                                                              | [ ]    | transcribe-media         |                           | ~65  |
-| [X]                                                              | [ ]    | ui-ux-pro-max            |                           | ~50  |
-| [X]                                                              | [ ]    | write-doc                |                           | ~65  |
-| [X; change name to /yt and remove description]                   | [ ]    | youtube-slide-transcript | user-only                 | ~155 |
-
-
+| Keep                                                             | Delete | Skill                    | Status                                       | ~tok |
+| ---------------------------------------------------------------- | ------ | ------------------------ | -------------------------------------------- | ---- |
+| [X]                                                              | [ ]    | blocksite                |                                              | ~85  |
+| [X]                                                              | [ ]    | capture-feedback         |                                              | ~50  |
+| [X]                                                              | [ ]    | clean-transcript         |                                              | ~45  |
+| [X]                                                              | [ ]    | close-session            | user-only                                    | ~75  |
+| [X]                                                              | [ ]    | day-shift                |                                              | ~70  |
+| [X]                                                              | [ ]    | dream                    |                                              | ~70  |
+| [X; remove description]                                          | [ ]    | email-tracker            |                                              | ~85  |
+| [X]                                                              | [ ]    | equationify              | user-only                                    | ~35  |
+| [X; make this a project specific skill for the associated class] | [ ]    | fill-notes               | moved to business-law                        | ~60  |
+| [X]                                                              | [ ]    | find-docs                | ctx7 library docs; same as rules/context7.md | ~225 |
+| [X; remove description]                                          | [ ]    | github-digest            |                                              | ~50  |
+| [X; need to remember what this does]                             | [ ]    | memory-review            | user-only                                    | ~55  |
+| [X]                                                              | [ ]    | morning-shift            |                                              | ~75  |
+| [X; remove description]                                          | [ ]    | new-project              | user-only                                    | ~140 |
+| [X]                                                              | [ ]    | night-shift              |                                              | ~90  |
+| [X]                                                              | [ ]    | restructure-project      | user-only                                    | ~155 |
+| [X; make this a project specific skill for the associated class] | [ ]    | supplement               | moved to business-law                        | ~80  |
+| [X]                                                              | [ ]    | todos                    | user-only, no description                    | 0    |
+| [X]                                                              | [ ]    | transcribe-media         |                                              | ~65  |
+| [X]                                                              | [ ]    | ui-ux-pro-max            |                                              | ~50  |
+| [X]                                                              | [ ]    | write-doc                |                                              | ~65  |
+| [X; change name to /yt and remove description]                   | [ ]    | youtube-slide-transcript | user-only                                    | ~155 |
 
 
 ## Not in `/skills` (for reference)
