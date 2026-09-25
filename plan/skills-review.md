@@ -32,8 +32,8 @@ Delete these in claude.ai → Settings → Capabilities, not on disk.
 | [X]  | [ ]    | chrome-browser                 | How to drive Claude in Chrome (your real Chrome) | 260  |
 | [X]  | [ ]    | computer-use                   | Screenshot + click/type in desktop apps | 320  |
 | [X]  | [ ]    | docs                           | Claude Docs: shared, editable docs | 330  |
-| [ ]  | [X]    | import-memory                  | Import memory export from another AI; delete in claude.ai | 60   |
-| [ ]  | [X]    | morning                        | delete in claude.ai | 120  |
+| [X]  | [ ]    | import-memory                  | Import memory export from another AI | 60   |
+| [X]  | [ ]    | morning                        | | 120  |
 | [X]  | [ ]    | slack-gif-creator              |                                  | 90   |
 
 
