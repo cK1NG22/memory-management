@@ -1,80 +1,136 @@
 # Skills review — 2026-09-24
 
-Mark each row: put `x` in **Keep** or **Delete**. Leave a note if it's a maybe.
+The 80 skills from `/skills`, in the same order. Put `x` in **Keep** or **Delete**; add a note for maybes.
 
-Source: `~/.claude/skills/`, `~/.claude/plugins/installed_plugins.json`, and the skill listing loaded
-this session. (The `/skills` screen itself printed nothing to capture.)
+- **Source** — `claude.ai sync` (account skills), `plugin`, or `local` (`~/.claude/skills/`).
+- **Status** — `user-only` = only runs when typed as `/<name>`, never auto-loads.
+  `locked by plugin` = can't be removed alone; deleting it means uninstalling the whole plugin.
+- **~tok** — listing cost. claude.ai and plugin values are from the `/skills` screen where visible;
+  the rest are estimated (description length ÷ 4).
 
-## Local skills — `~/.claude/skills/` (auto-invoke on)
+## Name clashes (from the `/skills` footer)
 
-Claude can load these on its own when the description matches.
+Your local `docx`, `mcp-builder`, `pdf`, `pptx`, `skill-creator`, `xlsx` take the slash command, so
+typing `/docx` etc. runs **yours**, not Anthropic's. To use Anthropic's, delete (or rename) the local
+one. `/deep-research` is also taken by another command — source not found on disk.
 
-| Keep | Delete | Skill | What it does |
-|---|---|---|---|
-| [ ] | [ ] | api-design | Design/review REST or GraphQL APIs |
-| [ ] | [ ] | blocksite | Block/unblock a site via /etc/hosts daemon |
-| [ ] | [ ] | capture-feedback | Save a correction/rule as durable feedback |
-| [ ] | [ ] | clean-transcript | Strip filler from meeting transcripts |
-| [ ] | [ ] | database-design | Schema design, normalization, indexing |
-| [ ] | [ ] | day-shift | Sprint plans + tonight's task cards |
-| [ ] | [ ] | doc-coauthoring | Structured doc co-writing workflow |
-| [ ] | [ ] | docx | Word documents |
-| [ ] | [ ] | dream | Consolidate memory from the day's transcripts |
-| [ ] | [ ] | email-tracker | Newsletter + Claude blog triage → Slack |
-| [ ] | [ ] | fill-notes | ACC 241 — lesson notes from videos (stage 2) |
-| [ ] | [ ] | find-docs | Current library docs (context7) |
-| [ ] | [ ] | github-digest | GitHub trending digest → Slack |
-| [ ] | [ ] | mcp-builder | Build MCP servers |
-| [ ] | [ ] | morning-shift | Review overnight runs, merge or reject |
-| [ ] | [ ] | night-shift | Launch the overnight queue |
-| [ ] | [ ] | pdf | PDF files |
-| [ ] | [ ] | pptx | PowerPoint files |
-| [ ] | [ ] | skill-creator | Create/edit/eval skills |
-| [ ] | [ ] | supplement | ACC 241 — reading notes into KCO.md (stage 4) |
-| [ ] | [ ] | transcribe-media | Local video/audio transcription |
-| [ ] | [ ] | ui-ux-pro-max | UI/UX design and review |
-| [ ] | [ ] | write-doc | ACC 241 — KCO.md into Google Doc (stage 5) |
-| [ ] | [ ] | xlsx | Spreadsheets |
+## claude.ai sync
 
-## Local skills — slash-command only (`disable-model-invocation: true`)
+Delete these in claude.ai → Settings → Capabilities, not on disk.
 
-These never auto-load; they only run when you type `/<name>`.
-
-| Keep | Delete | Skill | What it does |
-|---|---|---|---|
-| [ ] | [ ] | architecture-review | Review architecture: scalability, resilience, security |
-| [ ] | [ ] | close-session | End-of-session progress + memory update |
-| [ ] | [ ] | equationify | Rewrite a study file into rules/tables/sequences |
-| [ ] | [ ] | memory-review | Walk through and trim memory files |
-| [ ] | [ ] | new-project | Scaffold CLAUDE.md, ADR templates for a project |
-| [ ] | [ ] | new-session | Hand off to a fresh session in Agent View |
-| [ ] | [ ] | resolve-vulns | Fix supply-chain vulns from the daily scan |
-| [ ] | [ ] | restructure-project | Reshape a folder into the COS container shape |
-| [ ] | [ ] | todos | (no description in SKILL.md) |
-| [ ] | [ ] | youtube-slide-transcript | Slide-aware transcript of a talk video |
-
-## Plugins
-
-Delete here = uninstall the whole plugin (plugin skills can't be trimmed one by one).
-
-| Keep | Delete | Plugin | Status | Skills |
+| Keep | Delete | Skill | Status | ~tok |
 |---|---|---|---|---|
-| [ ] | [ ] | mattpocock-skills | enabled | diagnosing-bugs, tdd, prototype, research, domain-modeling, codebase-design, code-review, resolving-merge-conflicts, wizard, grilling, writing-for-agents |
-| [ ] | [ ] | ponytail | enabled | ponytail, ponytail-audit, ponytail-debt, ponytail-gain, ponytail-help, ponytail-review |
-| [ ] | [ ] | supabase | enabled | supabase |
-| [ ] | [ ] | modern-web-guidance (googlechrome) | installed, **disabled** | — |
-| [ ] | [ ] | vercel | installed, **disabled** | — |
+| [ ] | [ ] | anthropic-skills:deep-research | | 200 |
+| [ ] | [ ] | anthropic-skills:docx | clashes with local docx | 320 |
+| [ ] | [ ] | anthropic-skills:mcp-builder | clashes with local mcp-builder | 100 |
+| [ ] | [ ] | anthropic-skills:pdf | clashes with local pdf | 150 |
+| [ ] | [ ] | anthropic-skills:pptx | clashes with local pptx | 330 |
+| [ ] | [ ] | anthropic-skills:skill-creator | clashes with local skill-creator | 120 |
+| [ ] | [ ] | anthropic-skills:xlsx | clashes with local xlsx | 320 |
+| [ ] | [ ] | built-in-browser | | 280 |
+| [ ] | [ ] | chrome-browser | | 260 |
+| [ ] | [ ] | computer-use | | 320 |
+| [ ] | [ ] | docs | | 330 |
+| [ ] | [ ] | import-memory | | 60 |
+| [ ] | [ ] | morning | | 120 |
+| [ ] | [ ] | slack-gif-creator | | 90 |
 
-## Not removable from here (for reference)
+## Plugin: mattpocock-skills (25)
 
-- **Built into Claude Code:** dataviz, artifact-design, artifact-diagramming, artifact-capabilities,
-  update-config, keybindings-help, code-review, simplify, fewer-permission-prompts, loop, schedule,
-  claude-api, workflow-authoring, claude-in-chrome, run, init, security-review.
-- **claude.ai account skills (`anthropic-skills:`):** built-in-browser, chrome-browser, computer-use,
-  deep-research, docs, docx, import-memory, mcp-builder, morning, pdf, pptx, skill-creator,
-  slack-gif-creator, xlsx — managed in claude.ai settings, not on disk.
+Whole plugin is one decision. Mark individual rows anyway if it helps you decide.
 
-## Duplicates to check while marking
+| Keep | Delete | Skill | Status | ~tok |
+|---|---|---|---|---|
+| [ ] | [ ] | ask-matt | user-only | 40 |
+| [ ] | [ ] | code-review | locked by plugin | 150 |
+| [ ] | [ ] | codebase-design | locked by plugin | 100 |
+| [ ] | [ ] | diagnosing-bugs | locked by plugin | 60 |
+| [ ] | [ ] | domain-modeling | locked by plugin | 80 |
+| [ ] | [ ] | grill-me | user-only | 30 |
+| [ ] | [ ] | grill-with-docs | user-only | 50 |
+| [ ] | [ ] | grilling | locked by plugin | 60 |
+| [ ] | [ ] | handoff | user-only | 40 |
+| [ ] | [ ] | implement | user-only | 30 |
+| [ ] | [ ] | improve-codebase-architecture | user-only | 60 |
+| [ ] | [ ] | prototype | locked by plugin | 70 |
+| [ ] | [ ] | research | locked by plugin | 90 |
+| [ ] | [ ] | resolving-merge-conflicts | locked by plugin | 40 |
+| [ ] | [ ] | setup-matt-pocock-skills | user-only | 80 |
+| [ ] | [ ] | tdd | locked by plugin | 60 |
+| [ ] | [ ] | teach | user-only | ~40 |
+| [ ] | [ ] | to-questionnaire | user-only | ~40 |
+| [ ] | [ ] | to-spec | user-only | ~50 |
+| [ ] | [ ] | to-tickets | user-only | ~75 |
+| [ ] | [ ] | triage | user-only | ~50 |
+| [ ] | [ ] | wait-what | user-only | ~30 |
+| [ ] | [ ] | wayfinder | user-only | ~65 |
+| [ ] | [ ] | wizard | locked by plugin | ~85 |
+| [ ] | [ ] | writing-for-agents | locked by plugin | ~35 |
 
-- `docx`, `pdf`, `pptx`, `xlsx`, `mcp-builder`, `skill-creator` exist both locally and as
-  `anthropic-skills:`. Per [[feedback-prefer-managed-plugin-skills]], the managed copy usually wins.
+## Plugin: ponytail (6)
+
+| Keep | Delete | Skill | Status | ~tok |
+|---|---|---|---|---|
+| [ ] | [ ] | ponytail | locked by plugin | ~230 |
+| [ ] | [ ] | ponytail-audit | locked by plugin | ~110 |
+| [ ] | [ ] | ponytail-debt | locked by plugin | ~105 |
+| [ ] | [ ] | ponytail-gain | locked by plugin | ~85 |
+| [ ] | [ ] | ponytail-help | locked by plugin | ~60 |
+| [ ] | [ ] | ponytail-review | locked by plugin | ~125 |
+
+## Plugin: supabase (1)
+
+| Keep | Delete | Skill | Status | ~tok |
+|---|---|---|---|---|
+| [ ] | [ ] | supabase | locked by plugin | ~145 |
+
+## Local — `~/.claude/skills/` (34)
+
+Each one can be deleted on its own.
+
+| Keep | Delete | Skill | Status | ~tok |
+|---|---|---|---|---|
+| [ ] | [ ] | api-design | | ~40 |
+| [ ] | [ ] | architecture-review | user-only | ~45 |
+| [ ] | [ ] | blocksite | | ~85 |
+| [ ] | [ ] | capture-feedback | | ~50 |
+| [ ] | [ ] | clean-transcript | | ~45 |
+| [ ] | [ ] | close-session | user-only | ~75 |
+| [ ] | [ ] | database-design | | ~90 |
+| [ ] | [ ] | day-shift | | ~70 |
+| [ ] | [ ] | doc-coauthoring | | ~105 |
+| [ ] | [ ] | docx | clashes with anthropic-skills:docx | ~60 |
+| [ ] | [ ] | dream | | ~70 |
+| [ ] | [ ] | email-tracker | | ~85 |
+| [ ] | [ ] | equationify | user-only | ~35 |
+| [ ] | [ ] | fill-notes | | ~60 |
+| [ ] | [ ] | find-docs | | ~225 |
+| [ ] | [ ] | github-digest | | ~50 |
+| [ ] | [ ] | mcp-builder | clashes with anthropic-skills:mcp-builder | ~70 |
+| [ ] | [ ] | memory-review | user-only | ~55 |
+| [ ] | [ ] | morning-shift | | ~75 |
+| [ ] | [ ] | new-project | user-only | ~140 |
+| [ ] | [ ] | new-session | user-only | ~155 |
+| [ ] | [ ] | night-shift | | ~90 |
+| [ ] | [ ] | pdf | clashes with anthropic-skills:pdf | ~35 |
+| [ ] | [ ] | pptx | clashes with anthropic-skills:pptx | ~55 |
+| [ ] | [ ] | resolve-vulns | user-only | ~100 |
+| [ ] | [ ] | restructure-project | user-only | ~155 |
+| [ ] | [ ] | skill-creator | clashes with anthropic-skills:skill-creator | ~80 |
+| [ ] | [ ] | supplement | | ~80 |
+| [ ] | [ ] | todos | user-only, no description | 0 |
+| [ ] | [ ] | transcribe-media | | ~65 |
+| [ ] | [ ] | ui-ux-pro-max | | ~50 |
+| [ ] | [ ] | write-doc | | ~65 |
+| [ ] | [ ] | xlsx | clashes with anthropic-skills:xlsx | ~65 |
+| [ ] | [ ] | youtube-slide-transcript | user-only | ~155 |
+
+## Not in `/skills` (for reference)
+
+- **Installed but disabled plugins:** modern-web-guidance (2 skills), vercel (~40 skills). Uninstall
+  with `/plugin` if you don't want them on disk.
+- **mattpocock folders the plugin doesn't register** (10): claude-handoff, loop-me,
+  setup-ts-deep-modules, writing-beats, writing-fragments, writing-shape, git-guardrails-claude-code,
+  migrate-to-shoehorn, scaffold-exercises, setup-pre-commit. They never load.
+- **Built into Claude Code** (dataviz, artifact-*, loop, schedule, code-review, simplify, etc.) —
+  not listed by `/skills`, not removable.
