@@ -49,40 +49,39 @@ Delete these in claude.ai → Settings → Capabilities, not on disk.
 
 
 
-## Local — `~/.claude/skills/` (27)
+## Local — `~/.claude/skills/` (26)
 
 Each one can be deleted on its own.
 
 
-| Keep                                           | Delete | Skill                    | Status                                      | ~tok |
-| ---------------------------------------------- | ------ | ------------------------ | ------------------------------------------- | ---- |
-| [ ]                                            | [ ]    | api-design               |                                             | ~40  |
-| [ ]                                            | [ ]    | architecture-review      | user-only                                   | ~45  |
-| [X]                                            | [ ]    | blocksite                |                                             | ~85  |
-| [ ]                                            | [ ]    | capture-feedback         |                                             | ~50  |
-| [X]                                            | [ ]    | clean-transcript         |                                             | ~45  |
-| [ ]                                            | [ ]    | close-session            | user-only                                   | ~75  |
-| [ ]                                            | [ ]    | database-design          |                                             | ~90  |
-| [X]                                            | [ ]    | day-shift                |                                             | ~70  |
-| [ ]                                            | [ ]    | doc-coauthoring          |                                             | ~105 |
-| [X]                                            | [ ]    | dream                    |                                             | ~70  |
-| [X; remove description]                        | [ ]    | email-tracker            |                                             | ~85  |
-| [X]                                            | [ ]    | equationify              | user-only                                   | ~35  |
-| [ ]                                            | [ ]    | fill-notes               |                                             | ~60  |
-| [ ]                                            | [ ]    | find-docs                |                                             | ~225 |
-| [X; remove description]                        | [ ]    | github-digest            |                                             | ~50  |
-| [ ]                                            | [ ]    | memory-review            | user-only                                   | ~55  |
-| [X]                                            | [ ]    | morning-shift            |                                             | ~75  |
-| [X; remove description]                        | [ ]    | new-project              | user-only                                   | ~140 |
-| [ ]                                            | [ ]    | new-session              | user-only                                   | ~155 |
-| [X]                                            | [ ]    | night-shift              |                                             | ~90  |
-| [X]                                            | [ ]    | restructure-project      | user-only                                   | ~155 |
-| [ ]                                            | [ ]    | supplement               |                                             | ~80  |
-| [ ]                                            | [ ]    | todos                    | user-only, no description                   | 0    |
-| [X]                                            | [ ]    | transcribe-media         |                                             | ~65  |
-| [ ]                                            | [ ]    | ui-ux-pro-max            |                                             | ~50  |
-| [ ]                                            | [ ]    | write-doc                |                                             | ~65  |
-| [X; change name to /yt and remove description] | [ ]    | youtube-slide-transcript | user-only                                   | ~155 |
+| Keep                                                             | Delete | Skill                    | Status                    | ~tok |
+| ---------------------------------------------------------------- | ------ | ------------------------ | ------------------------- | ---- |
+| [ ]                                                              | [ ]    | api-design               |                           | ~40  |
+| [ ]                                                              | [ ]    | architecture-review      | user-only                 | ~45  |
+| [X]                                                              | [ ]    | blocksite                |                           | ~85  |
+| [ ]                                                              | [ ]    | capture-feedback         |                           | ~50  |
+| [X]                                                              | [ ]    | clean-transcript         |                           | ~45  |
+| [ ]                                                              | [ ]    | close-session            | user-only                 | ~75  |
+| [ ]                                                              | [ ]    | database-design          |                           | ~90  |
+| [X]                                                              | [ ]    | day-shift                |                           | ~70  |
+| [ ]                                                              | [ ]    | doc-coauthoring          |                           | ~105 |
+| [X]                                                              | [ ]    | dream                    |                           | ~70  |
+| [X; remove description]                                          | [ ]    | email-tracker            |                           | ~85  |
+| [X]                                                              | [ ]    | equationify              | user-only                 | ~35  |
+| [X; make this a project specific skill for the associated class] | [ ]    | fill-notes               | moved to business-law     | ~60  |
+| [ ]                                                              | [ ]    | find-docs                |                           | ~225 |
+| [X; remove description]                                          | [ ]    | github-digest            |                           | ~50  |
+| [X; need to remember what this does]                             | [ ]    | memory-review            | user-only                 | ~55  |
+| [X]                                                              | [ ]    | morning-shift            |                           | ~75  |
+| [X; remove description]                                          | [ ]    | new-project              | user-only                 | ~140 |
+| [X]                                                              | [ ]    | night-shift              |                           | ~90  |
+| [X]                                                              | [ ]    | restructure-project      | user-only                 | ~155 |
+| [X; make this a project specific skill for the associated class] | [ ]    | supplement               | moved to business-law     | ~80  |
+| [X]                                                              | [ ]    | todos                    | user-only, no description | 0    |
+| [X]                                                              | [ ]    | transcribe-media         |                           | ~65  |
+| [ ]                                                              | [ ]    | ui-ux-pro-max            |                           | ~50  |
+| [ ]                                                              | [ ]    | write-doc                |                           | ~65  |
+| [X; change name to /yt and remove description]                   | [ ]    | youtube-slide-transcript | user-only                 | ~155 |
 
 
 
