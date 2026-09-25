@@ -1,6 +1,7 @@
 # Skills review — 2026-09-24
 
-The 80 skills from `/skills`, in the same order. Put `x` in **Keep** or **Delete**; add a note for maybes.
+Started as the 80 skills from `/skills` (2026-09-24). Rows are removed once a deletion is verified on disk;
+every remaining row is marked. Applied rounds: 2026-09-24 and 2026-09-25 (see `TODO.md`).
 
 - **Source** — `claude.ai sync` (account skills), `plugin`, or `local` (`~/.claude/skills/`).
 - **Status** — `user-only` = only runs when typed as `/<name>`, never auto-loads.
@@ -10,9 +11,9 @@ the rest are estimated (description length ÷ 4).
 
 ## Name clashes (from the `/skills` footer)
 
-Your local `docx`, `mcp-builder`, `pdf`, `pptx`, `skill-creator`, `xlsx` take the slash command, so
-typing `/docx` etc. runs **yours**, not Anthropic's. To use Anthropic's, delete (or rename) the local
-one. `/deep-research` is also taken by another command — source not found on disk.
+Resolved 2026-09-24: the local `docx`, `mcp-builder`, `pdf`, `pptx`, `skill-creator`, `xlsx` were archived to
+`~/Projects/Archive/old-skills/`, so `/docx` etc. now run Anthropic's. Still open: `/deep-research` is taken by
+another command — source not found on disk (on hold, `TODO.md`).
 
 ## claude.ai sync
 
@@ -22,12 +23,12 @@ Delete these in claude.ai → Settings → Capabilities, not on disk.
 | Keep | Delete | Skill                          | Status                                           | ~tok |
 | ---- | ------ | ------------------------------ | ------------------------------------------------ | ---- |
 | [X]  | [ ]    | anthropic-skills:deep-research |                                                  | 200  |
-| [X]  | [ ]    | anthropic-skills:docx          | clashes with local docx                          | 320  |
-| [X]  | [ ]    | anthropic-skills:mcp-builder   | clashes with local mcp-builder                   | 100  |
-| [X]  | [ ]    | anthropic-skills:pdf           | clashes with local pdf                           | 150  |
-| [X]  | [ ]    | anthropic-skills:pptx          | clashes with local pptx                          | 330  |
-| [X]  | [ ]    | anthropic-skills:skill-creator | clashes with local skill-creator                 | 120  |
-| [X]  | [ ]    | anthropic-skills:xlsx          | clashes with local xlsx                          | 320  |
+| [X]  | [ ]    | anthropic-skills:docx          |                     | 320  |
+| [X]  | [ ]    | anthropic-skills:mcp-builder   |                     | 100  |
+| [X]  | [ ]    | anthropic-skills:pdf           |                     | 150  |
+| [X]  | [ ]    | anthropic-skills:pptx          |                     | 330  |
+| [X]  | [ ]    | anthropic-skills:skill-creator |                     | 120  |
+| [X]  | [ ]    | anthropic-skills:xlsx          |                     | 320  |
 | [X]  | [ ]    | built-in-browser               | Desktop-app browser pane (Claude_Browser tools)  | 280  |
 | [X]  | [ ]    | chrome-browser                 | How to drive Claude in Chrome (your real Chrome) | 260  |
 | [X]  | [ ]    | computer-use                   | Screenshot + click/type in desktop apps          | 320  |
@@ -45,7 +46,7 @@ Delete these in claude.ai → Settings → Capabilities, not on disk.
 | [X]  | [ ]    | supabase | locked by plugin | ~145 |
 
 
-## Local — `~/.claude/skills/` (22)
+## Local — `~/.claude/skills/` (22; 3 now live in business-law)
 
 Each one can be deleted on its own.
 
@@ -72,7 +73,7 @@ Each one can be deleted on its own.
 | [X]                                                              | [ ]    | todos                    | user-only, no description                    | 0    |
 | [X]                                                              | [ ]    | transcribe-media         |                                              | ~65  |
 | [X]                                                              | [ ]    | ui-ux-pro-max            |                                              | ~50  |
-| [X]                                                              | [ ]    | write-doc                |                                              | ~65  |
+| [X]                                                              | [ ]    | write-doc                | moved to business-law                        | ~65  |
 | [X; change name to /yt and remove description]                   | [ ]    | youtube-slide-transcript | user-only                                    | ~155 |
 
 
@@ -80,9 +81,6 @@ Each one can be deleted on its own.
 
 - **Installed but disabled plugins:** modern-web-guidance (2 skills), vercel (~40 skills). Uninstall
 with `/plugin` if you don't want them on disk.
-- **mattpocock folders the plugin doesn't register** (10): claude-handoff, loop-me,
-setup-ts-deep-modules, writing-beats, writing-fragments, writing-shape, git-guardrails-claude-code,
-migrate-to-shoehorn, scaffold-exercises, setup-pre-commit. They never load.
 - **Built into Claude Code** (dataviz, artifact-*, loop, schedule, code-review, simplify, etc.) —
 not listed by `/skills`, not removable.
 
