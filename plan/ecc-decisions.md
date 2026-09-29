@@ -5,26 +5,27 @@
 - **Traced** 2026-09-21 · **Carter answered** 2026-09-22 · **Trimmed** 2026-09-23 after the plugin
   and skill cleanup (`.claude/memory/decisions.md`). Carter's verbatim answers, and rows about
   removed skills, are in `plan/_archive/ecc-decisions_2026-09-23.md`.
-- **Still installed and under Carter's review:** mattpocock-skills, ponytail, supabase.
+- **Updated 2026-09-28** for the 09-24 cleanup: mattpocock-skills and ponytail uninstalled; local
+  `api-design`, `database-design`, `new-session` gone. Supabase is the only third-party plugin left.
 - **Related:** `plan/skill-budget-ab.md`, `plan/trim-skills.md`, memory `reference-ecc-kit-evaluation`.
 
 ## Status
 
 | # | Decision | Carter | Blocked on |
 |---|---|---|---|
-| 1 | Install as the `ecc@ecc` plugin | Compare with current skills first; will drop plugins that ECC beats | the table in item 1 |
+| 1 | Install as the `ecc@ecc` plugin | Compare with current skills first; will drop plugins that ECC beats | — (table refreshed 09-28) |
 | 2 | Copy in a chosen subset with `install.sh --target claude` | Most likely path; goes with item 1 | item 1 |
-| 3 | Add about 93k chars to the skill listing | Pending; depends on item 1 | item 1 |
-| 4 | Keep his api-design next to ECC's | Wants a side-by-side | reading item 4 |
+| 3 | Add about 93k chars to the skill listing | Pending; depends on item 1 | item 1; headroom needs re-measuring |
+| 4 | Keep his api-design next to ECC's | **Moot** — his api-design is gone; ECC's is a plain add-or-not under item 2 | — |
 | 5 | Add 68 agents | Accept once he knows what they do | — |
 | 6 | Add 94 `/ecc:` commands | Asked what replaced them | — |
-| 7 | Copy in `rules/common` | Wants the token cost; will read every file | loading probe |
+| 7 | Copy in `rules/common` | Wants the token cost; will read every file | reading the 10 files (probe done: loads) |
 | 8 | Agents invoked automatically | OK: they are agents, not skills | — |
 | 9 | 80% coverage, TDD on every change | TDD ≠ over-engineering; conformance-suite-first still fits | — |
 | 10 | ECC's model table | Would consider it; subagent-heavy work fits it | — |
 | 11 | Search order: GitHub → Context7 → Exa → agents | **Accept**; reuse reference files as ideas to distil | — |
 | 12 | Conventional commits | **Accept** | — |
-| 13 | Immutability, function and file size limits | Investigate; check fit with ponytail | ponytail review |
+| 13 | Immutability, function and file size limits | Investigate; ponytail test skipped (ponytail removed) | reading coding-style.md under item 7 |
 | 14 | `includeCoAuthoredBy: false` | No "co-authored by ECC"; "co-authored by Claude Code" is fine | — |
 | 15 | `pluginConfigs` options | Asked what it does | — |
 | 16 | ECC's settings recommendations | Asked what changes | — |
@@ -34,7 +35,7 @@
 | 30 | Instincts | Asked what instincts are | — |
 | 31 | Promoted instincts become local skills | Leaning toward promoting by hand | — |
 | 32 | unified-memory | Leaning away | — |
-| 33 | session-data as the resume mechanism | Wants one mechanism, not two | item 33 table |
+| 33 | session-data as the resume mechanism | Wants one mechanism, not two; now ECC session-data vs close-session only | item 33 table |
 | 34 | Sync ECC into Codex | Likely, after the Claude Code setup is settled | items 1–33 |
 | 35 | Catalog MCP servers | Asked what they are | — |
 | 36 | `contexts/` shell aliases | Wants a comparison | — |
@@ -47,20 +48,19 @@
 
 | Yours | ECC | Fit |
 |---|---|---|
-| mattpocock tdd, code-review, research | `tdd-workflow`, code-reviewer, `research-ops`, `deep-research` | Close |
-| mattpocock diagnosing-bugs, prototype, wizard, grilling, writing-for-agents | — | Gap. writing-for-agents is Carter's adopted writing standard |
-| mattpocock domain-modeling, codebase-design | `contract-first`, `hexagonal-architecture`, architect agent | Different framing |
-| ponytail (6) | code-simplifier agent, `refactor-cleaner`, KISS/YAGNI in coding-style.md | Conflict → item 13 |
+| built-in `/code-review`, anthropic-skills deep-research | code-reviewer agent, `deep-research`, `research-ops` | Close; yours are bundled and cost no listing budget |
+| (nothing — mattpocock uninstalled 09-24) | `tdd-workflow` + tdd-guide agent | ECC fills a gap |
+| (nothing — ponytail uninstalled 09-24) | code-simplifier agent, `refactor-cleaner`, KISS/YAGNI in coding-style.md | ECC fills a gap → item 13 |
 | dream, morning/day/night-shift | continuous-learning-v2, loop-operator agent, `autonomous-loops` | Different shape → items 24, 30 |
 | capture-feedback | instincts + `/ecc:learn` | → item 30 |
-| new-session, close-session | `/ecc:save-session`, `/ecc:checkpoint` | → item 33 |
-| database-design, api-design, mcp-builder, skill-creator | `postgres-patterns` + `database-migrations`, `api-design`, `mcp-server-patterns`, `/ecc:skill-create` | api-design → item 4 |
-| blocksite, email-tracker, github-digest, fill-notes, supplement, write-doc, transcribe-media, clean-transcript | — | Personal workflows; no overlap |
+| close-session | `/ecc:save-session`, `/ecc:checkpoint` | → item 33 |
+| anthropic-skills mcp-builder, skill-creator; supabase plugin | `mcp-server-patterns`, `/ecc:skill-create`, `postgres-patterns` + `database-migrations` | Yours are bundled; ECC's would add listing cost |
+| (nothing — api-design, database-design gone) | `api-design` | Add-or-not under item 2 |
+| blocksite, email-tracker, github-digest, weekly-update, transcribe-media, clean-transcript, financials, slide-deck, … | — | Personal workflows; no overlap |
 | anthropic-skills (bundled) | — | Don't count toward the listing budget |
 
-- IF you drop every remaining plugin (mattpocock + ponytail ≈ 17 entries) THEN it still can't make
-  room for the plugin path (292 skills + 94 commands). Only a file-copy subset fits (item 2).
-- [ambiguous in source] mattpocock is 11 entries in this count but 25 in the item 3 probe.
+- Those plugins are already dropped, and the plugin path (292 skills + 94 commands) still can't fit.
+  Only a file-copy subset fits (item 2).
 
 ### 2. Copy in a subset with `install.sh --target claude`
 
@@ -102,6 +102,8 @@ Steps: 1. Finish item 1 → 2. Pick the ECC skills that win → 3. Run `--skills
   about 5 ECC skills fit.
 - IF the model has 200K context (budget ≈ 8,000 chars) THEN the current catalog is already ≈ 3.5×
   over budget.
+- [stale 09-28] 31 plugin skills (mattpocock 25, ponytail 6) and several local skills were removed
+  after this count, so headroom is larger than 1,500. Re-measure before sizing a subset.
 - 69 = 48 local skills + 32 plugin skills (mattpocock 25, ponytail 6, supabase 1) − the skills
   hidden from the listing. The 40 bundled Anthropic skills don't count. The loader still reads the
   8 skills in `~/.claude/skills/_archived/` as live.
@@ -174,8 +176,9 @@ Model shown only where it isn't sonnet.
 | **Total** | **18,100** | **≈4,500** | |
 
 - Skill = loads when it fires. Rule = loads in every session, in every project.
-- IF the harness reads subfolders of `rules/ecc/` THEN the cost is ≈ 4,500 tokens per session,
-  every session. [not verified on this machine]
+- The harness reads subfolders of `~/.claude/rules/` (probe 2026-09-28, 2/2 sonnet runs quoted a
+  random sentinel from `rules/ecc/probe.md`; control at `rules/` top level also loaded). So the cost
+  is ≈ 4,500 tokens per session, every session, every project.
 - Probe: 1. Write a marker file to `~/.claude/rules/ecc/test.md` → 2. Run a headless session and
   check whether the marker loads → 3. Delete the file. This is the method from
   `reference-claude-code-loading-mechanics`.

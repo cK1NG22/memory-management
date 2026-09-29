@@ -197,7 +197,7 @@ Nothing here comes from the chat or the web.
 
 **Rules**
 
-- R42. IF the harness reads subfolders of `~/.claude/rules/ecc/` THEN `rules/common` costs ≈4,500 tokens every session, in every project. `[not verified on this machine — probe in ecc-decisions item 7]`
+- R42. IF you copy `rules/common` into `~/.claude/rules/ecc/` THEN it costs ≈4,500 tokens every session, in every project. Subfolders do load (probe 2026-09-28, ecc-decisions item 7).
 - R43. IF the Observer is off THEN observe-runner is cost with no benefit. It still starts on every tool call under the `standard` hook profile.
 - R44. IF you want one hook off (e.g. observe-runner) THEN list it in `ECC_DISABLED_HOOKS`.
 - R45. IF you install skills with `install.sh --skills a,b,c` THEN each is copied to `~/.claude/skills/<name>/`, which is global, not a mode folder.
@@ -237,7 +237,7 @@ Nothing here comes from the chat or the web.
 - Rules are stale → R38 (core) vs R39 (plugin); the cue is which install path you're on
 - About to edit an ECC file → R40
 - Choosing plugin vs core under the low-maintenance constraint → R41 + the plugin/core table
-- Deciding whether to copy `rules/common` → R42 (run the probe first)
+- Deciding whether to copy `rules/common` → R42
 - Observer declined, but tool calls still run a hook → R43, R44
 - Want ECC skills split across research / plan / make → R45, then R50 (open); plugin-vs-copy trimming → R46 vs R47; the cue is which install path
 - About to copy ECC skills in → R48
