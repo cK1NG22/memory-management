@@ -17,7 +17,7 @@
 | 2 | Copy in a chosen subset with `install.sh --target claude` | Most likely path; goes with item 1 | item 1 |
 | 3 | Add about 93k chars to the skill listing | Pending; depends on item 1 | item 1; headroom needs re-measuring |
 | 4 | Keep his api-design next to ECC's | **Moot** — his api-design is gone; ECC's is a plain add-or-not under item 2 | — |
-| 5 | Add 68 agents | Accept once he knows what they do | — |
+| 5 | Add 68 agents | Accept once he knows what they do; **measured +7,179 tokens/session** | — |
 | 6 | Add 94 `/ecc:` commands | Asked what replaced them | — |
 | 7 | Copy in `rules/common` | Wants the token cost; will read every file | reading the 10 files (probe done: loads) |
 | 8 | Agents invoked automatically | OK: they are agents, not skills | — |
@@ -29,16 +29,57 @@
 | 14 | `includeCoAuthoredBy: false` | No "co-authored by ECC"; "co-authored by Claude Code" is fine | — |
 | 15 | `pluginConfigs` options | Asked what it does | — |
 | 16 | ECC's settings recommendations | Asked what changes | — |
-| 17 | Merge `~/.claude/CLAUDE.md` with ECC's example | Merge by hand, with Carter in the loop | items 7–13 |
-| 18 | Hook profile | Wants to understand the hooks first | items 19–29 |
-| 19–29 | Individual hooks | Mostly "what is this / why is it useful?" | — |
+| 17 | Merge `~/.claude/CLAUDE.md` with ECC's example | **No** — global CLAUDE.md kept as is (09-28) | — |
+| 18 | Hook profile | **No hooks** (09-28) | — |
+| 19–29 | Individual hooks | **No hooks** (09-28) | — |
 | 30 | Instincts | Asked what instincts are | — |
 | 31 | Promoted instincts become local skills | Leaning toward promoting by hand | — |
 | 32 | unified-memory | Leaning away | — |
-| 33 | session-data as the resume mechanism | Wants one mechanism, not two; now ECC session-data vs close-session only | item 33 table |
-| 34 | Sync ECC into Codex | Likely, after the Claude Code setup is settled | items 1–33 |
+| 33 | session-data as the resume mechanism | **Keep close-session** — session-data needs hooks, and hooks are out (09-28) | — |
+| 34 | Sync ECC into Codex | **No** (09-28) | — |
 | 35 | Catalog MCP servers | Asked what they are | — |
 | 36 | `contexts/` shell aliases | Wants a comparison | — |
+
+## Measurements 2026-09-28 (CLI 2.1.284, ECC 2.2.2 @ d3b8a3e)
+
+Method: headless `claude -p --model sonnet`, a fresh repo per variant, ECC files copied into the
+project's `.claude/`; total input tokens (input + cache) for "Reply OK." Both runs were identical
+for every row. Nothing under `~/.claude` touched. ECC's installer was **not** run (the auto-mode
+classifier blocks executing it), so profile contents come from reading
+`manifests/install-profiles.json` and `scripts/lib/install-targets/claude-*.js`.
+
+| Added to a project | Tokens/session | Δ vs baseline |
+|---|---|---|
+| nothing (baseline) | 34,856 | — |
+| 68 agents | 42,035 | +7,179 |
+| 94 commands | 38,002 | +3,146 |
+| 47 `workflow-quality` skills | 37,802 | +2,946 |
+| full `rules/` tree (122 files; 111 have `paths:` frontmatter) | 44,654 | +9,798 |
+
+- **`--profile minimal`** = rules-core + agents-core + commands-core + platform-configs +
+  workflow-quality, no hooks. rules-core maps the whole `rules/` tree to `.claude/rules/ecc/`
+  (no language filter). platform-configs drops `.claude-plugin`, `.codex`, `.cursor`, `.gemini`,
+  `mcp-configs`, … into the target root. Sum of the four rows ≈ **+23,000 tokens/session** (not
+  measured together).
+- Profiles are the **file-copy path**, not the plugin. `--target claude-project` installs into one
+  project's `.claude/` instead of `~/.claude/`.
+- `--with` / `--without` adjust a profile by module; the unit is a module, not a file.
+  `--skills a,b` picks single skills. The bare-language form (`install.sh typescript`) copies
+  `rules/common` + one language but can't be combined with `--profile`.
+
+Loading probes (same method, sentinel strings, 2/2 runs each):
+
+| Setup | cwd = project root | cwd = `make/` |
+|---|---|---|
+| `<project>/.claude/rules/x.md` | loads | loads |
+| `<project>/make/.claude/rules/x.md` | **no** | loads |
+| `<project>/make/.claude/skills/s/` | **no** | loads |
+| `make/.claude/skills/s` → symlink to a library folder | — | loads |
+| `.claude/rules/x.md` → symlink to a library file | — | **no** |
+| `.claude/rules/dir` → symlink to a library folder | **no** | — |
+| `~/.claude/rules/ecc/x.md` (real subfolder) | loads | — |
+
+- Rules **skip symlinks** (file and folder); skills follow them.
 
 ---
 

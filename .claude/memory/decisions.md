@@ -916,3 +916,17 @@ the example of turning a setup into a product. Built at `~/Projects/mode-memory`
 - **Skill tracking now splits model vs user.** `track-skill-usage.sh` also runs on
   `UserPromptExpansion` and writes `by.model` / `by.user`. The event's input fields are
   undocumented (docs and context7 both silent), so the script keeps one raw sample to confirm them.
+
+## 2026-09-28 — ECC: no hooks, no CLAUDE.md merge, no Codex sync; loading probes
+
+- **No ECC hooks** (items 18–29), so ECC session-data is out and **close-session stays** the
+  resume mechanism (item 33). *Why:* Carter's call; his notes already declined Instincts,
+  Observer and session memory, which are what the hooks deliver.
+- **Global `~/.claude/CLAUDE.md` is kept as is** (item 17) and **no Codex sync** (item 34).
+- **Install shape (items 1–3) still open.** Carter had assumed "minimal profile". Read from the
+  manifests: minimal is the file-copy path and carries all 68 agents, 94 commands, the whole
+  rules tree, 47 skills, and platform-config folders; measured ≈ +23k tokens/session at project
+  scope. Numbers in `plan/ecc-decisions.md` → Measurements.
+- **Probed:** `~/.claude/rules/` subfolders load; a mode folder's `.claude/rules` and
+  `.claude/skills` load only when the session starts in that mode folder; **rules skip
+  symlinks, skills follow them.** This decides how a "library + scaffold" setup can work.
