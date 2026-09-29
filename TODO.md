@@ -37,3 +37,7 @@
 - [x] `write-doc` is stage 5 of the business-law notes pipeline but stays global (marked keep, not moved with fill-notes/supplement) — decide whether it moves too — added 2026-09-25, done 2026-09-25 (moved; business-law `e220a71`)
 - [ ] `/deep-research` is taken by an unknown command (from the `/skills` name-clash footer, 2026-09-24); source not found on disk — find it (Carter: on hold) — added 2026-09-25
 - [x] Verify a subagent's unconfirmed report that the rtk hook rewrites `npx` to `npm run` (2026-09-24); if true, add it to `reference-rtk-shims-find.md` — added 2026-09-25, done 2026-09-25 (refuted: `rtk rewrite` shows npx → `rtk npx`, a pass-through filter; noted in the memory file)
+- [ ] ECC fork (`ck22coding/ECC`): decide which of `docs/` (113 files) to keep — review suggested keeping only `SKILL-DEVELOPMENT-GUIDE.md`, `token-optimization.md`, `hook-bug-workarounds.md`, `PLAN-PRD-PATTERN.md`, `capability-surface-selection.md` (the last two are linked from skills) — added 2026-09-28
+- [ ] ECC fork: decide whether to trim `scripts/ci/`, `scripts/discord/`, and the `scripts/release*` files (hooks and 29 commands/skills/agents depend on the rest of `scripts/`) — added 2026-09-28
+- [ ] ECC fork: decide on `examples/` (67 files: per-stack CLAUDE.md templates, statusline example, eval/RAG prototype) — added 2026-09-28
+- [ ] ECC fork: decide on `.mcp.json` — it starts `chrome-devtools-mcp` for any session opened in the library folder; possible reference for the missing DevTools MCP item above — added 2026-09-28
