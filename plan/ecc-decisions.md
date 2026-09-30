@@ -13,9 +13,9 @@
 
 | # | Decision | Carter | Blocked on |
 |---|---|---|---|
-| 1 | Install as the `ecc@ecc` plugin | Compare with current skills first; will drop plugins that ECC beats | — (table refreshed 09-28) |
-| 2 | Copy in a chosen subset with `install.sh --target claude` | Most likely path; goes with item 1 | item 1 |
-| 3 | Add about 93k chars to the skill listing | Pending; depends on item 1 | item 1; headroom needs re-measuring |
+| 1 | Install as the `ecc@ecc` plugin | **No — library model** (09-29): ECC lives on disk as Carter's fork `ck22coding/ECC` (cut to Claude-only core); projects get hand-picked pieces at scaffold time | — |
+| 2 | Copy in a chosen subset with `install.sh --target claude` | **Replaced by per-project scaffold** — the fork's installer is removed; skills symlinked, rules copied (probe 09-28) | scaffold procedure (`TODO.md`) |
+| 3 | Add about 93k chars to the skill listing | **Moot globally** — only the skills a project picks enter its listing | — |
 | 4 | Keep his api-design next to ECC's | **Moot** — his api-design is gone; ECC's is a plain add-or-not under item 2 | — |
 | 5 | Add 68 agents | Accept once he knows what they do; **measured +7,179 tokens/session** | — |
 | 6 | Add 94 `/ecc:` commands | Asked what replaced them | — |

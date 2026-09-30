@@ -930,3 +930,23 @@ the example of turning a setup into a product. Built at `~/Projects/mode-memory`
 - **Probed:** `~/.claude/rules/` subfolders load; a mode folder's `.claude/rules` and
   `.claude/skills` load only when the session starts in that mode folder; **rules skip
   symlinks, skills follow them.** This decides how a "library + scaffold" setup can work.
+
+## 2026-09-29 — ECC: library model from Carter's own fork; fork cut to Claude-only core
+
+- **Install shape (items 1–3) decided: the "library" model, built from Carter's fork
+  `ck22coding/ECC`** — not the plugin, not an install profile. ECC stays on disk as a library;
+  each project is scaffolded by hand-picking skills/rules/agents/commands into its `.claude/`.
+  *Why:* profiles still load +23k tokens/session everywhere; per-project selection loads only what
+  that project needs. Constraint from the 09-28 probes: **skills can be symlinked (track upstream),
+  rules must be real copies (freeze).**
+- **Fork cleaned in two merged PRs.** PR #1 (`b2d2ede4`): 1,884 non-Claude files (other-tool
+  folders, other-tool docs, 13 locales, other-tool scripts/targets). PR #2 (`a0e8a663`): 765
+  files marked "pure drop" (installer + schemas, tests, `.github/`, ECC's own `.claude/` and
+  `CLAUDE.md`, assets, ecc2, docker, src/llm, integrations, OSS docs, lint configs). 1,348 remain.
+  *Why:* Carter — "remove distractions from the repo." Merge commits (not squash) so each drop
+  group reverts alone.
+- **Kept beyond the five core folders because core depends on them:** `scripts/` (all 24 hook
+  entries + 18 root scripts called by 29 commands/skills/agents), `package.json`, `config/`,
+  `workflows/`, `manifests/` (the only skill→module index). ECC's installer is knowingly broken
+  (df42d314) — the library model copies by hand.
+- **Undecided (in `TODO.md`):** `docs/`, `scripts/` trim, `examples/`, `.mcp.json`.
