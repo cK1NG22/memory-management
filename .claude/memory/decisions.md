@@ -950,3 +950,28 @@ the example of turning a setup into a product. Built at `~/Projects/mode-memory`
   `workflows/`, `manifests/` (the only skill→module index). ECC's installer is knowingly broken
   (df42d314) — the library model copies by hand.
 - **Undecided (in `TODO.md`):** `docs/`, `scripts/` trim, `examples/`, `.mcp.json`.
+
+## 2026-09-29 — ECC library clone; first project scaffold (eightfaces)
+
+- **The ECC fork is cloned at `~/Projects/memory-management/ecc/` (gitignored, own repo).**
+  *Why:* Carter wants this project's memory-system context loaded whenever he sets up a project
+  with ECC. Projects symlink into it, so it must not move — moving it breaks every link silently.
+- **"Developer profile, no hooks"** = upstream `install.sh --target claude-project --profile
+  developer --without baseline:hooks`, read from its `--dry-run --json` plan (619 operations),
+  not from the README. Upstream has seven profiles, none with a permissions setting. Taken from
+  the plan: 68 agents, 94 commands, 126 skills. Left out: `rules/` (waits on the stack),
+  `.agents/` `.pi/` `plugin.json` `marketplace.json` `mcp-configs` (other tools / packaging),
+  and 8 skills — `continuous-learning`, `continuous-learning-v2` (instincts), `unified-memory`
+  (pulled in as a dependency; item 32 leans away), `ck` (a memory store), `hookify-rules`,
+  `plankton-code-quality`, `delivery-gate` (hook-driven), `configure-ecc` (installer wizard).
+  `i18n-sync` is upstream-only, not yet in the fork.
+- **Probed: symlinked agent files and command files load** (sentinel + negative control,
+  `claude -p`). With skills already probed, only rules need real copies.
+- **eightfaces (`~/Foundry/clients/perry/eightfaces`) is Scott Murff's repo; the ECC links are
+  local only**, listed one per line in its `.git/info/exclude`. *Why:* nothing lands in his
+  tree. Cost: background-job worktrees there won't see them.
+- **Symlinks are optional (Carter, same day).** Builds may link or copy ECC pieces; the trade-off
+  table is in `docs/ecc-runbook.md` step 4. eightfaces stays linked for now.
+- **Plugin paths get fixed in the fork, not tolerated** (Carter). 26 commands and ~14 skills still
+  call `${CLAUDE_PLUGIN_ROOT}/…` or `~/.claude/skills/…`; they are ours to edit.
+- **`docs/ecc-runbook.md` written** — the how-to for using ECC and loading it into a build.

@@ -4,3 +4,6 @@
 .DS_Store
 __pycache__/
 *.pyc
+
+# ECC library — a clone of ck22coding/ECC with its own git; projects symlink into it
+/ecc/

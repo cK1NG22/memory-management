@@ -42,6 +42,9 @@
 - [ ] ECC fork: decide whether to trim `scripts/ci/`, `scripts/discord/`, and the `scripts/release*` files (hooks and 29 commands/skills/agents depend on the rest of `scripts/`) — added 2026-09-28
 - [ ] ECC fork: decide on `examples/` (67 files: per-stack CLAUDE.md templates, statusline example, eval/RAG prototype) — added 2026-09-28
 - [ ] ECC fork: decide on `.mcp.json` — it starts `chrome-devtools-mcp` for any session opened in the library folder; possible reference for the missing DevTools MCP item above — added 2026-09-28
-- [ ] ECC library: pick a durable local path for the `ck22coding/ECC` clone (the only local copy was a deleted job temp folder) — added 2026-09-29
-- [ ] ECC library: write the per-project scaffold procedure — symlink skills, real-copy rules; agents/commands symlink behavior still unprobed — added 2026-09-29
+- [x] ECC library: pick a durable local path for the `ck22coding/ECC` clone (the only local copy was a deleted job temp folder) — added 2026-09-29, done 2026-09-29 (`~/Projects/memory-management/ecc/`, gitignored)
+- [x] ECC library: write the per-project scaffold procedure — symlink skills, real-copy rules; agents/commands symlink behavior still unprobed — added 2026-09-29, done 2026-09-29 (`docs/ecc-runbook.md`; agents + commands probed: symlinks load)
 - [ ] ECC fork: delete the merged `claude-only` and `pure-drops` branches on GitHub — added 2026-09-29
+- [ ] ECC fork: repoint or delete the 26 commands and ~14 skills that call `${CLAUDE_PLUGIN_ROOT}/…` or `~/.claude/skills/…` (8 are instinct commands — likely delete); list in `docs/ecc-runbook.md` → Gotchas — added 2026-09-29
+- [ ] eightfaces ECC: once the stack is confirmed, copy the matching `rules/` into `.claude/rules/ecc/`, cut the unneeded language/framework skills, and decide symlink vs copy (runbook step 4) — added 2026-09-29
+- [ ] Measure the skill-listing budget in an eightfaces session with ECC loaded (117 skills + 94 commands on top of the ≈36k global catalog) — added 2026-09-29

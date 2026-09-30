@@ -7,6 +7,12 @@ folder.** Optimizing for context curation, explicitly not for traditional coding
 
 ## 🧭 Where we are now
 
+**2026-09-29 — ECC went live as a library.** The fork `ck22coding/ECC` is cloned at `ecc/`
+(gitignored, own repo). First build: eightfaces (Scott Murff's repo, local-only via
+`.git/info/exclude`) got the developer profile minus hooks — 68 agents, 94 commands, 117 skills
+as symlinks; rules wait on the stack. Probed: symlinked agents and commands load. Carter: symlinks
+are optional, and plugin-path commands get fixed in the fork. How-to: `docs/ecc-runbook.md`.
+
 **ECC adoption has a shape (2026-09-29): the "library" model, from Carter's own fork
 `ck22coding/ECC`.** No plugin, no install profile. The fork is cut to Claude-only core in two merged
 PRs (1,884 + 765 files dropped; 1,348 remain): skills, commands, agents, rules, hooks, plus the
@@ -18,13 +24,13 @@ rows 1–3; native `reference-ecc-kit-evaluation.md`.
 skip symlinks (must be real copies); a mode folder's `.claude/` loads only when the session starts
 there; `~/.claude/rules/` subfolders load everywhere. ECC's minimal profile ≈ +23k tokens/session.
 
-**Git is clean:** `main` pushed to `ck22coding/memory-management`; every merged worktree deleted.
+**Git:** both 2026-09-29 ECC branches merged into `main` and pushed to `ck22coding/memory-management`.
 
 ## ⏭️ Next steps / open
 
-The root `TODO.md` is the live list (24 open). ECC-next, in order:
-- Pick a durable local path for the fork clone (the only copy was a job temp folder).
-- Write the per-project scaffold procedure; probe whether agents/commands follow symlinks.
+The root `TODO.md` is the live list. ECC-next:
+- Fix the 26 commands and ~14 skills that call plugin paths, in the fork.
+- eightfaces: rules + skill cut once the stack is confirmed; measure the skill-listing budget there.
 - Carter decides: `docs/`, `scripts/` trim, `examples/`, `.mcp.json` in the fork.
 - Remaining ECC rows (5–16, 30–32, 35–36) still carry Carter's open questions.
 

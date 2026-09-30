@@ -13,6 +13,8 @@ the subject.
   generations. **Read before deleting any memory store.** Everything it describes has been deleted.
 - **`docs/memory-repair-runbook.md`** — the procedure for recovering memory stranded by a folder move,
   with the tools in `make/memory-repair/`. **Run `audit.py` before and after moving any folder.**
+- **`docs/ecc-runbook.md`** — how to use ECC and load it into a build. The library clone is
+  `ecc/` (gitignored, its own repo).
 
 ## The one thing to know
 
