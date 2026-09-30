@@ -46,5 +46,7 @@
 - [x] ECC library: write the per-project scaffold procedure — symlink skills, real-copy rules; agents/commands symlink behavior still unprobed — added 2026-09-29, done 2026-09-29 (`docs/ecc-runbook.md`; agents + commands probed: symlinks load)
 - [ ] ECC fork: delete the merged `claude-only` and `pure-drops` branches on GitHub — added 2026-09-29
 - [ ] ECC fork: repoint or delete the 26 commands and ~14 skills that call `${CLAUDE_PLUGIN_ROOT}/…` or `~/.claude/skills/…` (8 are instinct commands — likely delete); list in `docs/ecc-runbook.md` → Gotchas — added 2026-09-29
-- [ ] eightfaces ECC: once the stack is confirmed, copy the matching `rules/` into `.claude/rules/ecc/`, cut the unneeded language/framework skills, and decide symlink vs copy (runbook step 4) — added 2026-09-29
-- [ ] Measure the skill-listing budget in an eightfaces session with ECC loaded (117 skills + 94 commands on top of the ≈36k global catalog) — added 2026-09-29
+- [x] eightfaces ECC: rules copied (`common`, `typescript`, `react`, `web`), 56 skills / 36 agents / 19 commands unlinked, 2 skills added — added 2026-09-29, done 2026-09-29
+- [ ] eightfaces: decide on `common/testing.md` (80% coverage rule conflicts with the testing plan in `perry/agent-tooling.md`) — added 2026-09-29
+- [ ] eightfaces: symlink vs copy still undecided (stays linked) — added 2026-09-29
+- [ ] Measure the skill-listing budget in an eightfaces session with ECC loaded (63 skills + 75 commands after the stack cut, on top of the ≈36k global catalog) — added 2026-09-29

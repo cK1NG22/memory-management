@@ -30,7 +30,7 @@ there; `~/.claude/rules/` subfolders load everywhere. ECC's minimal profile ≈ 
 
 The root `TODO.md` is the live list. ECC-next:
 - Fix the 26 commands and ~14 skills that call plugin paths, in the fork.
-- eightfaces: rules + skill cut once the stack is confirmed; measure the skill-listing budget there.
+- eightfaces: cut to the confirmed stack 2026-09-29 (see decisions.md). Open: `common/testing.md`, symlink vs copy, measure the skill-listing budget.
 - Carter decides: `docs/`, `scripts/` trim, `examples/`, `.mcp.json` in the fork.
 - Remaining ECC rows (5–16, 30–32, 35–36) still carry Carter's open questions.
 

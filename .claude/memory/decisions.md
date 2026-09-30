@@ -975,3 +975,19 @@ the example of turning a setup into a product. Built at `~/Projects/mode-memory`
 - **Plugin paths get fixed in the fork, not tolerated** (Carter). 26 commands and ~14 skills still
   call `${CLAUDE_PLUGIN_ROOT}/…` or `~/.claude/skills/…`; they are ours to edit.
 - **`docs/ecc-runbook.md` written** — the how-to for using ECC and loading it into a build.
+
+## 2026-09-29 — eightfaces ECC cut to the confirmed stack
+
+- **Stack source:** `~/Foundry/clients/perry/agent-tooling.md` → *Decisions: v1 scope* — LangGraph
+  (TS), Next.js + shadcn + AI SDK on Vercel, Turborepo, Supabase.
+- **Rules copied** (real files, `.claude/rules/ecc/`): `common`, `typescript`, `react`, `web` from
+  fork `a0e8a663`. Skipped every `hooks.md` (hooks not used) and `react/testing.md` (Vitest/Jest,
+  dropped in the testing plan). Kept `common/testing.md` despite its 80% coverage rule — open.
+- **Unlinked (Carter: "remove the irrelevant skills and agents"):** 56 language/framework skills
+  (incl. `react-testing`, `prisma-patterns`, `vite-patterns`), 36 agents (other-language reviewers,
+  network/homelab/healthcare/marketing/opensource, `chief-of-staff`, `conversation-analyzer`,
+  `mle-reviewer`), and the 19 language commands that called those agents.
+- **Added:** `cost-aware-llm-pipeline`, `agent-harness-construction`.
+- **Verified:** headless session from eightfaces, 7 checks incl. negative controls; no broken links;
+  the only untracked path is another session's `.claude/worktrees/`.
+- **No ECC coverage** for LangGraph, AI SDK, shadcn, Turborepo, LangSmith, pgTAP, fast-check.

@@ -113,6 +113,10 @@ session is launched from.
 - **Skill-listing budget.** The global catalog was already ≈36k chars against a ≈30k budget before
   ECC; a build with 117 ECC skills + 94 commands will truncate descriptions. Not yet measured. The
   69 language/framework skills are the first cut once a build's stack is known.
+- **zsh does not word-split `$VAR`.** A `for x in $LIST` loop in the Bash tool (zsh) runs once over
+  the whole string and silently matches nothing. Run list loops under `/bin/bash` or use `${=LIST}`.
+- **`common/code-review.md` names every language reviewer** in a table, including ones a build has
+  unlinked. Harmless, but a session may mention agents that aren't there.
 - **The fork lags upstream.** `i18n-sync` is in the upstream developer profile but not the fork.
 - **Background jobs in this repo:** the rtk hook rewrites `git push` into a form the worktree
   guard refuses; run `/usr/bin/git …` (absolute paths bypass rtk).
@@ -121,4 +125,4 @@ session is launched from.
 
 | Build | Mode | Pieces | Added |
 |---|---|---|---|
-| `~/Foundry/clients/perry/eightfaces` | local-only (Scott's repo) | 68 agents, 94 commands, 117 skills; no rules yet | 2026-09-29 |
+| `~/Foundry/clients/perry/eightfaces` | local-only (Scott's repo) | 32 agents, 75 commands, 63 skills linked; 22 rule files copied (`common`, `typescript`, `react`, `web` from fork `a0e8a663`, minus `*/hooks.md` and `react/testing.md`) | 2026-09-29; cut to stack same day |
