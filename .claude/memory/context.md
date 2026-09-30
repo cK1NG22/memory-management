@@ -1,4 +1,4 @@
-# Context — memory-management (updated 2026-09-23)
+# Context — memory-management (updated 2026-09-29)
 
 *Built on the 2026-09-22 close, which lives on the unmerged branch `worktree-close-session-mode-memory`.
 This version folds that content in, so taking this file resolves that branch's `context.md` conflict.*
@@ -9,6 +9,13 @@ A memory and context system where **nothing fails silently** and **nothing is st
 folder.** Optimizing for context curation, explicitly not for traditional coding conventions.
 
 ## 🧭 Where we are now
+
+**2026-09-29 — ECC went live as a library.** The fork `ck22coding/ECC` is cloned at `ecc/`
+(gitignored, own repo). First build: eightfaces (Scott Murff's repo, local-only via
+`.git/info/exclude`) got the developer profile minus hooks — 68 agents, 94 commands, 117 skills
+as symlinks; rules wait on the stack. Probed: symlinked agents and commands load. Carter: symlinks
+are optional, and plugin-path commands get fixed in the fork. How-to: `docs/ecc-runbook.md`.
+Branch `worktree-ecc-library-clone` holds this and is unmerged.
 
 **2026-09-23 was a pruning day.** gstack is gone (54 skills; only `browse` was ever used), Arc is
 gone, and the browser roles are ruled (agent-browser general, Chrome DevTools debugging, Playwright
@@ -29,6 +36,9 @@ minus `/.git`). S3's §4 stop-gate is closed; **S4 is blocked** on the missing
 `~/Sandbox/skill-budget-ab-fixture`.
 
 ## ⏭️ Next steps / open
+
+ECC (all in `TODO.md`): fix the 26 plugin-path commands in the fork; eightfaces rules + skill cut
+once the stack is confirmed; measure the skill-listing budget there; merge the branch.
 
 The root `TODO.md` is the live list (17 open). Carter-owned:
 - Rule on ponytail, mattpocock, supabase. (data/product-management removed in claude.ai 2026-09-23.)

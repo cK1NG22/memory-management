@@ -950,3 +950,8 @@ the example of turning a setup into a product. Built at `~/Projects/mode-memory`
 - **eightfaces (`~/Foundry/clients/perry/eightfaces`) is Scott Murff's repo; the ECC links are
   local only**, listed one per line in its `.git/info/exclude`. *Why:* nothing lands in his
   tree. Cost: background-job worktrees there won't see them.
+- **Symlinks are optional (Carter, same day).** Builds may link or copy ECC pieces; the trade-off
+  table is in `docs/ecc-runbook.md` step 4. eightfaces stays linked for now.
+- **Plugin paths get fixed in the fork, not tolerated** (Carter). 26 commands and ~14 skills still
+  call `${CLAUDE_PLUGIN_ROOT}/…` or `~/.claude/skills/…`; they are ours to edit.
+- **`docs/ecc-runbook.md` written** — the how-to for using ECC and loading it into a build.

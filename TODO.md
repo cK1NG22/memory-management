@@ -42,3 +42,7 @@
 - [ ] ECC fork: decide whether to trim `scripts/ci/`, `scripts/discord/`, and the `scripts/release*` files (hooks and 29 commands/skills/agents depend on the rest of `scripts/`) — added 2026-09-28
 - [ ] ECC fork: decide on `examples/` (67 files: per-stack CLAUDE.md templates, statusline example, eval/RAG prototype) — added 2026-09-28
 - [ ] ECC fork: decide on `.mcp.json` — it starts `chrome-devtools-mcp` for any session opened in the library folder; possible reference for the missing DevTools MCP item above — added 2026-09-28
+- [ ] ECC fork: repoint or delete the 26 commands and ~14 skills that call `${CLAUDE_PLUGIN_ROOT}/…` or `~/.claude/skills/…` (8 are instinct commands — likely delete); list in `docs/ecc-runbook.md` → Gotchas — added 2026-09-29
+- [ ] eightfaces ECC: once the stack is confirmed, copy the matching `rules/` into `.claude/rules/ecc/`, cut the unneeded language/framework skills, and decide symlink vs copy (runbook step 4) — added 2026-09-29
+- [ ] Measure the skill-listing budget in an eightfaces session with ECC loaded (117 skills + 94 commands on top of the ≈36k global catalog) — added 2026-09-29
+- [ ] Merge branch `worktree-ecc-library-clone` (gitignores `ecc/`, adds `docs/ecc-runbook.md`); until then `ecc/` shows untracked on main — added 2026-09-29
