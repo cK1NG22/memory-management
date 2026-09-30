@@ -930,3 +930,23 @@ the example of turning a setup into a product. Built at `~/Projects/mode-memory`
 - **Probed:** `~/.claude/rules/` subfolders load; a mode folder's `.claude/rules` and
   `.claude/skills` load only when the session starts in that mode folder; **rules skip
   symlinks, skills follow them.** This decides how a "library + scaffold" setup can work.
+
+## 2026-09-29 — ECC library clone; first project scaffold (eightfaces)
+
+- **The ECC fork is cloned at `~/Projects/memory-management/ecc/` (gitignored, own repo).**
+  *Why:* Carter wants this project's memory-system context loaded whenever he sets up a project
+  with ECC. Projects symlink into it, so it must not move — moving it breaks every link silently.
+- **"Developer profile, no hooks"** = upstream `install.sh --target claude-project --profile
+  developer --without baseline:hooks`, read from its `--dry-run --json` plan (619 operations),
+  not from the README. Upstream has seven profiles, none with a permissions setting. Taken from
+  the plan: 68 agents, 94 commands, 126 skills. Left out: `rules/` (waits on the stack),
+  `.agents/` `.pi/` `plugin.json` `marketplace.json` `mcp-configs` (other tools / packaging),
+  and 8 skills — `continuous-learning`, `continuous-learning-v2` (instincts), `unified-memory`
+  (pulled in as a dependency; item 32 leans away), `ck` (a memory store), `hookify-rules`,
+  `plankton-code-quality`, `delivery-gate` (hook-driven), `configure-ecc` (installer wizard).
+  `i18n-sync` is upstream-only, not yet in the fork.
+- **Probed: symlinked agent files and command files load** (sentinel + negative control,
+  `claude -p`). With skills already probed, only rules need real copies.
+- **eightfaces (`~/Foundry/clients/perry/eightfaces`) is Scott Murff's repo; the ECC links are
+  local only**, listed one per line in its `.git/info/exclude`. *Why:* nothing lands in his
+  tree. Cost: background-job worktrees there won't see them.
