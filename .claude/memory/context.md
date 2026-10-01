@@ -9,9 +9,11 @@ folder.** Optimizing for context curation, explicitly not for traditional coding
 
 **2026-09-29 — ECC went live as a library.** The fork `ck22coding/ECC` is cloned at `ecc/`
 (gitignored, own repo). First build: eightfaces (Scott Murff's repo, local-only via
-`.git/info/exclude`) got the developer profile minus hooks — 68 agents, 94 commands, 117 skills
-as symlinks; rules wait on the stack. Probed: symlinked agents and commands load. Carter: symlinks
-are optional, and plugin-path commands get fixed in the fork. How-to: `docs/ecc-runbook.md`.
+`.git/info/exclude`) got the developer profile minus hooks, then was cut the same day to its
+confirmed stack (LangGraph TS, Next.js, shadcn, AI SDK, Turborepo, Supabase): 32 agents, 75
+commands, 63 skills as symlinks, plus 22 rule files copied (`common`, `typescript`, `react`, `web`).
+Probed: symlinked agents and commands load. Carter: symlinks are optional, and plugin-path commands
+get fixed in the fork. How-to: `docs/ecc-runbook.md`.
 
 **ECC adoption has a shape (2026-09-29): the "library" model, from Carter's own fork
 `ck22coding/ECC`.** No plugin, no install profile. The fork is cut to Claude-only core in two merged
@@ -24,7 +26,8 @@ rows 1–3; native `reference-ecc-kit-evaluation.md`.
 skip symlinks (must be real copies); a mode folder's `.claude/` loads only when the session starts
 there; `~/.claude/rules/` subfolders load everywhere. ECC's minimal profile ≈ +23k tokens/session.
 
-**Git:** both 2026-09-29 ECC branches merged into `main` and pushed to `ck22coding/memory-management`.
+**Git:** all three 2026-09-29 ECC branches merged into `main` and pushed; three merged worktree
+folders remain on disk (`close-session-ecc-library`, `ecc-library-clone`, `eightfaces-ecc-cut`).
 
 ## ⏭️ Next steps / open
 
