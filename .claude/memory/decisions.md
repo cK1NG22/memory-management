@@ -1018,3 +1018,5 @@ Carter asked for ECC inside `~/Projects/products/companion/.claude`. Built on br
   broken links. Listing cost, name + description chars: skills ≈18k, commands ≈6k, agents ≈6k.
 - **Merged same day** on Carter's "merge": `ck22coding/companion#2` → main as `4ecef62`; main
   checkout fast-forwarded, links resolve there.
+- **Hooks question closed: no hooks** (Carter, same day). He first said "install the hooks", then
+  stopped the work and said "no hooks". The 09-28 decision stands; nothing was installed.
