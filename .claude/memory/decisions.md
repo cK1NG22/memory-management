@@ -991,3 +991,28 @@ the example of turning a setup into a product. Built at `~/Projects/mode-memory`
 - **Verified:** headless session from eightfaces, 7 checks incl. negative controls; no broken links;
   the only untracked path is another session's `.claude/worktrees/`.
 - **No ECC coverage** for LangGraph, AI SDK, shadcn, Turborepo, LangSmith, pgTAP, fast-check.
+
+## 2026-10-04 — companion: ECC set up as committed symlinks (bg session)
+
+Carter asked for ECC inside `~/Projects/products/companion/.claude`. Built on branch `ecc-setup`
+(commit `7b53e9e`, draft PR `ck22coding/companion#2`), **unmerged** — Carter merges.
+
+- **Committed, not local-only.** *Why:* companion is Carter's own private repo and its build runs
+  in worktrees, which hold tracked files only; excluded links would be invisible there. First
+  build to commit the links. Cost: they dangle off this Mac (Vercel's clone included; untested).
+- **Start list = the eightfaces stack cut** (same stack: Next.js, React, TS, shadcn, Postgres),
+  since the fork no longer has the planner the runbook's step 2 calls for.
+- **Dropped beyond eightfaces:** the 12 commands and 7 skills still on plugin paths, instinct /
+  hookify / session commands, `jira`, `marketing-campaign`, `pm2`, `plan-canvas`;
+  `rag-pipeline-reviewer`, `seo-specialist`; `cost-aware-llm-pipeline`,
+  `agent-harness-construction`, `frontend-slides`. *Why:* broken or unused entries cost listing
+  budget and fail when run.
+- **No React Testing Library pieces and no `common/testing.md`.** *Why:* companion's `AGENTS.md`
+  scopes Vitest to pure logic in `lib/`; RTL is not installed. `_source.md` in the rules folder
+  states the fork commit and that `AGENTS.md` outranks the copied rules.
+- **Hooks not installed.** Carter's request named hooks; the 09-28 decision says no ECC hooks, and
+  all 24 entries bootstrap from an ECC root under `~/.claude` that the library model does not
+  have. **Open — Carter to confirm** whether the request meant to reverse 09-28.
+- **Verified:** eslint, `tsc --noEmit`, vitest (47/47) pass in the worktree with links present
+  (ESLint's walk does not follow them); headless session, 9 probes incl. 5 negative controls; no
+  broken links. Listing cost, name + description chars: skills ≈18k, commands ≈6k, agents ≈6k.
