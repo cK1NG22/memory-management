@@ -126,4 +126,4 @@ session is launched from.
 | Build | Mode | Pieces | Added |
 |---|---|---|---|
 | `~/Foundry/clients/perry/eightfaces` | local-only (Scott's repo) | 32 agents, 75 commands, 63 skills linked; 22 rule files copied (`common`, `typescript`, `react`, `web` from fork `a0e8a663`, minus `*/hooks.md` and `react/testing.md`) | 2026-09-29; cut to stack same day |
-| `~/Projects/products/companion` | **committed** symlinks (Carter's private repo; worktree builds need tracked links) | 30 agents, 51 commands, 53 skills linked; 21 rule files copied (`common`, `typescript`, `react`, `web` from fork `a0e8a663`, minus `*/hooks.md`, `common/testing.md`, `react/testing.md`) + `_source.md` | 2026-10-04, branch `ecc-setup` (PR #2, unmerged) |
+| `~/Projects/products/companion` | **committed** symlinks (Carter's private repo; worktree builds need tracked links) | 30 agents, 51 commands, 53 skills linked; 21 rule files copied (`common`, `typescript`, `react`, `web` from fork `a0e8a663`, minus `*/hooks.md`, `common/testing.md`, `react/testing.md`) + `_source.md` | 2026-10-04 (PR #2, merged `4ecef62`) |

@@ -1016,3 +1016,5 @@ Carter asked for ECC inside `~/Projects/products/companion/.claude`. Built on br
 - **Verified:** eslint, `tsc --noEmit`, vitest (47/47) pass in the worktree with links present
   (ESLint's walk does not follow them); headless session, 9 probes incl. 5 negative controls; no
   broken links. Listing cost, name + description chars: skills ≈18k, commands ≈6k, agents ≈6k.
+- **Merged same day** on Carter's "merge": `ck22coding/companion#2` → main as `4ecef62`; main
+  checkout fast-forwarded, links resolve there.
