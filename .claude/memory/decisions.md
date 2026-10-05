@@ -1120,3 +1120,38 @@ One direction; only the last stage is ever read by a session.
 
 **Open — not ruled:** whether the middleman moves plugin files or writes `enabledPlugins` per
 mode folder (or both); the folder's home; the items still open in the entry above.
+
+## 2026-10-04, last — middleman rulings; the recurrence count; a correction
+
+- **Delivery: both.** The middleman writes `enabledPlugins` per mode folder for whole plugins and
+  copies pieces when a subset is wanted. Carter's framing of the product: the built-in switch is
+  all-or-nothing per plugin; the middleman exists for tailored selection.
+- **The middleman folder's home: the user decides at setup.**
+- **Three memory settings, chosen by the user:** no memory; proposed changes (the dreamer
+  proposes); promotion (the dreamer applies). The plugin must work with memory off.
+- **Promotion threshold: 2 or 3**, to be tested on Carter's own setup before fixing it.
+- **"JEV" is a classifier model.** Idea: a small harness that uses it to sort each memory into
+  mode principle vs project fact, then by mode.
+
+**Measured the same day, read-only, 48 `feedback-*.md` files in 16 native stores (grouping is one
+agent's judgement; counts of files, IDs and transcripts are mechanical):**
+- Same rule saved as separate files: one group of 3 across 3 stores (keep a protective rail,
+  design around it) — or two pairs on a stricter split. 45 (or 41) files are singletons. No
+  repeat sits inside a single store.
+- Repeats recorded as edits to an existing file: 4 files carry a dated "update / confirmed again /
+  refinement", plus one same-day double ask.
+- So on today's data a threshold of 2 promotes about 5–7 items, and 3 promotes one. The count
+  understates real recurrence: feedback never saved, or merged silently, is invisible.
+- **Correction to the entry above and to `context.md`:** "the mode comes free from
+  `originSessionId`" does not hold for old files. 44 of 48 carry the ID, but a transcript was
+  found for only 6, all in project-root stores, none in a mode folder (cause not verified; old
+  transcripts appear to be gone). The mapping can only work if the gate script records the launch
+  folder soon after the memory is written.
+- **Side effect found and removed:** a probe that put `enabledPlugins` in a root
+  `settings.local.json` added a `local`-scope record to `~/.claude/plugins/installed_plugins.json`.
+  Removed by hand; the earlier `settings.json` probes left no record.
+
+**Open — not ruled:** whether a globally disabled plugin still auto-updates (not established: the
+docs lookup did not answer it, and the one disabled plugin here with a later update date may have
+been updated before it was disabled; `claude plugin update <plugin>` exists as a manual path);
+how the classifier harness is fed and checked.

@@ -33,7 +33,10 @@ dreamer, the tracking record, the plugin-mover skill, the plugin packaging.
 stores' `feedback` files: unknown path = new feedback; known path with a changed hash = the
 built-in writer updated an existing memory, which is how repeat feedback inside one project shows
 up (it edits the old file instead of adding one). Nothing new or changed → no agent runs. The
-mode comes free from `originSessionId` → the transcript store's name.
+mode was meant to come from `originSessionId` → the transcript store's name; measured later the
+same day, that worked for only 6 of 48 files, so the gate script has to record the launch folder
+soon after a memory is written (see `decisions.md`, last 2026-10-04 entry). Carter agreed to the
+script gate.
 
 **2026-09-29 — ECC went live as a library.** The fork `ck22coding/ECC` is cloned at `ecc/`
 (gitignored, own repo). First build: eightfaces (Scott Murff's repo, local-only via
