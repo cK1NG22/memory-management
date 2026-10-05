@@ -7,11 +7,10 @@ folder.** Optimizing for context curation, explicitly not for traditional coding
 
 ## 🧭 Where we are now
 
-**2026-10-04 — mode principles became rule files (branch `worktree-mode-rules`, unmerged).** Each
+**2026-10-04 — mode principles became rule files (merged to `main` by PR #2 the same day).** Each
 project now holds real copies in `<mode>/.claude/rules/`, sourced from `make/modes/library/`; the
 symlink + `@import` wiring is gone from this repo. `make/modes/modes.py` stamps, sorts and checks;
-`/modes` is the skill. Until the branch merges, `audit.py` reports 9 mode folder problems against
-the main checkout — that is the old wiring, and it clears on merge. Open follow-ups are in
+`/modes` is the skill. `audit.py` reported clean on main after the merge. Open follow-ups are in
 `TODO.md`. How-to: `docs/mode-files-runbook.md`.
 
 **2026-10-04, later — the mode loop is designed, not built.** Carter ruled the shape (full entry
@@ -44,6 +43,14 @@ same day: deliver both ways (`enabledPlugins` per mode folder and copied pieces)
 the middleman folder's home; memory is a setting (off / propose / apply); promote at 2 or 3
 recurrences; the dreamer drops redundant feedback, may mine Carter's prompts, and harvests only
 projects with mode folders (two today).
+
+**2026-10-04, after the merge — the "slice" idea, probed, not ruled.** `enabledPlugins` is on/off
+per plugin id; the manifest decides the pieces. A local marketplace can hold small plugins
+("slices") that list only chosen pieces and link into a held copy of the upstream plugin; each is
+switched on per mode folder. Probes on a throwaway marketplace: listed pieces only, links into the
+held copy load, hooks follow the slice, edits carry through, registering writes two global
+entries and removing restores them. Drawn in `plan/middleman-map.md` section 5; results and what
+is still unmeasured in `decisions.md`.
 
 **2026-09-29 — ECC went live as a library.** The fork `ck22coding/ECC` is cloned at `ecc/`
 (gitignored, own repo). First build: eightfaces (Scott Murff's repo, local-only via

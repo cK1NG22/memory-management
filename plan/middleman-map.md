@@ -101,7 +101,49 @@ Tests for `scaffold` to apply per plugin, per folder **[proposed]**:
 4. Does one of its rules conflict with a rule already in the folder, or a skill duplicate one?
    PART can leave that piece out; ALL cannot.
 
-## 5. Not yet decided or measured
+## 5. A third branch: the slice **[proposed, probed 2026-10-04]**
+
+`enabledPlugins` only says on or off per plugin id. Which pieces load is decided by the plugin's
+manifest — and a local marketplace can hold a manifest we write. So PART does not have to mean
+copying files into `.claude/`:
+
+```
+ MIDDLEMAN FOLDER = a local marketplace
+   .claude-plugin/marketplace.json      one entry per held plugin and per slice,
+                                        each with defaultEnabled: false
+   held/<plugin>/                       the upstream plugin, whole, untouched
+   slices/<plugin>-<mode>/
+     .claude-plugin/plugin.json         lists only the wanted skills, agents, hooks
+     picked/<skill>   ──link──▶         held/<plugin>/skills/<skill>
+     agents/<a>.md    ──link──▶         held/<plugin>/agents/<a>.md
+     scripts          ──link──▶         held/<plugin>/scripts
+
+ <project>/<mode>/.claude/settings.json
+   enabledPlugins:  <plugin>-<mode>@<middleman>: true
+```
+
+The per-piece toggle is one list in the slice's `plugin.json`.
+
+| | ALL — switch | PART — copy pieces | PART — slice |
+| --- | --- | --- | --- |
+| What is written in the project | one settings line | files or links | one settings line |
+| Skill names | `plugin:skill` | bare name | `slice:skill` **[measured]** |
+| Pieces that call the plugin's install path | work | break | the linked `scripts/` folder resolved under the slice's root **[measured]** |
+| Hooks | all of them | left behind | only those the slice lists **[measured]** |
+| Updates | plugin manager | re-copy | an edit to the held copy showed next session **[measured]** |
+| Remove it | flip the line | delete files | flip the line |
+| Global state | install record | none | one marketplace entry in user settings and one in `known_marketplaces.json`; empty data folders for slices with hooks **[measured]** |
+| Rules | — | real copies | cannot carry rules — plugins have no rules component (docs) |
+
+Measured limits: a link that leaves the marketplace folder does not load and gives no error; the
+held copy was itself a plugin in the same marketplace when the links worked. Full table of probe
+results: `.claude/memory/decisions.md`, the entry "a per-piece plugin switch".
+
+## 6. Not yet decided or measured
+
+- Slices **[open]**: two slices of one plugin in one folder; keeping the upstream name so skills
+  stay `plugin:skill`; MCP servers in a slice; whether an entry without `defaultEnabled: false`
+  loads everywhere; interactive sessions and the trust dialog.
 
 - Where the middleman folder lives is the user's choice at setup **[ruled]**; whether held
   plugins are git clones or copies of the plugin cache **[open]**.

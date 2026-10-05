@@ -1175,3 +1175,58 @@ how the classifier harness is fed and checked.
 
 **Open — not ruled:** how long `history.jsonl` is kept and whether long prompts are stored in
 full (neither measured); the items still open in the entries above.
+
+## 2026-10-04, after the merge — a per-piece plugin switch: the "slice" idea, probed
+
+Carter asked how `enabledPlugins` itself could become per-piece instead of working around it with
+a folder. **Nothing here is ruled**; it records what was read, what was measured, and the idea.
+
+**How the switch works (docs: plugins/loading, manifest and marketplace reference, read
+2026-10-04):**
+- `enabledPlugins` is a map of plugin id → true/false. Six sources set it (add-dir, user, project,
+  local, `--settings` flag, managed) and they merge **per plugin id** — nothing finer.
+- Project and local files are read from the launch folder only (matches the earlier measurement).
+- The switch never decides which pieces load. The plugin's **manifest** does: in `plugin.json`,
+  `agents` and `commands` lists replace the default folder scan, `skills` adds to it, hooks and
+  servers merge. A marketplace entry is the whole manifest when the plugin has no `plugin.json`.
+- Plugins have no rules component; a `CLAUDE.md` at a plugin root is not loaded.
+- Claude Code is closed source, so changing the setting itself means a feature request. Two shapes
+  were sketched: let `skillOverrides` take `plugin:skill` keys, or let an `enabledPlugins` value be
+  an object listing pieces.
+
+**Per-piece controls that exist today (CLI 2.1.289, 1 headless sonnet run each):**
+- `skillOverrides` aimed at a plugin skill: skill stayed listed (docs say plugin skills are exempt).
+- `permissions.deny: ["Skill(supabase:supabase)"]`: skill stayed listed, so no listing budget is
+  saved. Whether the call is blocked was not tested.
+
+**The slice idea (proposed):** make the middleman folder a local marketplace. Keep each upstream
+plugin whole in `held/`; write a small plugin per selection in `slices/`, whose `plugin.json` lists
+only the wanted pieces; switch a slice on per mode folder with the `enabledPlugins` line. Seen
+already working upstream: the Supabase repo ships two plugins from one repo this way.
+
+**Probes (2026-10-04, CLI 2.1.289, throwaway marketplace `mm-probe` in the job's temp folder: a
+held plugin with 2 skills, 2 agents, 1 hook; a link slice; a copy slice; 4 launch folders; 1
+headless sonnet run each, model self-report plus a hook log file):**
+
+| Question | Result |
+| --- | --- |
+| Does a slice load only its listed pieces? | Yes. Link slice: skill alpha, skill delta, agent one. Held skill beta and agent two absent. |
+| Can a slice **link** into the held plugin? | Yes — a linked skill folder and a linked agent file both loaded. |
+| Can a slice link **outside** the marketplace folder? | No — that skill was absent, with no error in the output. `claude plugin validate` did not flag it. |
+| Do hooks follow a slice? | Yes. The slice's hook fired (SessionStart and UserPromptSubmit) only in the folder that enabled it, calling a script through a linked `scripts/` folder; `CLAUDE_PLUGIN_ROOT` was the slice folder. |
+| Do the held plugin's hooks leak? | No. They fired only in the folder that enabled the whole held plugin. The copy slice (no hooks listed) fired nothing. |
+| Does an edit to the held copy carry through? | Yes — an edited description showed in the next session, no reinstall. |
+| Does the slice switch stay per folder? | Yes. A folder with no `enabledPlugins` line saw none of it (every entry had `defaultEnabled: false`). |
+| What does registering leave behind? | `claude plugin marketplace add <folder>` wrote one `extraKnownMarketplaces` entry in user settings and one entry in `known_marketplaces.json`. No install record, no cache folder. Sessions with a hook then created empty `~/.claude/plugins/data/<plugin>-<marketplace>/` folders. |
+| What does removing leave behind? | `claude plugin marketplace remove` restored both files to byte-identical. The two empty data folders stayed; removed by hand. |
+
+**Not measured:** two slices of one plugin enabled in the same folder; a slice that keeps the
+upstream plugin's name so skill names stay `plugin:skill`; MCP servers in a slice; whether entries
+without `defaultEnabled: false` would load everywhere; interactive sessions (the docs say project
+content needs the trust dialog); links when the held copy is not itself a plugin in the marketplace.
+
+**Docs on the earlier open question (auto-update):** marketplace auto-update defaults on only for
+Anthropic's official marketplaces, off for others; the pass "updates the plugins installed from
+them" — it says installed and does not say disabled ones are skipped. Still not measured.
+
+The slice branch is drawn in `plan/middleman-map.md`, section 6.
