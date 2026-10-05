@@ -1,57 +1,72 @@
-# Mode-files delivery runbook
+# Mode folders runbook
 
-Captured 2026-08-06 while executing the Phase 2.5 mode-files delivery (manifest Tranche 4).
-Use when delivering the shared mode files to a new machine, re-wiring them, or stamping a new
-project's mode folders (Phase 3 does this per project).
+Rewritten 2026-10-04 when mode principles moved from `@import`-ed symlinks to rule files. The
+previous procedure is `_archive/mode-files-runbook_2026-10-04.md`.
 
-## The mechanics this rides on (verified on CLI 2.1.223 — re-test after CLI upgrades)
+Use when stamping mode folders onto a project, sorting skills, agents and rules into them, or
+changing a mode principle. The tool is `make/modes/modes.py`; the `/modes` skill
+(`make/modes/SKILL.md`) walks the same steps and carries the sorting tests.
 
-Full record: `reference-claude-code-loading-mechanics` in the memory-management native store.
+## The mechanics this rides on (probed on this machine — re-test after CLI upgrades)
 
-- A CLAUDE.md `@import` only expands when the **literal** path sits inside the importing file's
-  project (containment is checked *before* symlink resolution).
-- Therefore `@~/.claude/modes/X.md` in a project file **silently never loads** — but an
-  **in-project symlink** pointing at `~/.claude/modes/X.md`, imported by filename, loads fine.
-- The user-level `~/.claude/CLAUDE.md` is exempt from containment: it imports
-  `@~/.claude/modes/ALWAYS.md` directly, no symlink.
-- A broken import (missing target, dead symlink, containment escape) fails **with no warning
-  anywhere** — exit 0, empty stderr, the `@line` just sits as literal text. This is why
-  `audit.py`'s imports check exists; never wire an import without it.
+| Fact | Probed |
+| --- | --- |
+| `<project>/<mode>/.claude/rules/` and `skills/` load only when the session starts in `<mode>/` | 2026-09-28, CLI 2.1.284, 2/2 runs |
+| The same holds for `<mode>/.claude/agents/`; a root session and a sibling-mode session see none of the three | 2026-10-04, CLI 2.1.289, 1 run per launch folder |
+| Rules skip symlinks — a linked rule file or folder silently never loads | 2026-09-28 |
+| Still true on 2.1.289: a symlinked rule file, a symlinked `rules/` folder and a symlinked `<mode>/.claude` all fail to load | 2026-10-04, 1 run each, real-file control loaded |
+| A rule file's `@import` of a file outside the project, or of an in-project symlink, does not expand (no in-project real-file control was run) | 2026-10-04, 1 run |
+| A hard-linked rule file loads, but the Edit tool writes a new file and breaks the link, leaving a plain copy; git also checks hard links out as separate files | 2026-10-04, 1 run + one edit |
+| Skills follow symlinks; a dead link vanishes with no warning | 2026-08-07, 2026-09-28 |
+| Symlinked agents load at the project level (not re-probed inside a mode folder) | 2026-09-29 |
+
+All probes are headless (`claude -p`) with the model reporting whether a sentinel string is in
+context. Full record: `reference-claude-code-loading-mechanics` in the native store.
+
+## The shape
+
+```
+<project>/
+  CLAUDE.md                     mode-invariant facts; loads in every session
+  .claude/{rules,skills,agents} load in every session in the project
+  research/
+    CLAUDE.md                   thin: what this mode is for in THIS project
+    .claude/rules/research.md   a real copy of the library rule
+    .claude/skills/  agents/    load only in research/ sessions
+  plan/  make/                  same
+```
+
+The source for mode rules is `make/modes/library/<mode>/rules/*.md`. Each project holds a copy.
+A project rule with the same filename as a library rule is its copy; any other filename is a
+project-only rule and is never compared or overwritten.
 
 ## Procedure
 
-1. `python3 make/memory-repair/audit.py` → must be clean before touching anything.
-2. Back up any store whose topics will be folded/deleted:
-   `cp -R ~/.claude/projects/<store>/memory ~/Claude/_archive/container-stores_<date>/<name>`.
-   Verify the copy by file count, not by eyeball.
-3. Write / update the canonical files: `~/.claude/modes/ALWAYS.md`, `RESEARCH-MODE.md`,
-   `PLAN-MODE.md`, `MAKE-MODE.md`. Fold each memory topic's rule + why + how-to-apply; the topic
-   files are deleted afterward, so the fold must carry everything load-bearing.
-4. Global wiring (once per machine): `~/.claude/CLAUDE.md` gets
-   `@~/.claude/modes/ALWAYS.md`. Remove any global-CLAUDE.md text the fold now covers — only if
-   the removal is recall-neutral (ALWAYS.md loads in every session; a mode file loads only in
-   projects that are wired, so those demotions wait for Phase 3).
-5. Per-project wiring (this is what Phase 3 stamps everywhere):
-   ```
-   ln -s ~/.claude/modes/RESEARCH-MODE.md <project>/research/RESEARCH-MODE.md   # abs target —
-   ln -s ~/.claude/modes/PLAN-MODE.md     <project>/plan/PLAN-MODE.md           # survives a
-   ln -s ~/.claude/modes/MAKE-MODE.md     <project>/make/MAKE-MODE.md           # project move
-   ```
-   and each mode `CLAUDE.md` ends with `@<MODE>-MODE.md` (the symlink's filename — same dir).
-6. Verify delivery, don't assume it: headless probe from a mode dir asking whether a phrase that
-   exists only in the mode file is present in context. `claude -p "... is '<phrase>' present?"`.
-7. Only after the probe passes: delete the folded topic files and strip their `MEMORY.md` index
-   lines (a dangling index line is an audit failure).
-8. `python3 make/memory-repair/audit.py` → exit 0. The imports check runs on every audit from now
-   on; it scans `~/.claude/CLAUDE.md` plus `<container>/*/CLAUDE.md` and
-   `<container>/*/*/CLAUDE.md`, flags missing targets and containment escapes, and has a negative
-   test proving it can fail.
+1. `python3 make/modes/modes.py stamp <project> --dry-run` — read every line.
+2. `python3 make/modes/modes.py stamp <project>` — creates what is missing, keeps what exists,
+   copies the rules, removes the old `<MODE>-MODE.md` symlink and its `@import` line, then checks.
+3. Sort: `modes.py list <project> [--from ~/.claude]`, decide with the tests in the skill, then
+   `modes.py place <kind> <name> <mode> --project <project>`.
+4. Verify delivery once per project, and again after a CLI upgrade: from a mode folder,
+   `claude -p "Is the phrase '<phrase only in that mode's rule>' in your context?"`.
+5. `python3 make/memory-repair/audit.py` — its mode folder check runs `modes.py check` on every
+   stamped project in the containers.
 
-## Failure modes this procedure exists to prevent
+## Changing a principle
+
+Edit the library file, then `modes.py stamp <project> --update` for each stamped project. Until
+then `check` and `audit.py` name every copy that has fallen behind. A change made directly in a
+project's copy is reported as a difference, never silently kept or silently overwritten.
+
+## Failure modes
 
 | Symptom | Cause | Caught by |
 | --- | --- | --- |
-| Mode rules silently absent | import target missing / symlink dead | audit imports check, step 6 probe |
-| Mode rules silently absent everywhere | `@~/...` home path used in a project file | audit containment check |
-| Rule lost entirely | topic deleted before fold verified | step ordering (6 before 7) |
-| Fold lost on disaster | no backup | step 2 |
+| Mode rules silently absent | rule file or rules folder is a symlink | `check`: "is a symlink — it never loads" |
+| Mode rules silently absent | session started at the project root, not in the mode folder | nothing — this is the design; launch in the mode folder |
+| Two projects follow different principles | a copy drifted from the library | `check`: "differs from the library" |
+| A skill or agent vanished | its link target moved or was deleted | `check`: "dead symlink" |
+| Principles loaded twice | old symlink + `@import` left beside the new rule | `check`: "still imports" / "old symlink" |
+| A skill stopped triggering at the root | it was moved into one mode folder | the `place` note; decide with sorting test 2 |
+
+`check` proves the files are right. Only the step-4 probe proves a session reads them.

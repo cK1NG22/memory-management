@@ -26,6 +26,7 @@ These are **present-tense and rewritten**. Anything past-tense and immutable bel
 
 **Write only inside `plan/`.** If something belongs in `research/` or `make/`, say so and stop.
 
-## Mode principles (single source: ~/.claude/modes/PLAN-MODE.md, via the symlink beside this file)
+## Mode principles
 
-@PLAN-MODE.md
+The rule files in `.claude/rules/` beside this file. They load when a session starts in this folder.
+They are copies from the mode library; `modes.py check` reports any that differ.

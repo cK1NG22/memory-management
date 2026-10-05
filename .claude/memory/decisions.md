@@ -1018,3 +1018,160 @@ Carter asked for ECC inside `~/Projects/products/companion/.claude`. Built on br
   broken links. Listing cost, name + description chars: skills ≈18k, commands ≈6k, agents ≈6k.
 - **Merged same day** on Carter's "merge": `ck22coding/companion#2` → main as `4ecef62`; main
   checkout fast-forwarded, links resolve there.
+
+## 2026-10-04 — mode principles move to rule files; `/modes` skill (bg session)
+
+Carter: "update the memory system one final time… most aligned with the current claude memory
+system." Built on branch `worktree-mode-rules`, **unmerged** — Carter merges.
+
+- **Mode principles are rule files in `<project>/<mode>/.claude/rules/`, not `@import`-ed
+  symlinks.** Carter chose this over user-level rules, with or without `paths:` frontmatter.
+  *Why:* it keeps the trigger the mode shape already has (session starts in the mode folder) and
+  uses the native rules folder instead of a symlink that slips past the import containment check.
+- **Cost accepted: no single source.** Rules skip symlinks, so each project holds a real copy.
+  The library at `make/modes/library/<mode>/rules/` is the source; `modes.py check` and
+  `audit.py` report every copy that differs. Matching filename = a copy; any other filename = a
+  project-only rule, never compared.
+- **One tool, one skill.** `make/modes/modes.py` (`stamp`, `check`, `list`, `place`) does
+  everything deterministic; the `/modes` skill carries the one judgement call, the sorting tests.
+  Sorting defaults: in-project items move; outside skills and agents link; rules always copy.
+- **Probed 2026-10-04, CLI 2.1.289** (one headless run per launch folder, sentinel strings):
+  nested `<mode>/.claude/agents/` loads only from that mode folder, same as rules and skills; root
+  and sibling-mode sessions see none. After stamping this repo, a `make/` session held a
+  make-only phrase and neither the plan-only nor research-only phrase.
+- **This repo is restamped** (the only project that had the old wiring). The three
+  `<MODE>-MODE.md` symlinks and `@import` lines are deleted on this branch.
+- **Not done here, left for Carter:** installing the skill under `~/.claude/skills/`, deleting
+  `~/.claude/modes/{RESEARCH,PLAN,MAKE}-MODE.md` (only after merge — main still links to them),
+  and porting the change to `~/Projects/products/mode-memory`. `ALWAYS.md` is unchanged.
+- **Folder name `make/modes/` is a strawman** — chosen by the session, not by Carter.
+
+## 2026-10-04 — the mode loop: auto-memory captures, a dreamer harvests, the source copies out (bg session)
+
+Carter's rulings in conversation, same day as the entry above. **Design only — none of this is
+built.** Where it contradicts the entry above, this one wins and the code has not caught up yet.
+
+**The loop.** Session in a mode folder → the built-in auto-memory records feedback in the native
+store → a dreaming agent harvests it → one source file per mode → copied into every
+`<project>/<mode>/.claude/rules/` on each source edit → the next session in that mode reads it.
+One direction; only the last stage is ever read by a session.
+
+- **One source copy, kept where nothing auto-loads it.** Symlinks and hard links are both out.
+  *Why:* probed the same day on CLI 2.1.289 — a symlinked rule file, `rules/` folder and
+  `<mode>/.claude` all failed to load; a hard link loaded but the Edit tool replaced it with a new
+  file on the first edit, leaving a silent copy.
+- **Capture belongs to Anthropic's built-in auto-memory, not to a tool of ours.** Carter: "this is
+  the breakthrough." Feedback is harvested out of each `~/.claude/projects/<key>/memory/`.
+  `capture-feedback` (Carter's own skill, confirmed local, no plugin copy) is to be retired.
+  *Supersedes* his statement earlier the same day that feedback tools save into `.claude/memory/`.
+  *Why:* the built-in writer already runs in every session; 44 of the 48 `feedback-*.md` files in
+  the native stores carry its `originSessionId`.
+- **The dreamer sorts.** Built-in feedback has no mode, so the dreamer decides which mode and
+  whether it is a mode principle or a project fact. Carter: "that is no big deal." Later, a
+  version that classifies each piece automatically (Carter called it the "JEV version" — the
+  term's meaning is not confirmed).
+- **Harvest moves, and promotion is by recurrence.** Feedback received multiple times is promoted
+  into the source mode file and leaves the store it came from.
+- **Copies are generated output.** Every source edit is copied to every stamped project; a copy
+  that differs is overwritten. *Supersedes* the entry above, where a differing copy is reported
+  and kept until `--update`. `modes.py` still has the old behaviour.
+- **Dreaming must not waste compute.** Cron jobs, hooks and a tracking record of what was written
+  since the last dreaming run, so a run targets only what is new.
+- **The middleman.** A general version of the ECC library: a folder that holds plugins so they do
+  not load globally, plus skills that scaffold projects with mode-sorted pieces from any plugin.
+  The plugin also ships a skill that scans for plugins saved or loaded globally and moves them
+  into that folder.
+- **Carter's objection that shaped this:** a plugin that is always on defeats mode scoping. The
+  resolution he accepted is that the always-on part is only the tools; the content sits in the
+  folder that does not load.
+
+**Open — not ruled:**
+- Where the source and the middleman folder live. Carter's lean: `~/.claude/modes/`. Tests any
+  home has to pass: outside every loading path; owned by the user so a plugin update cannot
+  replace it; a fixed location; under version control (`~/.claude` is not a git repo here).
+- Whether the dreamer applies a promotion that meets the recurrence rule, or proposes it.
+- How many recurrences, and whether they must come from different projects.
+- The tracking record's design (the session's proposal is in `context.md`; Carter asked how it
+  works and has not ruled).
+
+## 2026-10-04, later still — the middleman's shape; plugins already toggle per launch folder
+
+- **Script gate, not a stamp.** Carter agreed: a script compares the stores' feedback files to a
+  record before any model call. Closes that open item above.
+- **The tools do not have to be always on.** *Supersedes* the last bullet of the entry above.
+  Carter: the plugin's skills load in the middleman folder, and you open a session there to
+  scaffold — the way he already uses `memory-management/`. Install would place one skill that
+  asks where the middleman folder goes (container or project), creates it, and copies the other
+  skills in.
+- **Skills named so far:** `compliance` (find globally installed plugins and bring them under the
+  middleman) and `scaffold` (take a project description, pick pieces from the held plugins and
+  personal skills, check for conflicting rules and redundant skills, copy into each mode folder),
+  with agents called by `scaffold`.
+- **Two products, "separate but eventually the same":** (1) the middleman — serving skills,
+  agents and rules per project instead of globally; (2) that principle applied to Carter's own
+  context, rules, memory and skills (the mode loop).
+- **Measured the same day (CLI 2.1.289, headless sonnet, 1 run per launch folder, a skills-only
+  plugin installed and disabled at user level):** `enabledPlugins` in a `.claude/settings.json`
+  switches a plugin on only for sessions launched in that exact folder. Set in `make/`: found
+  from `make/`, absent from `plan/` and the root. Set at the root: found at the root, absent from
+  `make/`. Same result outside a git repo. So a built-in per-folder switch exists for whole
+  plugins. Not measured: switching a plugin *off* in a folder; piece-level selection (the switch
+  is whole-plugin); whether hooks and MCP servers follow the same switch.
+
+**Open — not ruled:** whether the middleman moves plugin files or writes `enabledPlugins` per
+mode folder (or both); the folder's home; the items still open in the entry above.
+
+## 2026-10-04, last — middleman rulings; the recurrence count; a correction
+
+- **Delivery: both.** The middleman writes `enabledPlugins` per mode folder for whole plugins and
+  copies pieces when a subset is wanted. Carter's framing of the product: the built-in switch is
+  all-or-nothing per plugin; the middleman exists for tailored selection.
+- **The middleman folder's home: the user decides at setup.**
+- **Three memory settings, chosen by the user:** no memory; proposed changes (the dreamer
+  proposes); promotion (the dreamer applies). The plugin must work with memory off.
+- **Promotion threshold: 2 or 3**, to be tested on Carter's own setup before fixing it.
+- **"JEV" is a classifier model.** Idea: a small harness that uses it to sort each memory into
+  mode principle vs project fact, then by mode.
+
+**Measured the same day, read-only, 48 `feedback-*.md` files in 16 native stores (grouping is one
+agent's judgement; counts of files, IDs and transcripts are mechanical):**
+- Same rule saved as separate files: one group of 3 across 3 stores (keep a protective rail,
+  design around it) — or two pairs on a stricter split. 45 (or 41) files are singletons. No
+  repeat sits inside a single store.
+- Repeats recorded as edits to an existing file: 4 files carry a dated "update / confirmed again /
+  refinement", plus one same-day double ask.
+- So on today's data a threshold of 2 promotes about 5–7 items, and 3 promotes one. The count
+  understates real recurrence: feedback never saved, or merged silently, is invisible.
+- **Correction to the entry above and to `context.md`:** "the mode comes free from
+  `originSessionId`" does not hold for old files. 44 of 48 carry the ID, but a transcript was
+  found for only 6, all in project-root stores, none in a mode folder (cause not verified; old
+  transcripts appear to be gone). The mapping can only work if the gate script records the launch
+  folder soon after the memory is written.
+- **Side effect found and removed:** a probe that put `enabledPlugins` in a root
+  `settings.local.json` added a `local`-scope record to `~/.claude/plugins/installed_plugins.json`.
+  Removed by hand; the earlier `settings.json` probes left no record.
+
+**Open — not ruled:** whether a globally disabled plugin still auto-updates (not established: the
+docs lookup did not answer it, and the one disabled plugin here with a later update date may have
+been updated before it was disabled; `claude plugin update <plugin>` exists as a manual path);
+how the classifier harness is fed and checked.
+
+## 2026-10-04, closing — dreamer scope and inputs; the prompt history repairs the mode lookup
+
+- **The dreamer checks for redundant memories:** feedback still sitting in a store that is
+  already present in a source mode file.
+- **The dreamer may harvest patterns from Carter's own messages** without reading whole
+  transcripts.
+- **The dreamer farms only from projects that have mode folders scaffolded.**
+- **Measured (mechanical, 2026-10-04):** `~/.claude/history.jsonl` holds every typed prompt —
+  fields `display`, `pastedContents`, `timestamp`, `project` (the launch folder), `sessionId`;
+  8,312 rows from 2026-02-24 to today, 106 launch folders. Looking up each feedback file's
+  `originSessionId` there found the launch folder for 43 of 43 IDs (5 files have no ID): 41 at a
+  project root or other folder, 2 in a mode folder. *Supersedes* the correction in the entry
+  above — the mode lookup works through the prompt history, where transcripts gave 6 of 48.
+- **Scope today:** two projects have all three mode folders (`memory-management`,
+  `claude-architect`); 3 of the 48 feedback files sit in their stores.
+- The map of the whole setup is `plan/mode-loop-map.md` (path is a strawman).
+
+**Open — not ruled:** how long `history.jsonl` is kept and whether long prompts are stored in
+full (neither measured); the items still open in the entries above.

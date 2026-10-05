@@ -135,6 +135,29 @@ def check_imports():
     return bad
 
 
+def check_mode_folders():
+    """Mode rules are real copies in <project>/<mode>/.claude/rules/, because
+    rules skip symlinks (probed 2026-09-28). Copies drift, and a symlinked rule
+    or a dead skill link vanishes SILENTLY — so every stamped project is checked
+    against the library. The checks themselves live in make/modes/modes.py."""
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "modes"))
+    import modes
+    from pathlib import Path
+    home = os.path.expanduser("~")
+    projects = set()
+    for c in CONTAINERS:
+        for depth in ("*", os.path.join("*", "*")):
+            for m in modes.MODES:
+                base = os.path.join(home, c, depth, m)
+                hits = glob.glob(os.path.join(base, ".claude", "rules"))
+                hits += [p for p in glob.glob(os.path.join(base, f"{m.upper()}-MODE.md"))
+                         if os.path.islink(p)]                  # the old wiring, not yet restamped
+                for hit in hits:
+                    projects.add(hit.split(os.sep + m + os.sep)[0])
+    library = modes.HERE / "library"
+    return [(p, why) for p in sorted(projects) for why in modes.check(Path(p), library)]
+
+
 def audit():
     orphans, dangling, unindexed, live = [], [], [], []
     total_topics = 0
@@ -193,6 +216,15 @@ def audit():
         for f, raw, why in broken_imports:
             print(f"   {f}")
             print(f"      @{raw}  ->  {why}")
+        print()
+
+    mode_problems = check_mode_folders()
+    if mode_problems:
+        problems += len(mode_problems)
+        print(f"❌ MODE FOLDER PROBLEMS ({len(mode_problems)}) — each of these fails with no warning.")
+        print("   Fix: python3 make/modes/modes.py stamp <project>  (add --update for a drifted copy)\n")
+        for p, why in mode_problems:
+            print(f"   {p}  ->  {why}")
         print()
 
     if unindexed:
