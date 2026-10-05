@@ -14,6 +14,27 @@ symlink + `@import` wiring is gone from this repo. `make/modes/modes.py` stamps,
 the main checkout — that is the old wiring, and it clears on merge. Open follow-ups are in
 `TODO.md`. How-to: `docs/mode-files-runbook.md`.
 
+**2026-10-04, later — the mode loop is designed, not built.** Carter ruled the shape (full entry
+in `decisions.md`): the built-in auto-memory captures feedback → a dreamer harvests the native
+stores → one source file per mode that nothing auto-loads → copied into every project's mode
+rules on each source edit. `capture-feedback` is to be retired. The plugin becomes a "middleman":
+a non-loading folder that holds other plugins, with skills that sort their pieces into mode
+folders and one that moves globally installed plugins into it.
+
+*Built on the branch so far:* stamp, check, list, place, the `/modes` skill, the audit check, this
+repo restamped. *Built and now contradicted by the rulings:* `check`/`stamp` report a differing
+copy and wait — they should overwrite it; the library sits in `make/modes/library/`, a home Carter
+has not ruled on. *Not built:* the copy-on-edit trigger, the list of stamped projects, the
+dreamer, the tracking record, the plugin-mover skill, the plugin packaging.
+
+*Proposed by the session for the tracking record, not ruled:* native stores are not git repos, so
+"commits since the last run" does not apply to them — the signal is file change. Keep one record
+(path → content hash → state) written by the dreamer. Before any model call a script walks the
+stores' `feedback` files: unknown path = new feedback; known path with a changed hash = the
+built-in writer updated an existing memory, which is how repeat feedback inside one project shows
+up (it edits the old file instead of adding one). Nothing new or changed → no agent runs. The
+mode comes free from `originSessionId` → the transcript store's name.
+
 **2026-09-29 — ECC went live as a library.** The fork `ck22coding/ECC` is cloned at `ecc/`
 (gitignored, own repo). First build: eightfaces (Scott Murff's repo, local-only via
 `.git/info/exclude`) got the developer profile minus hooks — 68 agents, 94 commands, 117 skills

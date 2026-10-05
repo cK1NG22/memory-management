@@ -1045,3 +1045,51 @@ system." Built on branch `worktree-mode-rules`, **unmerged** — Carter merges.
   `~/.claude/modes/{RESEARCH,PLAN,MAKE}-MODE.md` (only after merge — main still links to them),
   and porting the change to `~/Projects/products/mode-memory`. `ALWAYS.md` is unchanged.
 - **Folder name `make/modes/` is a strawman** — chosen by the session, not by Carter.
+
+## 2026-10-04 — the mode loop: auto-memory captures, a dreamer harvests, the source copies out (bg session)
+
+Carter's rulings in conversation, same day as the entry above. **Design only — none of this is
+built.** Where it contradicts the entry above, this one wins and the code has not caught up yet.
+
+**The loop.** Session in a mode folder → the built-in auto-memory records feedback in the native
+store → a dreaming agent harvests it → one source file per mode → copied into every
+`<project>/<mode>/.claude/rules/` on each source edit → the next session in that mode reads it.
+One direction; only the last stage is ever read by a session.
+
+- **One source copy, kept where nothing auto-loads it.** Symlinks and hard links are both out.
+  *Why:* probed the same day on CLI 2.1.289 — a symlinked rule file, `rules/` folder and
+  `<mode>/.claude` all failed to load; a hard link loaded but the Edit tool replaced it with a new
+  file on the first edit, leaving a silent copy.
+- **Capture belongs to Anthropic's built-in auto-memory, not to a tool of ours.** Carter: "this is
+  the breakthrough." Feedback is harvested out of each `~/.claude/projects/<key>/memory/`.
+  `capture-feedback` (Carter's own skill, confirmed local, no plugin copy) is to be retired.
+  *Supersedes* his statement earlier the same day that feedback tools save into `.claude/memory/`.
+  *Why:* the built-in writer already runs in every session; 44 of the 48 `feedback-*.md` files in
+  the native stores carry its `originSessionId`.
+- **The dreamer sorts.** Built-in feedback has no mode, so the dreamer decides which mode and
+  whether it is a mode principle or a project fact. Carter: "that is no big deal." Later, a
+  version that classifies each piece automatically (Carter called it the "JEV version" — the
+  term's meaning is not confirmed).
+- **Harvest moves, and promotion is by recurrence.** Feedback received multiple times is promoted
+  into the source mode file and leaves the store it came from.
+- **Copies are generated output.** Every source edit is copied to every stamped project; a copy
+  that differs is overwritten. *Supersedes* the entry above, where a differing copy is reported
+  and kept until `--update`. `modes.py` still has the old behaviour.
+- **Dreaming must not waste compute.** Cron jobs, hooks and a tracking record of what was written
+  since the last dreaming run, so a run targets only what is new.
+- **The middleman.** A general version of the ECC library: a folder that holds plugins so they do
+  not load globally, plus skills that scaffold projects with mode-sorted pieces from any plugin.
+  The plugin also ships a skill that scans for plugins saved or loaded globally and moves them
+  into that folder.
+- **Carter's objection that shaped this:** a plugin that is always on defeats mode scoping. The
+  resolution he accepted is that the always-on part is only the tools; the content sits in the
+  folder that does not load.
+
+**Open — not ruled:**
+- Where the source and the middleman folder live. Carter's lean: `~/.claude/modes/`. Tests any
+  home has to pass: outside every loading path; owned by the user so a plugin update cannot
+  replace it; a fixed location; under version control (`~/.claude` is not a git repo here).
+- Whether the dreamer applies a promotion that meets the recurrence rule, or proposes it.
+- How many recurrences, and whether they must come from different projects.
+- The tracking record's design (the session's proposal is in `context.md`; Carter asked how it
+  works and has not ruled).
