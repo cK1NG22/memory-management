@@ -1093,3 +1093,30 @@ One direction; only the last stage is ever read by a session.
 - How many recurrences, and whether they must come from different projects.
 - The tracking record's design (the session's proposal is in `context.md`; Carter asked how it
   works and has not ruled).
+
+## 2026-10-04, later still — the middleman's shape; plugins already toggle per launch folder
+
+- **Script gate, not a stamp.** Carter agreed: a script compares the stores' feedback files to a
+  record before any model call. Closes that open item above.
+- **The tools do not have to be always on.** *Supersedes* the last bullet of the entry above.
+  Carter: the plugin's skills load in the middleman folder, and you open a session there to
+  scaffold — the way he already uses `memory-management/`. Install would place one skill that
+  asks where the middleman folder goes (container or project), creates it, and copies the other
+  skills in.
+- **Skills named so far:** `compliance` (find globally installed plugins and bring them under the
+  middleman) and `scaffold` (take a project description, pick pieces from the held plugins and
+  personal skills, check for conflicting rules and redundant skills, copy into each mode folder),
+  with agents called by `scaffold`.
+- **Two products, "separate but eventually the same":** (1) the middleman — serving skills,
+  agents and rules per project instead of globally; (2) that principle applied to Carter's own
+  context, rules, memory and skills (the mode loop).
+- **Measured the same day (CLI 2.1.289, headless sonnet, 1 run per launch folder, a skills-only
+  plugin installed and disabled at user level):** `enabledPlugins` in a `.claude/settings.json`
+  switches a plugin on only for sessions launched in that exact folder. Set in `make/`: found
+  from `make/`, absent from `plan/` and the root. Set at the root: found at the root, absent from
+  `make/`. Same result outside a git repo. So a built-in per-folder switch exists for whole
+  plugins. Not measured: switching a plugin *off* in a folder; piece-level selection (the switch
+  is whole-plugin); whether hooks and MCP servers follow the same switch.
+
+**Open — not ruled:** whether the middleman moves plugin files or writes `enabledPlugins` per
+mode folder (or both); the folder's home; the items still open in the entry above.
