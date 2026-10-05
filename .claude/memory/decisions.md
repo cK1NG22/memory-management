@@ -1018,3 +1018,30 @@ Carter asked for ECC inside `~/Projects/products/companion/.claude`. Built on br
   broken links. Listing cost, name + description chars: skills ≈18k, commands ≈6k, agents ≈6k.
 - **Merged same day** on Carter's "merge": `ck22coding/companion#2` → main as `4ecef62`; main
   checkout fast-forwarded, links resolve there.
+
+## 2026-10-04 — mode principles move to rule files; `/modes` skill (bg session)
+
+Carter: "update the memory system one final time… most aligned with the current claude memory
+system." Built on branch `worktree-mode-rules`, **unmerged** — Carter merges.
+
+- **Mode principles are rule files in `<project>/<mode>/.claude/rules/`, not `@import`-ed
+  symlinks.** Carter chose this over user-level rules, with or without `paths:` frontmatter.
+  *Why:* it keeps the trigger the mode shape already has (session starts in the mode folder) and
+  uses the native rules folder instead of a symlink that slips past the import containment check.
+- **Cost accepted: no single source.** Rules skip symlinks, so each project holds a real copy.
+  The library at `make/modes/library/<mode>/rules/` is the source; `modes.py check` and
+  `audit.py` report every copy that differs. Matching filename = a copy; any other filename = a
+  project-only rule, never compared.
+- **One tool, one skill.** `make/modes/modes.py` (`stamp`, `check`, `list`, `place`) does
+  everything deterministic; the `/modes` skill carries the one judgement call, the sorting tests.
+  Sorting defaults: in-project items move; outside skills and agents link; rules always copy.
+- **Probed 2026-10-04, CLI 2.1.289** (one headless run per launch folder, sentinel strings):
+  nested `<mode>/.claude/agents/` loads only from that mode folder, same as rules and skills; root
+  and sibling-mode sessions see none. After stamping this repo, a `make/` session held a
+  make-only phrase and neither the plan-only nor research-only phrase.
+- **This repo is restamped** (the only project that had the old wiring). The three
+  `<MODE>-MODE.md` symlinks and `@import` lines are deleted on this branch.
+- **Not done here, left for Carter:** installing the skill under `~/.claude/skills/`, deleting
+  `~/.claude/modes/{RESEARCH,PLAN,MAKE}-MODE.md` (only after merge — main still links to them),
+  and porting the change to `~/Projects/products/mode-memory`. `ALWAYS.md` is unchanged.
+- **Folder name `make/modes/` is a strawman** — chosen by the session, not by Carter.

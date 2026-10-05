@@ -26,6 +26,7 @@ in `../.claude/memory/decisions.md` and the design changes in `../plan/`.
 
 **Write only inside `research/`.** If something belongs in `plan/` or `make/`, say so and stop.
 
-## Mode principles (single source: ~/.claude/modes/RESEARCH-MODE.md, via the symlink beside this file)
+## Mode principles
 
-@RESEARCH-MODE.md
+The rule files in `.claude/rules/` beside this file. They load when a session starts in this folder.
+They are copies from the mode library; `modes.py check` reports any that differ.

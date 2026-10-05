@@ -1,0 +1,4 @@
+# .claude/ IS committed. Only these are not.
+.claude/worktrees/
+.claude/settings.local.json
+.DS_Store

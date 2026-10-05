@@ -46,7 +46,10 @@ when the *repo* moves.
 
 ## The modes
 
-`research/` → `plan/` → `make/`. Each carries its own `CLAUDE.md` and its own `.claude/skills/`.
+`research/` → `plan/` → `make/`. Each carries its own `CLAUDE.md` and its own `.claude/`
+(`rules/`, `skills/`, `agents/`), which load only when a session starts in that folder. Mode
+principles are rule files copied from `make/modes/library/` — real copies, because rules skip
+symlinks. Stamp, sort and check with `make/modes/modes.py`; see `docs/mode-files-runbook.md`.
 Modes are a **loading mechanism, not a locking one** — they control which skills and instructions
 load, and they are a convention, never enforcement. Nothing available in Claude Code is a hard write
 boundary; see `docs/mode-review-verdict.md`.

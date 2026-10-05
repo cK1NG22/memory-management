@@ -23,6 +23,7 @@ Code here. Read `../plan/` freely. Read `../.claude/memory/context.md` for curre
 **Write only inside `make/`.** If a plan needs changing, say so and stop — do not edit `../plan/`
 from here, and do not route around that with `python -c` or `node -e`.
 
-## Mode principles (single source: ~/.claude/modes/MAKE-MODE.md, via the symlink beside this file)
+## Mode principles
 
-@MAKE-MODE.md
+The rule files in `.claude/rules/` beside this file. They load when a session starts in this folder.
+They are copies from the mode library; `modes.py check` reports any that differ.

@@ -1,1 +1,0 @@
-/Users/carterking/.claude/modes/RESEARCH-MODE.md

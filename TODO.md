@@ -50,3 +50,10 @@
 - [ ] eightfaces: decide on `common/testing.md` (80% coverage rule conflicts with the testing plan in `perry/agent-tooling.md`) — added 2026-09-29
 - [ ] eightfaces: symlink vs copy still undecided (stays linked) — added 2026-09-29
 - [ ] Measure the skill-listing budget in an eightfaces session with ECC loaded (63 skills + 75 commands after the stack cut, on top of the ≈36k global catalog) — added 2026-09-29
+- [ ] Carter: merge `worktree-mode-rules` (mode principles as rule files + the `/modes` skill); `audit.py` shows 9 mode folder problems on main until then — added 2026-10-04
+- [ ] Carter: confirm or rename the skill's folder `make/modes/` (the session picked it), then install it: `ln -s ~/Projects/memory-management/make/modes ~/.claude/skills/modes` — added 2026-10-04
+- [ ] After the merge: delete `~/.claude/modes/{RESEARCH,PLAN,MAKE}-MODE.md` (nothing links to them once main is restamped), and update the pointers that still name them — native `MEMORY.md` (three "Mode principles:" lines), `~/.claude/CLAUDE.md` ("Planning a build" section), `reference-claude-code-loading-mechanics.md` (add the 2026-10-04 agents probe) — added 2026-10-04
+- [ ] Port the rule-file change to `~/Projects/products/mode-memory`: `new-project.sh`, `install.sh`, templates, `tools/audit.py`, README and `docs/loading-mechanics.md` still ship the symlink + `@import` wiring — added 2026-10-04
+- [ ] Decide whether `ALWAYS.md` also becomes a user-level rule (`~/.claude/rules/`) instead of an `@import` in `~/.claude/CLAUDE.md` — added 2026-10-04
+- [ ] `plan/ROADMAP.md`, `plan/phase3.md` and `plan/container-consolidation-manifest.md` still describe the symlink + `@import` wiring and Phase 3 Plan A/B — rewrite or archive — added 2026-10-04
+- [ ] `new-project` and `restructure-project` skills scaffold older shapes that overlap `/modes` — decide whether they stay — added 2026-10-04

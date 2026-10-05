@@ -1,4 +1,4 @@
-# Context — memory-management (updated 2026-09-29)
+# Context — memory-management (updated 2026-10-04)
 
 ## 🎯 Goal / KPI
 
@@ -6,6 +6,13 @@ A memory and context system where **nothing fails silently** and **nothing is st
 folder.** Optimizing for context curation, explicitly not for traditional coding conventions.
 
 ## 🧭 Where we are now
+
+**2026-10-04 — mode principles became rule files (branch `worktree-mode-rules`, unmerged).** Each
+project now holds real copies in `<mode>/.claude/rules/`, sourced from `make/modes/library/`; the
+symlink + `@import` wiring is gone from this repo. `make/modes/modes.py` stamps, sorts and checks;
+`/modes` is the skill. Until the branch merges, `audit.py` reports 9 mode folder problems against
+the main checkout — that is the old wiring, and it clears on merge. Open follow-ups are in
+`TODO.md`. How-to: `docs/mode-files-runbook.md`.
 
 **2026-09-29 — ECC went live as a library.** The fork `ck22coding/ECC` is cloned at `ecc/`
 (gitignored, own repo). First build: eightfaces (Scott Murff's repo, local-only via
