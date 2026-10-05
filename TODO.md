@@ -57,3 +57,5 @@
 - [ ] Decide whether `ALWAYS.md` also becomes a user-level rule (`~/.claude/rules/`) instead of an `@import` in `~/.claude/CLAUDE.md` — added 2026-10-04
 - [ ] `plan/ROADMAP.md`, `plan/phase3.md` and `plan/container-consolidation-manifest.md` still describe the symlink + `@import` wiring and Phase 3 Plan A/B — rewrite or archive — added 2026-10-04
 - [ ] `new-project` and `restructure-project` skills scaffold older shapes that overlap `/modes` — decide whether they stay — added 2026-10-04
+- [ ] `capture-feedback` still appends mode feedback to `~/.claude/modes/*-MODE.md`, which nothing loads after the rule-file change — repoint it (to the project's `<mode>/.claude/rules/` or to `make/modes/library/`), decided together with the dreaming item below — added 2026-10-04
+- [ ] Mode dreaming: mine per-mode feedback from stamped projects (rule copies that differ from the library, and transcripts grouped by launch folder) and promote it into `make/modes/library/`, then `stamp --update` everywhere. Open: where a session records feedback, proposals vs direct writes, how it joins the existing Dream Shift — added 2026-10-04

@@ -14,6 +14,9 @@ changing a mode principle. The tool is `make/modes/modes.py`; the `/modes` skill
 | `<project>/<mode>/.claude/rules/` and `skills/` load only when the session starts in `<mode>/` | 2026-09-28, CLI 2.1.284, 2/2 runs |
 | The same holds for `<mode>/.claude/agents/`; a root session and a sibling-mode session see none of the three | 2026-10-04, CLI 2.1.289, 1 run per launch folder |
 | Rules skip symlinks — a linked rule file or folder silently never loads | 2026-09-28 |
+| Still true on 2.1.289: a symlinked rule file, a symlinked `rules/` folder and a symlinked `<mode>/.claude` all fail to load | 2026-10-04, 1 run each, real-file control loaded |
+| A rule file's `@import` of a file outside the project, or of an in-project symlink, does not expand (no in-project real-file control was run) | 2026-10-04, 1 run |
+| A hard-linked rule file loads, but the Edit tool writes a new file and breaks the link, leaving a plain copy; git also checks hard links out as separate files | 2026-10-04, 1 run + one edit |
 | Skills follow symlinks; a dead link vanishes with no warning | 2026-08-07, 2026-09-28 |
 | Symlinked agents load at the project level (not re-probed inside a mode folder) | 2026-09-29 |
 
