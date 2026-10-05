@@ -37,7 +37,9 @@ mode comes from `originSessionId` → the launch folder recorded in `~/.claude/h
 (43 of 43 IDs found; transcripts gave only 6). Carter agreed to the script gate.
 
 **The map of the whole setup is `plan/mode-loop-map.md`** — two products (middleman, mode loop),
-the loop step by step, each line tagged ruled / measured / proposed / open. Later rulings the
+the loop step by step, each line tagged ruled / measured / proposed / open.
+`plan/middleman-map.md` is the middleman's own process: install → setup → compliance → scaffold →
+the split (whole plugin = switch it on in that folder's settings; part = copy pieces). Later rulings the
 same day: deliver both ways (`enabledPlugins` per mode folder and copied pieces); the user picks
 the middleman folder's home; memory is a setting (off / propose / apply); promote at 2 or 3
 recurrences; the dreamer drops redundant feedback, may mine Carter's prompts, and harvests only
