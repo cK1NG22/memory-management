@@ -1155,3 +1155,23 @@ agent's judgement; counts of files, IDs and transcripts are mechanical):**
 docs lookup did not answer it, and the one disabled plugin here with a later update date may have
 been updated before it was disabled; `claude plugin update <plugin>` exists as a manual path);
 how the classifier harness is fed and checked.
+
+## 2026-10-04, closing — dreamer scope and inputs; the prompt history repairs the mode lookup
+
+- **The dreamer checks for redundant memories:** feedback still sitting in a store that is
+  already present in a source mode file.
+- **The dreamer may harvest patterns from Carter's own messages** without reading whole
+  transcripts.
+- **The dreamer farms only from projects that have mode folders scaffolded.**
+- **Measured (mechanical, 2026-10-04):** `~/.claude/history.jsonl` holds every typed prompt —
+  fields `display`, `pastedContents`, `timestamp`, `project` (the launch folder), `sessionId`;
+  8,312 rows from 2026-02-24 to today, 106 launch folders. Looking up each feedback file's
+  `originSessionId` there found the launch folder for 43 of 43 IDs (5 files have no ID): 41 at a
+  project root or other folder, 2 in a mode folder. *Supersedes* the correction in the entry
+  above — the mode lookup works through the prompt history, where transcripts gave 6 of 48.
+- **Scope today:** two projects have all three mode folders (`memory-management`,
+  `claude-architect`); 3 of the 48 feedback files sit in their stores.
+- The map of the whole setup is `plan/mode-loop-map.md` (path is a strawman).
+
+**Open — not ruled:** how long `history.jsonl` is kept and whether long prompts are stored in
+full (neither measured); the items still open in the entries above.

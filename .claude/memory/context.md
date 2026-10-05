@@ -33,10 +33,15 @@ dreamer, the tracking record, the plugin-mover skill, the plugin packaging.
 stores' `feedback` files: unknown path = new feedback; known path with a changed hash = the
 built-in writer updated an existing memory, which is how repeat feedback inside one project shows
 up (it edits the old file instead of adding one). Nothing new or changed → no agent runs. The
-mode was meant to come from `originSessionId` → the transcript store's name; measured later the
-same day, that worked for only 6 of 48 files, so the gate script has to record the launch folder
-soon after a memory is written (see `decisions.md`, last 2026-10-04 entry). Carter agreed to the
-script gate.
+mode comes from `originSessionId` → the launch folder recorded in `~/.claude/history.jsonl`
+(43 of 43 IDs found; transcripts gave only 6). Carter agreed to the script gate.
+
+**The map of the whole setup is `plan/mode-loop-map.md`** — two products (middleman, mode loop),
+the loop step by step, each line tagged ruled / measured / proposed / open. Later rulings the
+same day: deliver both ways (`enabledPlugins` per mode folder and copied pieces); the user picks
+the middleman folder's home; memory is a setting (off / propose / apply); promote at 2 or 3
+recurrences; the dreamer drops redundant feedback, may mine Carter's prompts, and harvests only
+projects with mode folders (two today).
 
 **2026-09-29 — ECC went live as a library.** The fork `ck22coding/ECC` is cloned at `ecc/`
 (gitignored, own repo). First build: eightfaces (Scott Murff's repo, local-only via
