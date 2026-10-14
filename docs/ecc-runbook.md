@@ -20,13 +20,13 @@ adoption decisions: `plan/ecc-decisions.md`.
 
 ## Using it in a session
 
-| Piece | How it is used | Notes |
-|---|---|---|
-| **Agents** (68) | Claude delegates to them by their `description`, or you name one ("use the code-reviewer agent") | Each pins a model in frontmatter: 58 sonnet, 4 opus, 6 haiku |
-| **Skills** | Load on description match, or `/<name>` | Count against the skill-listing budget (see Gotchas) |
-| **Commands** (94) | `/<name>` — **no `/ecc:` prefix**; that prefix only exists on the plugin path | 26 are broken here (see Gotchas) |
-| **Rules** | Always loaded when present in `.claude/rules/` | Must be real copies |
-| **Hooks, instincts, session memory** | **Not used** (decided 2026-09-28) | close-session stays the resume mechanism |
+| Piece                                | How it is used                                                                                                               | Notes                                                        |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| **Agents** (68)                      | Claude delegates to them by their `description`, or you name one ("use the code-reviewer agent")                             | Each pins a model in frontmatter: 58 sonnet, 4 opus, 6 haiku |
+| **Skills**                           | Load on description match, or `/<name>`                                                                                      | Count against the skill-listing budget (see Gotchas)         |
+| **Commands** (94)                    | `/<name>` — **no `/ecc:` prefix**; that prefix only exists on the plugin path                                                | 26 are broken here (see Gotchas)                             |
+| **Rules**                            | No `paths:` → loaded at session start. With `paths:` → loaded only when Claude reads a matching file (see "When rules load") | Must be real copies                                          |
+| **Hooks, instincts, session memory** | **Not used** (decided 2026-09-28)                                                                                            | close-session stays the resume mechanism                     |
 
 ## Loading ECC into a build
 
@@ -49,20 +49,21 @@ adoption decisions: `plan/ecc-decisions.md`.
    `plankton-code-quality`, `delivery-gate`, `configure-ecc`.
 4. **Link or copy agents, commands and skills — symlinks are optional.** Both load (probed).
 
-   | | Symlink | Copy |
-   |---|---|---|
-   | Fork updates | reach every build at once | frozen; re-copy to update |
-   | Moving `ecc/` | breaks every link silently | no effect |
-   | Commit to a shared repo | no (absolute paths to this Mac) | yes |
-   | Background-job worktrees | only if committed — so no | yes, if committed |
-   | Edit one build's copy | no — edits hit every build | yes |
-   | Rules | **do not load** | load |
+   |                          | Symlink                         | Copy                      |
+   | ------------------------ | ------------------------------- | ------------------------- |
+   | Fork updates             | reach every build at once       | frozen; re-copy to update |
+   | Moving `ecc/`            | breaks every link silently      | no effect                 |
+   | Commit to a shared repo  | no (absolute paths to this Mac) | yes                       |
+   | Background-job worktrees | only if committed — so no       | yes, if committed         |
+   | Edit one build's copy    | no — edits hit every build      | yes                       |
+   | Rules                    | **do not load**                 | load                      |
 
    ALWAYS.md's "never vendor" rule targets third-party tools that keep shipping; ECC is our own
    fork, so copying from it is a trade-off, not a violation. Either way, go item by item (not
    whole folders) so the project's own agents/skills/commands sit beside them and an exclude line
    never hides a real file you later want to commit. The symlink version (used for eightfaces;
    swap `ln -s` for `cp -R` to copy):
+
    ```bash
    L=~/Projects/memory-management/ecc; cd <build>; mkdir -p .claude/agents .claude/commands .claude/skills
    for f in $L/agents/*.md;   do b=$(basename $f); [ -e .claude/agents/$b ]   || { ln -s $f .claude/agents/$b;   echo "/.claude/agents/$b"; }; done >> ex.txt
@@ -70,7 +71,9 @@ adoption decisions: `plan/ecc-decisions.md`.
    for s in <skill list from plan.json, minus drops>; do [ -e .claude/skills/$s ] || { ln -s $L/skills/$s .claude/skills/$s; echo "/.claude/skills/$s"; }; done >> ex.txt
    { echo "# ECC — local only, links into $L"; cat ex.txt; echo "# end ECC"; } >> .git/info/exclude; rm ex.txt
    ```
+
    The `[ -e … ] ||` guard never overwrites a project's own file with the same name.
+
 5. **Rules (once the stack is confirmed): real copies** into `.claude/rules/ecc/`. Rules skip
    symlinks, file and folder alike. Copies are frozen at the day they were made, so note the fork
    commit they came from and re-copy when the fork moves.
@@ -89,17 +92,43 @@ adoption decisions: `plan/ecc-decisions.md`.
 
 ## What loads, and from where (probed)
 
-| Setup | Loads? |
-|---|---|
-| Symlinked skill folder | yes |
-| Symlinked agent file | yes (2026-09-29) |
-| Symlinked command file | yes (2026-09-29) |
-| Symlinked rule file or rules folder | **no** |
-| Real subfolder `.claude/rules/ecc/` | yes |
+| Setup                                                   | Loads?                                               |
+| ------------------------------------------------------- | ---------------------------------------------------- |
+| Symlinked skill folder                                  | yes                                                  |
+| Symlinked agent file                                    | yes (2026-09-29)                                     |
+| Symlinked command file                                  | yes (2026-09-29)                                     |
+| Symlinked rule file or rules folder                     | **no**                                               |
+| Real subfolder `.claude/rules/ecc/`                     | yes                                                  |
 | A mode folder's `.claude/` (e.g. `make/.claude/skills`) | only when the session **starts** in that mode folder |
 
 The last row matters for mode-structured builds: put ECC in the `.claude/` of the folder the build
 session is launched from.
+
+## When rules load (docs-verified 2026-10-14)
+
+Source: Claude Code docs, `memory.md` and `claude-directory.md`, read through context7's
+`/pjbrito/claude-code-docs` mirror (no official Anthropic entry in context7).
+
+- **Subfolders count.** "All `.md` files are discovered recursively", so `.claude/rules/ecc/<lang>/`
+  is found.
+- **No `paths:` frontmatter → loads at session start**, like CLAUDE.md. ECC's `common/` files have
+  none, so all of them load every session.
+- **`paths:` frontmatter → loads only when Claude _reads_ a matching file**, "not on every tool
+  use". ECC's `typescript/`, `react/` and `web/` files all carry `paths:` globs (`**/*.ts`,
+  `**/*.tsx`, `**/*.css`, …), so a session that never opens code never loads them, and opening one
+  `.tsx` file loads all three folders at once.
+- **Rules are guidance, not enforcement.** "For guaranteed behavior use hooks or permissions."
+- Observed in an eightfaces session the same day: start-of-session context held the nine
+  `common/` files and none of the scoped ones.
+- **ECC's react globs assume a type-based layout** (`**/components/**`, `**/hooks/**`,
+  `**/pages/**`). In a feature-folder build those never match; only `*.tsx`/`*.jsx` triggers them.
+
+**Key Insights**
+
+- To keep a rule out of sessions that don't need it, give it `paths:` instead of deleting it. To
+  force a rule to load, remove its `paths:`.
+- A scoped rule that contradicts the project's CLAUDE.md (coverage targets, folders by type) arrives
+  mid-session, after CLAUDE.md, so the conflict is easy to miss. Name the override in CLAUDE.md.
 
 ## Gotchas
 
@@ -123,7 +152,7 @@ session is launched from.
 
 ## Builds using ECC
 
-| Build | Mode | Pieces | Added |
-|---|---|---|---|
-| `~/Foundry/clients/perry/eightfaces` | local-only (Scott's repo) | 32 agents, 75 commands, 63 skills linked; 22 rule files copied (`common`, `typescript`, `react`, `web` from fork `a0e8a663`, minus `*/hooks.md` and `react/testing.md`) | 2026-09-29; cut to stack same day |
-| `~/Projects/products/companion` | **committed** symlinks (Carter's private repo; worktree builds need tracked links) | 30 agents, 51 commands, 53 skills linked; 21 rule files copied (`common`, `typescript`, `react`, `web` from fork `a0e8a663`, minus `*/hooks.md`, `common/testing.md`, `react/testing.md`) + `_source.md` | 2026-10-04 (PR #2, merged `4ecef62`) |
+| Build                                | Mode                                                                               | Pieces                                                                                                                                                                                                   | Added                                |
+| ------------------------------------ | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| `~/Foundry/clients/perry/eightfaces` | **committed copies** since 2026-10-14 (`09bbd75`, `a89e6db`; `scripts/ecc.sh` removed); local-only links before | 32 agents, 75 commands, skills; 22 rule files copied (`common`, `typescript`, `react`, `web` from fork `a0e8a663`, minus `*/hooks.md` and `react/testing.md`)                                  | 2026-09-29; committed 2026-10-14 |
+| `~/Projects/products/companion`      | **committed** symlinks (Carter's private repo; worktree builds need tracked links) | 30 agents, 51 commands, 53 skills linked; 21 rule files copied (`common`, `typescript`, `react`, `web` from fork `a0e8a663`, minus `*/hooks.md`, `common/testing.md`, `react/testing.md`) + `_source.md` | 2026-10-04 (PR #2, merged `4ecef62`) |
