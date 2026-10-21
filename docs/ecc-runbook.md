@@ -152,7 +152,12 @@ Source: Claude Code docs, `memory.md` and `claude-directory.md`, read through co
 
 ## Builds using ECC
 
+**companion has 14 dead links** as of 2026-10-21 (11 commands, `dmux-workflows`, `ecc-guide`,
+`tdd-workflow` — deleted from the fork in `7167296d`). Clean with
+`find .claude -type l ! -exec test -e {} \; -delete` in that build.
+
 | Build                                | Mode                                                                               | Pieces                                                                                                                                                                                                   | Added                                |
 | ------------------------------------ | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
 | `~/Foundry/clients/perry/eightfaces` | **committed copies** since 2026-10-14 (`09bbd75`, `a89e6db`; `scripts/ecc.sh` removed); local-only links before | 32 agents, 75 commands, skills; 22 rule files copied (`common`, `typescript`, `react`, `web` from fork `a0e8a663`, minus `*/hooks.md` and `react/testing.md`)                                  | 2026-09-29; committed 2026-10-14 |
 | `~/Projects/products/companion`      | **committed** symlinks (Carter's private repo; worktree builds need tracked links) | 30 agents, 51 commands, 53 skills linked; 21 rule files copied (`common`, `typescript`, `react`, `web` from fork `a0e8a663`, minus `*/hooks.md`, `common/testing.md`, `react/testing.md`) + `_source.md` | 2026-10-04 (PR #2, merged `4ecef62`) |
+| `~/Projects/pulse` | **committed** symlinks in `make/.claude/` (mode-structured; Carter's local repo, no remote yet) | companion's pick list minus 14 links the fork has since deleted (`7167296d`): 30 agents, 40 commands, 50 skills; 9 `common/` rule files copied from fork `303df07c` (minus `hooks.md`) + `_source.md`; stack rules wait on the stack | 2026-10-21 |
